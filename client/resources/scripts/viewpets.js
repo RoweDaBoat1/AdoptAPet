@@ -1,7 +1,3 @@
-function redirectToLogin() {
-    // Redirect to the login page
-    window.location.href = 'client/login.html';
-  }
 
   function fetchData() {
     return fetch('../data/db.json') // Adjust the path to point to the db.json file

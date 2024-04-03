@@ -31,11 +31,16 @@
             </ul>
         </div>
         <div class="login ml-auto">
-            <button class="btn btn-light" onclick="redirectToLogin()">Login</button>
+            <button class="btn btn-light" onclick="window.location.href = 'login.html'">Login</button>
         </div>
     </nav>
 
     <div class="container" style="margin-top: 60px;"></div>
+    <div class="container" style="margin-top: 60px;">
+        <div class="pets">
+            <!-- Pet cards will be populated here -->
+        </div>
+    </div>
       
       <div class="filters">
         <label for="distance">Distance (in miles):</label>
@@ -97,14 +102,6 @@
       
       <h1 class="title">View All Pets</h1>
       
-      <div class="pet-card" onclick="redirectToPetPage('pet_id')">
-        <img src="pet_image_url" alt="Pet Name">
-        <div class="pet-info">
-          <p class="pet-name">Pet Name</p>
-          <span class="gender-symbol">♂</span> <!-- Male symbol, you can change it to ♀ for female -->
-        </div>
-        <span class="favorite" onclick="toggleFavorite(event)">★</span> <!-- Favorite star -->
-      </div>
      
       <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
