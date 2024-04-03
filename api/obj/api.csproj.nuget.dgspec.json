@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Jacob\\source\\repos\\mis321\\adoptapet\\api\\api.csproj": {}
+    "C:\\Users\\Jacob\\source\\repos\\mis321\\AdoptAPet\\api\\api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Jacob\\source\\repos\\mis321\\adoptapet\\api\\api.csproj": {
+    "C:\\Users\\Jacob\\source\\repos\\mis321\\AdoptAPet\\api\\api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Jacob\\source\\repos\\mis321\\adoptapet\\api\\api.csproj",
+        "projectUniqueName": "C:\\Users\\Jacob\\source\\repos\\mis321\\AdoptAPet\\api\\api.csproj",
         "projectName": "api",
-        "projectPath": "C:\\Users\\Jacob\\source\\repos\\mis321\\adoptapet\\api\\api.csproj",
+        "projectPath": "C:\\Users\\Jacob\\source\\repos\\mis321\\AdoptAPet\\api\\api.csproj",
         "packagesPath": "C:\\Users\\Jacob\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Jacob\\source\\repos\\mis321\\adoptapet\\api\\obj\\",
+        "outputPath": "C:\\Users\\Jacob\\source\\repos\\mis321\\AdoptAPet\\api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Jacob\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -38,13 +38,29 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Cors": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[7.0.10, )"
             },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.5.0, )"
+            },
+            "System.Data.SQLite.Core": {
+              "target": "Package",
+              "version": "[1.0.118, )"
+            },
+            "mysql.data": {
+              "target": "Package",
+              "version": "[8.3.0, )"
             }
           },
           "imports": [

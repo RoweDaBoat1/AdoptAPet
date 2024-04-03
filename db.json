@@ -1,13 +1,25 @@
-{"users":[
-    {
-        "id": "1",
-        "fullName": "Mina Webster",
-        "email": "minawebster868@gmail.com",
-        "addressLine": "4936 Mtn View Pkwy",
-        "city": "Birmingham",
-        "state": "AL",
-        "zip": 35244,
-        "password": "321isStressful"
-    }
-  
-]}
+{
+    "pets": [
+        {
+            "Id": 1,
+            "name": "Bandit",
+            "type": "Dog",
+            "gender": "F",
+            "breed": [
+                "Australian Cattle",
+                "Rat Terrier"
+            ],
+            "weight": "MEDIUM",
+            "height": "MEDIUM",
+            "age": 11,
+            "attitude": [
+                "Friendly",
+                "Playful",
+                "Anxious"
+            ],
+            "houseTrained": "Yes",
+            "about": "Bandit is the sweetest dog ever. Her sister, Smokey, passed last year but when they were both alive Bandit was always the calmer and nicer of the two. Smokey was my favorite of the two because she had such a stronger personality, but now that we just have Bandit, I can't imagine ever loving her less. She is the sweetest, most stereotypical man's best friend ever and I've really seen her personality shine over the last year. She loved to kill small amphibians as a puppy (aka rat terrier) and she is named for the annoying habit she has of stealing people's socks.",
+            "shelterID": 1
+        }
+    ]
+}
