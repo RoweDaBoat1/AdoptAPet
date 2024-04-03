@@ -1,3 +1,6 @@
+const userUrl = "https://localhost:5016/api/users"
+const shelterUrl = "https://localhost:5016/api/shelters"
+
 function showSignupForm(userType) {
     if (userType === 'user') {
         window.location.href = 'user_signup.html'; // Redirect to user signup page
@@ -24,20 +27,18 @@ function handleOnLoad(){
 //USER FUNCTIONS
 async function handleAddUser(){
     let user = {
-        id: crypto.randomUUID(),
-        fullName: document.getElementById('name').value,
-        email: document.getElementById('userEmail').value,
-        addressLine: document.getElementById('userAddressLine').value,
-        city: document.getElementById('userCity').value,
-        state: document.getElementById('userState').value,
-        zip: document.getElementById('userZip').value,
-        password : document.getElementById('userPassword').value
+        userId: crypto.randomUUID(),
+        fullName: document.getElementById('fullName').value,
+        userEmail: document.getElementById('userEmail').value,
+        userPhone: document.getElementById('userPhone').value,
+        userZip: document.getElementById('userZip').value,
+        userPassword : document.getElementById('userPassword').value
     }
     await saveUser(user)
 }
 
 async function saveUser(user){
-    await fetch(url, {
+    await fetch(userUrl, {
             method: "POST",
             body: JSON.stringify(user),
             headers: {
@@ -47,7 +48,7 @@ async function saveUser(user){
 }
 //SHELTER FUNCTIONS
 async function getAllShelters(){
-    let response = await fetch(url)
+    let response = await fetch(shelterUrl)
     movies = await response.json()
     console.log(movies)
 }
@@ -98,8 +99,8 @@ async function populateShelterTable(){
 
 async function handleAddShelter(){
     let shelter = {
-        id: crypto.randomUUID(),
-        name: document.getElementById('shelterName').value,
+        //id: crypto.randomUUID(),
+        shelterName: document.getElementById('shelterName').value,
         email: document.getElementById('shelterEmail').value,
         phone: document.getElementById('shelterPhone').value,
         addressLine: document.getElementById('shelterAddressLine').value,
@@ -114,7 +115,7 @@ async function handleAddShelter(){
 }
 
 async function saveShelter(shelter){
-    await fetch(url, {
+    await fetch(shelterUrl, {
             method: "POST",
             body: JSON.stringify(shelter),
             headers: {
@@ -131,7 +132,7 @@ async function handleShelterApproval(id, button){
         console.log(shelter.approved)
     }
     //2 have put api method in backend that changes approved to opposite
-    await fetch(url + '/' +id,{
+    await fetch(shelterUrl + '/' +id,{
         method: "PUT",
         body: JSON.stringify(shelter),
         headers: {

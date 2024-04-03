@@ -1,0 +1,16 @@
+#imagePreview{
+    margin-top: 10px;
+}
+
+#imagePreview img{
+    max-width: 200px;
+    max-height: 200px;
+    margin-top: 10px;
+}
+
+#newListingForm input[type="text"],
+#newListingForm input[type="date"],
+#newListingForm input[type="number"],
+#newListingForm select {
+    margin-bottom: 10px; /* Add margin-bottom to create vertical padding */
+}
