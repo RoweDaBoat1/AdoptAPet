@@ -1,0 +1,13 @@
+{"users":[
+    {
+        "id": "1",
+        "fullName": "Mina Webster",
+        "email": "minawebster868@gmail.com",
+        "addressLine": "4936 Mtn View Pkwy",
+        "city": "Birmingham",
+        "state": "AL",
+        "zip": 35244,
+        "password": "321isStressful"
+    }
+  
+]}
