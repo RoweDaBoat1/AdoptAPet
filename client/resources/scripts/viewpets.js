@@ -14,7 +14,6 @@
         console.error('There was a problem fetching the data:', error);
       });
   }
-  
   function populateCards() {
     const petsContainer = document.querySelector('.pets');
   
@@ -23,10 +22,6 @@
         const petCard = document.createElement('div');
         petCard.classList.add('pet-card');
         petCard.setAttribute('onclick', `redirectToPetPage('${pet.Id}')`);
-  
-        const petImage = document.createElement('img');
-        petImage.src = pet.image;
-        petImage.alt = pet.name;
   
         const petInfo = document.createElement('div');
         petInfo.classList.add('pet-info');
@@ -49,12 +44,12 @@
   
         petInfo.appendChild(petName);
         petInfo.appendChild(genderSymbol);
-        petCard.appendChild(petImage);
         petCard.appendChild(petInfo);
         petCard.appendChild(favoriteButton);
         petsContainer.appendChild(petCard);
       });
     });
   }
+  
   
   document.addEventListener('DOMContentLoaded', populateCards);
