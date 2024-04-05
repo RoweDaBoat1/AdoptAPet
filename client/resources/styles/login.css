@@ -5,21 +5,13 @@
     box-sizing: border-box;
 }
 
-.container{
-    width:100%;
-    height: 100vh;
-    background-image: linear-gradient(rgba(0,0,50,0.8), rgba(0,0,50,0.8),url(https://pawderosaranch.com/wp-content/uploads/2017/02/Calm-Happy-Dogs.jpg));
-    background-position: center;
-    background-size: cover;
-    position:relative;
-}
 
 
 .card {
     border: 1px solid #ccc; /* Border color */
     border-radius: 8px; /* Rounded corners */
-    padding: 10px; /* Padding inside the card */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #shelterSignupForm input[type="text"],
@@ -41,3 +33,18 @@
     margin-bottom: 10px; /* Add margin-bottom to create vertical padding */
 }
 
+#customAmountInput {
+    display: none;
+    margin-top: 10px; /* Add margin-top to create space between custom input and dropdown */
+}
+
+.container {
+    height: 200px;
+    position: relative;
+  }
+
+  button {
+    position: sticky;
+    left: 50%;
+    transform: translateX(-50%);
+  }

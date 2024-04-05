@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Info</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href ="./resources/styles/login.css">
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body onload="handleOnLoad()">
+    <div class="container">
+        <div class="row">
+          <div class="col">
+          </div>
+          <div class="col-6">
+            <h2 style="text-align: center;">Profile Info</h2>
+          </div>
+          <div class="col">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+          </div>
+          <div class="col-5">
+            <table>
+                <tr>
+                    <td>First and Last Name:</td>
+                    <td id="fullName">John Doe</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td id="userEmail">johndoe@example.com</td>
+                </tr>
+                <tr>
+                    <td>Phone</td>
+                    <td id="userPhone">205-348-5656</td>
+                </tr>
+                <tr>
+                    <td>Zip/Postal Code</td>
+                    <td id="userZip">35487</td>
+                </tr>
+                <tr>
+                    <td>Password</td>
+                    <td id="userPassword">*********</td>
+                </tr>
+            </table>
+            <div class="container">
+                <button style="margin-top: 10px;" class="btn btn-primary" onclick="handleEdit()">Edit</button><br>
+                <button style="margin-top: 30px;" class="btn btn-primary"onclick="updateData()">Update</button>
+            </div>
+            <div class="container">
+
+            </div>
+          </div>
+          <div class="col">
+          </div>
+        </div>
+      </div>
+        <!-- <div id = "app" class = "center">
+        <div id ="profileTable"></div>
+    </div> -->
+    <script>
+        function handleEdit() {
+            document.getElementById('fullName').contentEditable = true
+            document.getElementById('userEmail').contentEditable = true
+            document.getElementById('userPhone').contentEditable = true
+            document.getElementById('userZip').contentEditable = true
+            document.getElementById('userPassword').contentEditable = true
+            
+        }
+
+        function updateData() {
+            var fullName = document.getElementById('fullName').innerText;
+            var userEmail = document.getElementById('userEmail').innerText;
+            var userPhone = document.getElementById('userPhone').innerText;
+            var userZip = document.getElementById('userZip').innerText;
+            var userPassword = document.getElementById('userPassword').innerText;
+
+            // Perform update operation, for example, send data to the server
+            console.log("Updated username:", username);
+            console.log("Updated email:", email);
+            // You can send this data to the server using AJAX or any other method
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!--<script src="./resources/scripts/createaccount.js"></script>-->
+    <script src="./resources/scripts/editprofile.js"></script>
+</body>
+</html>
