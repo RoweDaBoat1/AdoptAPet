@@ -1,6 +1,13 @@
 /bin/*
 /obj/*
 
+api/bin/
+
+bin
+obj
+
+
+
 *.log
 
 .vs/
