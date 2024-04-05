@@ -1,0 +1,62 @@
+/* Navbar */
+.navbar {
+    padding: 10px 0; 
+}
+
+.navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.navbar-nav .nav-link {
+    font-size: 18px;
+    color: #fff;
+}
+
+.navbar-toggler {
+    border: none; 
+}
+
+/* Banner */
+.banner {
+    background-image: url('/Users/maren_ohara/source/repos/321/group8/AdoptAPet/client/resources/styles/images/banner.jpg'); /* Replace 'banner.jpg' with your banner image URL */
+    background-size: cover;
+    height: 500px; 
+    color: #fff;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.banner h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.banner p {
+    font-size: 20px;
+}
+
+/* Container */
+.container {
+    padding: 20px;
+}
+
+.container h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.container p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+/* Footer */
+.footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}

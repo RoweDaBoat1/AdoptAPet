@@ -1,0 +1,14 @@
+.about-section {
+    margin-bottom: 40px;
+}
+
+.about-section h2 {
+    margin-bottom: 20px;
+}
+
+.about-image {
+    width: 100%;
+    max-width: 500px;
+    display: block;
+    margin: 20px auto;
+}
