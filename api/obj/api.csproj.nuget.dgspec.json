@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "/Users/rowe/Desktop/MIS/MIS_321/AAP_PROJECT/AdoptAPet/api/api.csproj": {}
   },
   "projects": {
@@ -15,6 +16,22 @@
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/rowe/.nuget/NuGet/NuGet.Config"
+=======
+    "C:\\Users\\Jacob\\source\\repos\\mis321\\AdoptAPet\\api\\api.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Jacob\\source\\repos\\mis321\\AdoptAPet\\api\\api.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Jacob\\source\\repos\\mis321\\AdoptAPet\\api\\api.csproj",
+        "projectName": "api",
+        "projectPath": "C:\\Users\\Jacob\\source\\repos\\mis321\\AdoptAPet\\api\\api.csproj",
+        "packagesPath": "C:\\Users\\Jacob\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Jacob\\source\\repos\\mis321\\AdoptAPet\\api\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Jacob\\AppData\\Roaming\\NuGet\\NuGet.Config"
+>>>>>>> main
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -82,7 +99,11 @@
               "privateAssets": "all"
             }
           },
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.400/RuntimeIdentifierGraph.json"
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+>>>>>>> main
         }
       }
     }
