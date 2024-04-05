@@ -1,9 +1,9 @@
-/bin/
-/obj/
+/bin/*
+/obj/*
 
 *.log
 
 .vs/
 *.suo
 
-node_modules/
+/node_modules/*
