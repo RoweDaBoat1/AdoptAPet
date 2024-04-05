@@ -29,13 +29,13 @@ namespace api.models
                     UserID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
                     Email = rdr.IsDBNull(1) ? null : rdr.GetString(1),
                     Username = rdr.IsDBNull(2) ? null : rdr.GetString(2),
-                    PasswordHash = rdr.IsDBNull(3) ? 0 : rdr.GetString(3),
+                    PasswordHash = rdr.IsDBNull(3) ? null : rdr.GetString(3),
                     FirstName = rdr.IsDBNull(4) ? null : rdr.GetString(4),
                     LastName = rdr.IsDBNull(5) ? null : rdr.GetString(5),
                     Address = rdr.IsDBNull(6) ? null : rdr.GetString(6),
                     PhoneNumber = rdr.IsDBNull(7) ? null : rdr.GetString(7),
-                    UserType = rdr.IsDBNull(8) ? null : rdr.GetString(8),
-                    FavoritePets = rdr.IsDBNull(9) ? null : rdr.GetString(9)
+                    // UserType = rdr.IsDBNull(8) ? null : rdr.GetString(8),
+                    FavoritePets = rdr.IsDBNull(9) ? null : rdr.GetString(8)
                 });
             }
 
@@ -59,16 +59,16 @@ namespace api.models
             rdr.Read();
             return new User()
                 {
-                     UserID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
+                    UserID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
                     Email = rdr.IsDBNull(1) ? null : rdr.GetString(1),
                     Username = rdr.IsDBNull(2) ? null : rdr.GetString(2),
-                    PasswordHash = rdr.IsDBNull(3) ? 0 : rdr.GetString(3),
+                    PasswordHash = rdr.IsDBNull(3) ? null : rdr.GetString(3),
                     FirstName = rdr.IsDBNull(4) ? null : rdr.GetString(4),
                     LastName = rdr.IsDBNull(5) ? null : rdr.GetString(5),
                     Address = rdr.IsDBNull(6) ? null : rdr.GetString(6),
                     PhoneNumber = rdr.IsDBNull(7) ? null : rdr.GetString(7),
-                    UserType = rdr.IsDBNull(8) ? null : rdr.GetString(8),
-                    FavoritePets = rdr.IsDBNull(9) ? null : rdr.GetString(9)
+                    // UserType = rdr.IsDBNull(8) ? null : rdr.GetString(8),
+                    FavoritePets = rdr.IsDBNull(9) ? null : rdr.GetString(8)
                 };
         }
     }

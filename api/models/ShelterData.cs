@@ -15,9 +15,9 @@ namespace api.models
         public string Phone_Number{get;set;}
         public string Email {get;set;}
         public string Shelter_Name{get;set;}
-        public static string UserType = "Shelter";
-        public int Pets_For_Adoption {get;set;}
-        public int Pets_Adopted {get;set;}
+        // public static string UserType = "Shelter";
+        public string Pets_For_Adoption {get;set;}
+        public string Pets_Adopted {get;set;}
         public string Message_From_User {get;set;}
         public string Approval_Status {get;set;}
     }
