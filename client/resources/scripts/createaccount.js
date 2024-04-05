@@ -9,6 +9,16 @@ function showSignupForm(userType) {
     }
 }
 
+ function handleUButtonClick(){
+    handleAddUser()
+    window.location.href = "../../login.html"
+}
+
+function handleSButtonClick(){
+    handleAddShelter()
+    window.location.href = "../../login.html"
+}
+
 function login() {
     var email = document.getElementById('email').value;
     var password = document.getElementById('password').value;
@@ -23,6 +33,7 @@ function login() {
 
 function handleOnLoad(){
     populateShelterTable()
+    populateAppShelterTable()
 }
 //USER FUNCTIONS
 async function handleAddUser(){
@@ -49,8 +60,8 @@ async function saveUser(user){
 //SHELTER FUNCTIONS
 async function getAllShelters(){
     let response = await fetch(shelterUrl)
-    movies = await response.json()
-    console.log(movies)
+    shelters = await response.json()
+    console.log(shelters)
 }
 
 async function populateShelterTable(){
@@ -94,6 +105,43 @@ async function populateShelterTable(){
     </table>
     `
     document.getElementById('shelterTable').innerHTML = html
+}
+
+async function populateAppShelterTable(){
+    await getAllShelters()
+    // Filter shelters to get only approved ones
+    let approvedShelters = shelters.filter(shelter => shelter.approved)
+    let html = `
+    <table class="table table-striped">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Address Line</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zip Code</th>
+            <th>Approve Account</th>
+        </tr>`;
+    approvedShelters.forEach(function(shelter){
+        html += `
+        <tr>
+            <td>${shelter.id}</td>
+            <td>${shelter.name}</td>
+            <td>${shelter.email}</td>
+            <td>${shelter.phone}</td>
+            <td>${shelter.addressLine}</td>
+            <td>${shelter.city}</td>
+            <td>${shelter.state}</td>
+            <td>${shelter.zip}</td>
+            <td><button class="btn btn-link" onclick="handleShelterApproval('${shelter.id}', this)"><i class="far fa-check-square" style="color: green;"></i></button></td>
+        </tr>`;
+    });
+    
+    html += `
+    </table>`;
+    document.getElementById('appShelterTable').innerHTML = html;
 }
 
 
@@ -180,73 +228,73 @@ function signup(userType) {
 }
 
 
-function signup(userType) {
-    var userData = {}
+// function signup(userType) {
+//     var userData = {}
 
-    // Collect common fields
-    userData.id = crypto.randomUUID()
-    userData.email = document.getElementById(userType + 'Email').value
-    userData.addressLine = document.getElementById(userType + 'AddressLine').value
-    userData.city = document.getElementById(userType + 'City').value
-    userData.state = document.getElementById(userType + 'State').value
-    userData.zip = document.getElementById(userType + 'Zip')
-    userData.password = document.getElementById(userType + 'Password').value
+//     // Collect common fields
+//     userData.id = crypto.randomUUID()
+//     userData.email = document.getElementById(userType + 'Email').value
+//     userData.addressLine = document.getElementById(userType + 'AddressLine').value
+//     userData.city = document.getElementById(userType + 'City').value
+//     userData.state = document.getElementById(userType + 'State').value
+//     userData.zip = document.getElementById(userType + 'Zip')
+//     userData.password = document.getElementById(userType + 'Password').value
 
-    // Collect user type-specific fields
-    if (userType === 'user') {
-        userData.fullName = document.getElementById('name').value
-    } else if (userType === 'shelter') {
-        userData.shelterName = document.getElementById('shelterName').value
-        userData.phone = document.getElementById('shelterPhone').value
+//     // Collect user type-specific fields
+//     if (userType === 'user') {
+//         userData.fullName = document.getElementById('name').value
+//     } else if (userType === 'shelter') {
+//         userData.shelterName = document.getElementById('shelterName').value
+//         userData.phone = document.getElementById('shelterPhone').value
         
-    }
-    // Perform signup logic here based on user type
-    const express = require('express');
-    const bodyParser = require('body-parser');
-    const app = express();
-    const port = 3000;
+//     }
+//     // Perform signup logic here based on user type
+//     const express = require('express');
+//     const bodyParser = require('body-parser');
+//     const app = express();
+//     const port = 3000;
 
-    // Dummy database
-    let users = [];
+//     // Dummy database
+//     let users = [];
 
-    app.use(bodyParser.json());
+//     app.use(bodyParser.json());
 
-    // Signup endpoint
-    app.post('/signup', (req, res) => {
-        const { email, password, userType } = req.body;
-        let additionalData = {};
-        // Additional data specific to user type
-        if (userType === 'user') {
-            const { fullName, city, state } = req.body;
-            additionalData = { fullName, city, state };
-        } else if (userType === 'admin') {
-            const { shelterName, phone, address } = req.body;
-            additionalData = { shelterName, phone, address };
-        }
-        // Validate signup data (e.g., check for required fields)
-        if (!email || !password) {
-            return res.status(400).json({ error: 'Email and password are required' });
-        }
-        // Check if the email is already registered
-        if (users.some(user => user.email === email)) {
-            return res.status(400).json({ error: 'Email is already registered' });
-        }
-        // Perform signup
-        const newUser = {
-            email,
-            password,
-            userType,
-            ...additionalData,
-            approved: userType === 'admin' ? false : true // Set approval status for admin accounts
-        };
-        users.push(newUser);
-        // Optionally, you can send a confirmation email or perform other actions here
-        res.status(201).json({ message: 'Signup successful', user: newUser });
-    });
+//     // Signup endpoint
+//     app.post('/signup', (req, res) => {
+//         const { email, password, userType } = req.body;
+//         let additionalData = {};
+//         // Additional data specific to user type
+//         if (userType === 'user') {
+//             const { fullName, city, state } = req.body;
+//             additionalData = { fullName, city, state };
+//         } else if (userType === 'admin') {
+//             const { shelterName, phone, address } = req.body;
+//             additionalData = { shelterName, phone, address };
+//         }
+//         // Validate signup data (e.g., check for required fields)
+//         if (!email || !password) {
+//             return res.status(400).json({ error: 'Email and password are required' });
+//         }
+//         // Check if the email is already registered
+//         if (users.some(user => user.email === email)) {
+//             return res.status(400).json({ error: 'Email is already registered' });
+//         }
+//         // Perform signup
+//         const newUser = {
+//             email,
+//             password,
+//             userType,
+//             ...additionalData,
+//             approved: userType === 'admin' ? false : true // Set approval status for admin accounts
+//         };
+//         users.push(newUser);
+//         // Optionally, you can send a confirmation email or perform other actions here
+//         res.status(201).json({ message: 'Signup successful', user: newUser });
+//     });
 
-    app.listen(port, () => console.log(`Server running on port ${port}`));
+//     app.listen(port, () => console.log(`Server running on port ${port}`));
 
-    console.log('Signing up as', userType, 'with username:', email, 'and password:', password);
-}
+//     console.log('Signing up as', userType, 'with username:', email, 'and password:', password);
+// }
 
 

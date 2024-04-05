@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donate</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href ="./resources/styles/login.css">
 </head>
 <body onload="handleOnLoad()">
     <div class="container">
@@ -23,40 +24,28 @@
             Every donation to an animal shelter is a lifeline for the animals in need. Your generosity ensures that furry friends nationwide receive the care, love, and second chance they deserve. From providing food and shelter to offering medical attention and rehabilitation, your contribution directly transforms the lives of abandoned, abused, and neglected animals. Your donation isn't just a gift; it's a promise of a brighter future for these animals. Join us in our mission to provide compassion and care to those who need it most. Together, we can create a world where every animal is valued and cherished.
           </div>
           <div class="col-5">
-            <form onsubmit = "return false" style="text-align: center;">
-                <label for = "shelterName">Select Shelter</label><br>
-                    <select name="shelterName" id="shelterName">
-                        <option value="null">-</option>
-                        <option value="schc">Shelby County HC</option>
-                        <option value="tmac">Tuscaloosa Metro AC</option>
-                        <option value="more">another shelter</option>
-                        <option value="evenmore">and yet another</option>
-                    </select><br>
-                <label for = "name">Full Name</label><br>
-                <input type = "text" id = "name" name = "name"><br>
-                <label for = "email">Email</label><br>
-                <input type = "email" id = "email" name = "email"><br>
-                <label for="donation">Donation Amount:</label><br>
-                    <select name="donation" id="donation">
-                        <option value="null">-</option>
-                        <option value="10">$10</option>
-                        <option value="25">$25</option>
-                        <option value="50">$50</option>
-                        <option value="100">$100</option>
-                    </select><br>
-                <label for = "anonymous">Donate Anonymously?</label><br>
-                    <input type="radio" id="anon" name="anonymous" value=true>
-                    <label for="html">Yes</label>
-                    <input type="radio" id="anon" name="anonymous" value=false>
-                    <label for="css">No</label><br>
-                <button style="margin-top: 10px;" class="btn btn-primary" onclick="window.location.href='https&#58;&#47;&#47;www.metroanimalshelter.org/donate'">Proceed to Payment</button>
-            </form>
+            <div id="app"></div>
           </div>
           <div class="col">
             <img src="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*6RpjMuKQEiO6mu8kG1BZqA.jpeg" alt="Kitten playing" width="400" height="400">
           </div>
         </div>
-      </div>
+    </div> 
+    <!-- <script>
+        function handleChange(donation) {
+            var selectedValue = donation.value;
+            if (selectedValue === "custom") {
+                // Show the custom input field or perform any other action
+                document.getElementById("customAmountInput").style.display = "block";
+            } else {
+                // Hide the custom input field or perform any other action
+                document.getElementById("customAmountInput").style.display = "none";
+            }
+        }
+    </script> -->
+         
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="./resources/scripts/createaccount.js"></script>
+    <script src="./resources/scripts/donate.js"></script>
 </body>
 </html>
