@@ -6,8 +6,34 @@
     <title>Create User Account</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href ="./resources/styles/login.css">
+    <link rel="stylesheet" href="./resources/styles/navbar.css">
 </head>
 <body>
+  <nav class="navbar navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="#">Adopt A Pet</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav mr-auto">
+    <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    See More!
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+    <a href="/Users/maren_ohara/source/repos/321/group8/AdoptAPet/client/homepage.html">Home Page</a>
+    <br>
+    <a href="/Users/maren_ohara/source/repos/321/group8/AdoptAPet/client/aboutus.html">About Us</a>
+    <br>
+    <a href="/Users/maren_ohara/source/repos/321/group8/AdoptAPet/client/donation.html">Donate</a>
+    </div>
+    </li>
+    </ul>
+    </div>
+    <div class="login ml-auto">
+    <button class="btn btn-primary" onclick="window.location.href = 'login.html'">Login</button>
+    </div>
+    </nav>
     <div class="container">
         <div class="row">
           <div class="col">
@@ -24,12 +50,12 @@
             <form onsubmit="return false">
             <div id="userSignupForm" style="display: none;" class="card">
                 <h3>Create User Account</h3>
-                <label for = "data">Personal Info</label><br>
+                <!-- <label for = "data">Personal Info</label><br> -->
                 <input type="text" id="fullName" placeholder="First and Last Name" required><br>
                 <input type="email" id="userEmail" placeholder="Email" required><br>
                 <input type="text" id="userPhone" placeholder="Phone Number" required><br>
                 <input type="number" id="userZip" placeholder="Zip/Postal Code" required><br>
-                <label for = "password">Password</label><br>
+                <label for = "userPassword">Password</label><br>
                 <input type="password" id="userPassword" placeholder="New Password" required><br>
                 <!-- <button onclick="signup('user')">Sign Up</button> -->
                 <button style="margin-top: 10px;" class="btn btn-primary" onclick="handleUButtonClick()">Create Account</button>
@@ -51,6 +77,15 @@
             // Handle invalid or unknown userType
         }
     </script>
+    <script>
+      const apiUrls = {
+        baseurl: 'https://localhost:5016/api',
+        petUrl: 'https://localhost:5016/api/pets',
+        shelterUrl: 'https://localhost:5016/api/shelters',
+        userUrl: 'https://localhost:5016/api/users',
+        donationUrl: 'https://localhost:5016/api/donations'
+      };
+  </script> 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="./resources/scripts/createaccount.js"></script>
 </body>
