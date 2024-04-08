@@ -12,23 +12,31 @@ namespace api.models
     public class SaveUser : IInsertUser
     {
         public void InsertUser(User value){
+
+            // Hash the password using PasswordHasher class
+            string salt;
+            string hashedPassword = PasswordHasher.HashPassword(value.PasswordHash, out salt);
+
             ConnectionString myConnection = new ConnectionString();
             string cs = myConnection.cs;
+
             using var con = new MySqlConnection(cs);
             con.Open();
 
             using var cmd = new MySqlCommand(cs);
 
-            cmd.CommandText = @"INSET INTO User(UserId, Email, Username, PasswordHash, FirstName, LastName, Address, PhoneNumber, UserType, FavoritePets) VALUES(@UserId, @Email, @Username, @PasswordHash, @FirstName, @LastName, @Address, @PhoneNumber, @UserType, @FavoritePets))";
+            cmd.Connection = con;
+            cmd.CommandText = @"INSERT INTO Users(UserId, Email, Username, PasswordHash, Salt, FirstName, LastName, Address, PhoneNumber, Role, FavoritePets) VALUES(@UserId, @Email, @Username, @PasswordHash, @Salt, @FirstName, @LastName, @Address, @PhoneNumber, @Role, @FavoritePets)";
             cmd.Parameters.AddWithValue("@UserId", value.UserID);
             cmd.Parameters.AddWithValue("@Email", value.Email);
             cmd.Parameters.AddWithValue("@UserName", value.Username);
-            cmd.Parameters.AddWithValue("@PasswordHash", value.PasswordHash);
+            cmd.Parameters.AddWithValue("@PasswordHash", hashedPassword); // Use hashed password
+            cmd.Parameters.AddWithValue("@Salt", salt); // Store salt in the database
             cmd.Parameters.AddWithValue("@FirstName", value.FirstName);
             cmd.Parameters.AddWithValue("@LastName", value.LastName);
             cmd.Parameters.AddWithValue("@Address", value.Address);
             cmd.Parameters.AddWithValue("@PhoneNumber", value.PhoneNumber);
-            // cmd.Parameters.AddWithValue("@UserType", value.UserType);
+            cmd.Parameters.AddWithValue("@Role", value.UserType);
             cmd.Parameters.AddWithValue("@FavoritePets", value.FavoritePets);
             cmd.Prepare();
             cmd.ExecuteNonQuery();

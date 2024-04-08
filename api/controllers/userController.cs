@@ -26,11 +26,12 @@ namespace api.Controllers
         // GET: api/Users/5
         [EnableCors("OpenPolicy")]
         [HttpGet("{id}", Name = "GetUserByID")]
-        public User GetUserByID(int ID)
+        public User GetUserByID(int id)  // Change parameter name to 'id'
         {
             IGetUser readObject = new ReadUserData();
-            return readObject.GetUser(ID);
+            return readObject.GetUser(id);  // Use the 'id' parameter to get the user
         }
+
 
         // POST: api/Users
         [EnableCors("OpenPolicy")]
