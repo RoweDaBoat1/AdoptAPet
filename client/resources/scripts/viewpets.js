@@ -1,53 +1,57 @@
-function fetchData() {
-  return fetch('http://localhost:5016/api/pets')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then(data => {
-      return data; // No need to access 'pets' array as it seems the data already contains pets
-    })
-    .catch(error => {
-      console.error('There was a problem fetching the data:', error);
-    });
+const apiUrl = 'http://localhost:5016/api/pets';
+
+async function fetchData() {
+  const response = await fetch(apiUrl)
+  const data = response.json()
+  return data
+
+    // .then(response => {
+    //   if (!response.ok) {
+    //     throw new Error('Network response was not ok');
+    //   }
+    //   return response.json();
+    // })
+    // .then(data => {
+    //   return data; 
+    // })
+    // .catch(error => {
+    //   console.error('There was a problem fetching the data:', error);
+    // });
 }
 
-function populateCards() {
+async function populateCards() {
   const petsContainer = document.querySelector('.pets');
 
-  fetchData().then(pets => {
-    pets.forEach(pet => {
-      const petCard = document.createElement('div');
-      petCard.classList.add('pet-card');
-      petCard.setAttribute('onclick', `redirectToPetPage('${pet.petID}')`);
+  pets = await fetchData()
+  pets.forEach(pet => {
+    const petCard = document.createElement('div');
+    petCard.classList.add('pet-card');
+    petCard.setAttribute('onclick', `redirectToPetPage('${pet.petID}')`);
 
-      const petInfo = document.createElement('div');
-      petInfo.classList.add('pet-info');
+    const petInfo = document.createElement('div');
+    petInfo.classList.add('pet-info');
 
-      const petName = document.createElement('p');
-      petName.classList.add('pet-name');
-      petName.textContent = pet.name;
+    const petName = document.createElement('p');
+    petName.classList.add('pet-name');
+    petName.textContent = pet.name;
 
-      const genderSymbol = document.createElement('span');
-      genderSymbol.classList.add('gender-symbol');
-      genderSymbol.textContent = pet.gender === 'Female' ? '♀' : '♂';
+    const petBreed = document.createElement('p');
+    petBreed.classList.add('pet-breed');
+    petBreed.textContent = `Breed: ${pet.breed}`;
 
-      const favoriteButton = document.createElement('span');
-      favoriteButton.classList.add('favorite');
-      favoriteButton.textContent = '★';
-      favoriteButton.addEventListener('click', event => {
-        event.stopPropagation(); 
-        toggleFavorite(event);
-      });
+    const petAge = document.createElement('p');
+    petAge.classList.add('pet-age');
+    petAge.textContent = `Age: ${pet.age}`;
 
-      petInfo.appendChild(petName);
-      petInfo.appendChild(genderSymbol);
-      petCard.appendChild(petInfo);
-      petCard.appendChild(favoriteButton);
-      petsContainer.appendChild(petCard);
-    });
+    const petGender = document.createElement('p');
+    petGender.classList.add('pet-gender');
+    petGender.textContent = `Gender: ${pet.gender}`;
+
+    petInfo.appendChild(petName);
+    petInfo.appendChild(petBreed);
+    petInfo.appendChild(petAge);
+    petInfo.appendChild(petGender);
+    petsContainer.appendChild(petCard);
   });
 }
 
