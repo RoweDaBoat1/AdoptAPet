@@ -6,7 +6,7 @@ api/bin/
 bin
 obj
 
-
+.DS_Store
 
 *.log
 
