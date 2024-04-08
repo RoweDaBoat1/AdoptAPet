@@ -33,21 +33,39 @@ namespace api.Controllers
         }
 
         // POST: api/pets
+        [EnableCors("OpenPolicy")]
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] Pet value)
         {
+            IInsertPet insertObject = new SavePet();
+            insertObject.InsertPet(value);
         }
 
         // PUT: api/pets/5
+        [EnableCors("OpenPolicy")]
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] Pet updatedPet)
         {
+            if (id != updatedPet.PetID)
+            {
+                return BadRequest();
+            }
+
+            IUpdatePet updateObject = new UpdatePetData();
+            updateObject.UpdatePet(id, updatedPet);
+
+            return NoContent();
         }
 
         // DELETE: api/pets/5
+        [EnableCors("OpenPolicy")]
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            IDeletePet deleteObject = new DeletePetData();
+            deleteObject.DeletePet(id);
+
+            return NoContent();
         }
     }
 }

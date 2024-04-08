@@ -42,15 +42,30 @@ namespace api.Controllers
         }
 
         // PUT: api/Users/5
+        [EnableCors("OpenPolicy")]
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] User updatedUser)
         {
+            if (id != updatedUser.UserID)
+            {
+                return BadRequest();
+            }
+
+            IUpdateUser updateObject = new UpdateUserData();
+            updateObject.UpdateUser(id, updatedUser);
+
+            return NoContent();
         }
 
         // DELETE: api/Users/5
+        [EnableCors("OpenPolicy")]
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int ID)
         {
+            IDeleteUser deleteObject = new DeleteUserData();
+            deleteObject.DeleteUser(ID);
+
+            return NoContent();
         }
     }
 }

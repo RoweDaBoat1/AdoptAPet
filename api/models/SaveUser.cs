@@ -19,7 +19,7 @@ namespace api.models
 
             using var cmd = new MySqlCommand(cs);
 
-            cmd.CommandText = @"INSET INTO User(UserId, Email, Username, PasswordHash, FirstName, LastName, Address, PhoneNumber, UserType, FavoritePets) VALUES(@UserId, @Email, @Username, @PasswordHash, @FirstName, @LastName, @Address, @PhoneNumber, @UserType, @FavoritePets))";
+            cmd.CommandText = @"INSET INTO User(UserId, Email, Username, PasswordHash, FirstName, LastName, Address, PhoneNumber, FavoritePets) VALUES(@UserId, @Email, @Username, @PasswordHash, @FirstName, @LastName, @Address, @PhoneNumber, @FavoritePets))";
             cmd.Parameters.AddWithValue("@UserId", value.UserID);
             cmd.Parameters.AddWithValue("@Email", value.Email);
             cmd.Parameters.AddWithValue("@UserName", value.Username);
@@ -32,7 +32,6 @@ namespace api.models
             cmd.Parameters.AddWithValue("@FavoritePets", value.FavoritePets);
             cmd.Prepare();
             cmd.ExecuteNonQuery();
-            
         }
     }
 }
