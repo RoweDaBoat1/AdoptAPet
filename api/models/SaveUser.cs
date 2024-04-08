@@ -40,7 +40,6 @@ namespace api.models
             cmd.Parameters.AddWithValue("@FavoritePets", value.FavoritePets);
             cmd.Prepare();
             cmd.ExecuteNonQuery();
-            
         }
     }
 }
