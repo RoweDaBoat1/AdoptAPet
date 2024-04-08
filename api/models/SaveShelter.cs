@@ -19,7 +19,7 @@ namespace api.models
 
             using var cmd = new MySqlCommand(cs);
 
-            cmd.CommandText = @"INSET INTO Shelter(ShelterId, Username, PasswordHash, Pets_Uploaded, Address, PhoneNumber, Email, Shelter_Name, UserType, Pets_For_Adoption, Pets_Adopted, Message_From_User, Approval_Status) VALUES(@ShelterId, @Username, @PasswordHash, @Pets_Uploaded, @Address, @PhoneNumber, @Email, @Shelter_Name, @UserType, @Pets_For_Adoption, @Pets_Adopted, @Message_From_User, @Approval_Status))";
+            cmd.CommandText = @"INSET INTO Shelter(ShelterId, Username, PasswordHash, Pets_Uploaded, Address, PhoneNumber, Email, Shelter_Name, Pets_For_Adoption, Pets_Adopted, Message_From_User, Approval_Status) VALUES(@ShelterId, @Username, @PasswordHash, @Pets_Uploaded, @Address, @PhoneNumber, @Email, @Shelter_Name, @Pets_For_Adoption, @Pets_Adopted, @Message_From_User, @Approval_Status))";
             cmd.Parameters.AddWithValue("@ShelterId", value.ShelterID);
             cmd.Parameters.AddWithValue("@Username", value.Username);
             cmd.Parameters.AddWithValue("@PasswordHash", value.PasswordHash);

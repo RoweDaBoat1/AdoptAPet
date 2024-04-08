@@ -42,15 +42,30 @@ namespace api.Controllers
         }
 
         // PUT: api/Shelters/5
+        [EnableCors("OpenPolicy")]
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] Shelter updatedShelter)
         {
+            if (id != updatedShelter.ShelterID)
+            {
+                return BadRequest();
+            }
+
+            IUpdateShelter updateObject = new UpdateShelterData();
+            updateObject.UpdateShelter(id, updatedShelter);
+
+            return NoContent();
         }
 
         // DELETE: api/Shelters/5
+        [EnableCors("OpenPolicy")]
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            IDeleteShelter deleteObject = new DeleteShelterData();
+            deleteObject.DeleteShelter(id);
+
+            return NoContent();
         }
     }
 }
