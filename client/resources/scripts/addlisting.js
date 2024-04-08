@@ -1,4 +1,7 @@
-const petUrl = "https://localhost:5016/api/pets"
+//const petUrl = "https://localhost:5016/api/pets"
+
+const petUrl = apiUrls.petUrl
+
 let pets = []
 
 const imageUpload = document.getElementById('imageUpload')
@@ -167,7 +170,7 @@ async function handlePetAdoption(id, button){
         console.log(pet.adopted)
     }
     //2
-    await fetch(url + '/' +id,{
+    await fetch(petUrl + '/' +id,{
         method: "PUT",
         body: JSON.stringify(pet),
         headers: {
