@@ -1,0 +1,18 @@
+.navbar {
+    padding: 10px 0;
+}
+.navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+}
+.navbar-nav .nav-link {
+    font-size: 18px;
+    color: #fff;
+}
+.navbar-toggler {
+    border: none;
+}
+
+body {
+    padding-top: 76px; /* Adjust the value based on your navbar's height */
+}

@@ -38,13 +38,12 @@
     margin-top: 10px; /* Add margin-top to create space between custom input and dropdown */
 }
 
-.container {
-    height: 200px;
-    position: relative;
+.button-container {
+    display: flex;
+    justify-content:center;
+    margin-top: 20px;
   }
 
-  button {
-    position: sticky;
-    left: 50%;
-    transform: translateX(-50%);
+.button-container button {
+    margin: 0 10px;
   }

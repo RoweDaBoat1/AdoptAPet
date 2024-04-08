@@ -1,49 +1,55 @@
-const userUrl = "https://localhost:5016/api/users"
-const shelterUrl = "https://localhost:5016/api/shelters"
+// import ApiUrls from './apiUrls.js';
+// const apiUrls = new ApiUrls();
 
-function showSignupForm(userType) {
-    if (userType === 'user') {
-        window.location.href = 'user_signup.html'; // Redirect to user signup page
-    } else if (userType === 'shelter') {
-        window.location.href = 'shelter_signup.html'; // Redirect to shelter signup page
-    }
+// const shelterUrl = "https://localhost:5016/api/shelters"
+// const userUrl = "https://localhost:5016/api/users"
+
+const shelterUrl = apiUrls.shelterUrl
+const userUrl = apiUrls.userUrl
+
+async function handleUButtonClick(){
+    await handleAddUser()
+    window.location.href = "login.html"
 }
 
- function handleUButtonClick(){
-    handleAddUser()
-    window.location.href = "../../login.html"
+async function handleSButtonClick(){
+    await handleAddShelter()
+    window.location.href = "login.html"
 }
 
-function handleSButtonClick(){
-    handleAddShelter()
-    window.location.href = "../../login.html"
-}
+// function login() {
+//     var email = document.getElementById('email').value;
+//     var password = document.getElementById('password').value;
 
-function login() {
-    var email = document.getElementById('email').value;
-    var password = document.getElementById('password').value;
+//     if(email == "admin@aap.org" && password == "w00fme0w"){
+//         userType = 'admin'
+//     }
+//     // Perform login authentication here
+//     showSuccessMessage('Login successful!'); // You can customize the message
+//     console.log('Logging in with email:', email, 'and password:', password);
+// }
 
-    if(email == "admin@aap.org" && password == "w00fme0w"){
-        userType = 'admin'
-    }
-    // Perform login authentication here
-    showSuccessMessage('Login successful!'); // You can customize the message
-    console.log('Logging in with email:', email, 'and password:', password);
-}
-
-function handleOnLoad(){
-    populateShelterTable()
-    populateAppShelterTable()
+async function handleOnLoad(){
+    await populateShelterTable()
+    await populateAppShelterTable()
 }
 //USER FUNCTIONS
 async function handleAddUser(){
     let user = {
+        //username, passwordHash, fname, lname, address, role, and favorite pets are temporary
         userId: crypto.randomUUID(),
-        fullName: document.getElementById('fullName').value,
         userEmail: document.getElementById('userEmail').value,
-        userPhone: document.getElementById('userPhone').value,
-        userZip: document.getElementById('userZip').value,
-        userPassword : document.getElementById('userPassword').value
+        username: "test",
+        passwordHash: "1234",
+        firstName: "John",
+        lastName: "Doe",
+        Address: "123 Dirt Rd",
+        //fullName: document.getElementById('fullName').value,
+        phoneNumber: document.getElementById('userPhone').value,
+        //userZip: document.getElementById('userZip').value,
+        //userPassword : document.getElementById('userPassword').value
+        role: "user",
+        favoritePets: 0
     }
     await saveUser(user)
 }
@@ -59,15 +65,13 @@ async function saveUser(user){
 }
 //SHELTER FUNCTIONS
 async function getAllShelters(){
-    let response = await fetch(shelterUrl)
+    let response = await fetch(userUrl)
     shelters = await response.json()
     console.log(shelters)
 }
 
 async function populateShelterTable(){
     await getAllShelters()
-    //change sort to have approved=false at top
-    sortTable()
     let html = `
     <table class = "table table-striped">
         <tr>
@@ -198,34 +202,34 @@ async function handleShelterApproval(id, button){
 }
 
 // Function to display success message
-function showSuccessMessage(message) {
-    var modal = document.createElement('div');
-    modal.className = 'success-modal';
-    modal.innerHTML = `
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Success!</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>${message}</p>
-                </div>
-            </div>
-        </div>
-    `;
-    document.body.appendChild(modal);
-    setTimeout(function() {
-        modal.remove();
-    }, 3000);
-}
+// function showSuccessMessage(message) {
+//     var modal = document.createElement('div');
+//     modal.className = 'success-modal';
+//     modal.innerHTML = `
+//         <div class="modal-dialog">
+//             <div class="modal-content">
+//                 <div class="modal-header">
+//                     <h5 class="modal-title">Success!</h5>
+//                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+//                 </div>
+//                 <div class="modal-body">
+//                     <p>${message}</p>
+//                 </div>
+//             </div>
+//         </div>
+//     `;
+//     document.body.appendChild(modal);
+//     setTimeout(function() {
+//         modal.remove();
+//     }, 3000);
+// }
 
 // Example function for signup
-function signup(userType) {
+//function signup(userType) {
     // Perform signup process
     // If signup is successful, show success message
-    showSuccessMessage('Signup successful!'); // You can customize the message
-}
+    //showSuccessMessage('Signup successful!'); // You can customize the message
+//}
 
 
 // function signup(userType) {

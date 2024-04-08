@@ -1,68 +1,102 @@
 //const userUrl = "https://localhost:5016/api/users"
 
-// function handleOnLoad(){
-//     let html = `
-//     <div id= "petTable"></div>`
-//     document.getElementById('app').innerHTML = html
-//     populateTable()
-// }
+//just for testing
+const users = [
+    { fullName: 'John Doe', userEmail: 'john@example.com', phoneNumber: '1234567890', userZip: '12345', userPassword: 'password' }
+]
+
+function handleOnLoad(){
+    populateTable(users)
+}
 
 // //function to see who is logged in and retrieve their data
 
-// function populateTable(){
-// //above function
-//     let html = `
-//         <table>
-//             <tr>
-//                 <th>Account Info</th>
-//                 <th></th>
-//             </tr>
-//             <tr>
-//                 <td>First and Last Name:</td>
-//                 <td id="fullName">John Doe</td>
-//             </tr>
-//             <tr>
-//                 <td>Email</td>
-//                 <td id="userEmail">johndoe@example.com</td>
-//             </tr>
-//             <tr>
-//                 <td>Phone</td>
-//                 <td id="userPhone">205-348-5656</td>
-//             </tr>
-//             <tr>
-//                 <td>Zip/Postal Code</td>
-//                 <td id="userZip">35487</td>
-//             </tr>
-//             <tr>
-//                 <td>Password</td>
-//                 <td id="userPassword">*********</td>
-//             </tr>
-//         </table>
-//         <button onclick="handleEdit()">Edit</button>
-//     `
-//     document.getElementById('userTable').innerHTML = html
-// }
 
-// function handleEdit(user){
-//     let html = `
-//         <h1> Annes user Adoption Agency</h1>
-//         <form onsubmit = "return false">
-//             <label for = "data">Personal Info</label><br>
-//             <input type="text" id="fullName" placeholder="First and Last Name" required><br>
-//             <input type="email" id="userEmail" placeholder="Email" required><br>
-//             <input type="text" id="userPhone" placeholder="Phone Number" required><br>
-//             <input type="number" id="userZip" placeholder="Zip/Postal Code" required><br>
-//             <label for = "password">Password</label><br>
-//             <input type="password" id="userPassword" placeholder="New Password" required><br>
-//             <button style = "margin-top: 10px;" class = "btn btn-primary" onclick = handleUpdateUser('${user.id}')>Update</button>    
-//         </form>`
-//     document.getElementById('app').innerHTML = html
-//     document.getElementById('fullName').innerHTML = user.fullName
-//     document.getElementById('userEmail').innerHTML = user.email
-//     document.getElementById('userPhone').innerHTML = user.phone
-//     document.getElementById('userZip').innerHTML = user.zip
-//     document.getElementById('userPassword').innerHTML = user.password
-// }
+function populateTable(users) {
+    let html = `
+        <table id="userTable">
+            <tr>
+                <th>Account Info</th>
+                <th></th>
+            </tr>`;
+
+    users.forEach(function(user) {
+        html += `
+            <tr>
+                <td>First and Last Name:</td>
+                <td><span id="fullName">${user.fullName}</span></td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td><span id="email">${user.userEmail}</span></td>
+            </tr>
+            <tr>
+                <td>Phone:</td>
+                <td><span id="phone">${user.phoneNumber}</span></td>
+            </tr>
+            <tr>
+                <td>Zip/Postal Code:</td>
+                <td><span id="zip">${user.userZip}</span></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><span id="password">${user.userPassword}</span></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button class="btn btn-primary" onclick="toggleEdit()">Edit</button>
+                    <button class="btn btn-primary" onclick="saveChanges()">Save</button>
+                </td>
+            </tr>`;
+    });
+
+    html += `
+        </table>`;
+
+    document.getElementById('userTableContainer').innerHTML = html;
+}
+
+function toggleEdit() {
+    const cells = document.querySelectorAll('#userTable span');
+    cells.forEach(function(cell) {
+        const input = document.createElement('input');
+        input.value = cell.innerText;
+        cell.innerHTML = '';
+        cell.appendChild(input);
+    });
+}
+
+async function saveChanges() {
+    const cells = document.querySelectorAll('#userTable span');
+    cells.forEach(function(cell) {
+        const input = cell.querySelector('input');
+        if (input) {
+            cell.innerText = input.value;
+        }
+    });
+
+    await fetch(userUrl + '/' + user.id,{
+        method: "PUT",
+        body: JSON.stringify(user),
+        headers: {
+            "Content-type" : "application/json; charset=UTF-8"
+        }
+    })
+    // Send the updated data to the server for saving
+    // You can implement the fetch call to update the database here
+    // Example:
+    // fetch('/updateUser', {
+    //     method: 'POST',
+    //     body: JSON.stringify(userData),
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     }
+    // }).then(response => {
+    //     // Handle response
+    // }).catch(error => {
+    //     // Handle error
+    // });
+}
 
 // async function handleUpdateUser(id){
 //     let user = {
