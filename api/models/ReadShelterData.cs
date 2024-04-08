@@ -29,17 +29,15 @@ namespace api.models
                 allShelters.Add(new Shelter()
                 {
                     ShelterID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
-                    Username = rdr.IsDBNull(1) ? null : rdr.GetString(1),
-                    PasswordHash = rdr.IsDBNull(2) ? null : rdr.GetString(2),
-                    Pets_Uploaded = rdr.IsDBNull(3) ? 0 : rdr.GetInt32(3),
-                    Address = rdr.IsDBNull(4) ? null : rdr.GetString(4),
-                    Phone_Number = rdr.IsDBNull(5) ? null : rdr.GetString(5),
-                    Email = rdr.IsDBNull(6) ? null : rdr.GetString(6),
-                    Shelter_Name = rdr.IsDBNull(7) ? null : rdr.GetString(7),
-                    Pets_For_Adoption = rdr.IsDBNull(8) ? null : rdr.GetString(8),
-                    Pets_Adopted  = rdr.IsDBNull(9) ? null : rdr.GetString(9),
-                    Message_From_User = rdr.IsDBNull(10) ? null : rdr.GetString(10),
-                    Approval_Status = rdr.IsDBNull(11) ? null : rdr.GetString(11)
+                    PasswordHash = rdr.IsDBNull(1) ? null : rdr.GetString(1),
+                    Address = rdr.IsDBNull(2) ? null : rdr.GetString(2),
+                    Phone_Number = rdr.IsDBNull(3) ? null : rdr.GetString(3),
+                    Email = rdr.IsDBNull(4) ? null : rdr.GetString(4),
+                    Shelter_Name = rdr.IsDBNull(5) ? null : rdr.GetString(5),
+                    Pets_For_Adoption = rdr.IsDBNull(6) ? 0 : rdr.GetInt32(6),
+                    Pets_Adopted  = rdr.IsDBNull(7) ? 0 : rdr.GetInt32(7),
+                    Approval_Status = rdr.IsDBNull(8) ? false : rdr.GetBoolean(8),
+                    Salt = rdr.IsDBNull(9) ? null : rdr.GetString(9)
                 });
             }
 
@@ -64,17 +62,15 @@ namespace api.models
             return new Shelter()
                 {
                     ShelterID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
-                    Username = rdr.IsDBNull(1) ? null : rdr.GetString(1),
-                    PasswordHash = rdr.IsDBNull(2) ? null : rdr.GetString(2),
-                    Pets_Uploaded = rdr.IsDBNull(3) ? 0 : rdr.GetInt32(3),
-                    Address = rdr.IsDBNull(4) ? null : rdr.GetString(4),
-                    Phone_Number = rdr.IsDBNull(5) ? null : rdr.GetString(5),
-                    Email = rdr.IsDBNull(6) ? null : rdr.GetString(6),
-                    Shelter_Name = rdr.IsDBNull(7) ? null : rdr.GetString(7),
-                    Pets_For_Adoption = rdr.IsDBNull(8) ? null : rdr.GetString(8),
-                    Pets_Adopted  = rdr.IsDBNull(9) ? null : rdr.GetString(9),
-                    Message_From_User = rdr.IsDBNull(10) ? null : rdr.GetString(10),
-                    Approval_Status = rdr.IsDBNull(11) ? null : rdr.GetString(11)
+                    PasswordHash = rdr.IsDBNull(1) ? null : rdr.GetString(1),
+                    Address = rdr.IsDBNull(2) ? null : rdr.GetString(2),
+                    Phone_Number = rdr.IsDBNull(3) ? null : rdr.GetString(3),
+                    Email = rdr.IsDBNull(4) ? null : rdr.GetString(4),
+                    Shelter_Name = rdr.IsDBNull(5) ? null : rdr.GetString(5),
+                    Pets_For_Adoption = rdr.IsDBNull(6) ? 0 : rdr.GetInt32(6),
+                    Pets_Adopted  = rdr.IsDBNull(7) ? 0 : rdr.GetInt32(7),
+                    Approval_Status = rdr.IsDBNull(8) ? false : rdr.GetBoolean(8),
+                    Salt = rdr.IsDBNull(9) ? null : rdr.GetString(9)
                 };
         }
     }

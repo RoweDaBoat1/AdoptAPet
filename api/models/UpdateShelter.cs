@@ -28,20 +28,19 @@ namespace api.models
                                     Pets_For_Adoption = @Pets_For_Adoption, 
                                     Pets_Adopted = @Pets_Adopted, 
                                     Message_From_User = @Message_From_User, 
-                                    Approval_Status = @Approval_Status 
+                                    Approval_Status = @Approval_Status,
+                                    Salt = @Salt
                                 WHERE ShelterId = @ShelterId";
             cmd.Parameters.AddWithValue("@ShelterId", id);
-            cmd.Parameters.AddWithValue("@Username", updatedShelter.Username);
             cmd.Parameters.AddWithValue("@PasswordHash", updatedShelter.PasswordHash);
-            cmd.Parameters.AddWithValue("@Pets_Uploaded", updatedShelter.Pets_Uploaded);
             cmd.Parameters.AddWithValue("@Address", updatedShelter.Address);
             cmd.Parameters.AddWithValue("@PhoneNumber", updatedShelter.Phone_Number);
             cmd.Parameters.AddWithValue("@Email", updatedShelter.Email);
             cmd.Parameters.AddWithValue("@Shelter_Name", updatedShelter.Shelter_Name);
             cmd.Parameters.AddWithValue("@Pets_For_Adoption", updatedShelter.Pets_For_Adoption);
             cmd.Parameters.AddWithValue("@Pets_Adopted", updatedShelter.Pets_Adopted);
-            cmd.Parameters.AddWithValue("@Message_From_User", updatedShelter.Message_From_User);
             cmd.Parameters.AddWithValue("@Approval_Status", updatedShelter.Approval_Status);
+            cmd.Parameters.AddWithValue("@Approval_Status", updatedShelter.Salt);
             
             cmd.ExecuteNonQuery();
         }
