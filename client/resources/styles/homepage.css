@@ -60,3 +60,27 @@
     padding: 20px 0;
     text-align: center;
 }
+
+/* Pet of the Week */
+.pet-of-the-week {
+    margin-bottom: 40px;
+}
+
+.pet-of-the-week img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.pet-info {
+    text-align: left;
+}
+
+/* Featured Pets */
+.featured-pets {
+    margin-top: 40px;
+}
+
+.featured-pets .card {
+    margin-bottom: 20px;
+}

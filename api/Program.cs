@@ -30,9 +30,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors("OpenPolicy");
-
 app.UseRouting();
+
+app.UseCors("OpenPolicy");
 
 app.UseAuthorization();
 
