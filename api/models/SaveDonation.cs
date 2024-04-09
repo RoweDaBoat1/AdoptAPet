@@ -23,7 +23,6 @@ namespace api.models
             cmd.Parameters.AddWithValue("@Name", value.Name);
             cmd.Prepare();
             cmd.ExecuteNonQuery();
-            
         }
     }
 }

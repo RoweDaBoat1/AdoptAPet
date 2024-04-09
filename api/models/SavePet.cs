@@ -35,7 +35,6 @@ namespace api.models
             cmd.Parameters.AddWithValue("@ShelterID", value.ShelterID);
             cmd.Prepare();
             cmd.ExecuteNonQuery();
-            
         }
     }
 }
