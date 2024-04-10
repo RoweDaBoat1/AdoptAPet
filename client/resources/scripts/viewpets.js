@@ -55,4 +55,8 @@ async function populateCards() {
   });
 }
 
+function redirectToPetPage(petId) {
+  window.location.href = `petprofile.html?petId=${petId}`;
+}
+
 document.addEventListener('DOMContentLoaded', populateCards);
