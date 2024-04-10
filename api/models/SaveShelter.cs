@@ -12,7 +12,7 @@ namespace api.models
     public class SaveShelter : IInsertShelter
     {
         public void InsertShelter(Shelter value){
-            
+
             // Hash the password using PasswordHasher class
             string salt;
             string hashedPassword = PasswordHasher.HashPassword(value.PasswordHash, out salt);
