@@ -1,3 +1,22 @@
+/* Navbar */
+.navbar {
+    padding: 10px 0; 
+}
+
+.navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.navbar-nav .nav-link {
+    font-size: 18px;
+    color: #fff;
+}
+
+.navbar-toggler {
+    border: none; 
+}
+
 /* Filters */
 .filters {
     margin: 20px 0;

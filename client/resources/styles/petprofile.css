@@ -1,0 +1,36 @@
+/* Navbar */
+.navbar {
+    padding: 10px 0; 
+}
+
+.navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.navbar-nav .nav-link {
+    font-size: 18px;
+    color: #fff;
+}
+
+.navbar-toggler {
+    border: none; 
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.pet-details {
+    margin-top: 20px;
+}
+
+.pet-details p {
+    margin-bottom: 10px;
+}
+
+.pet-details strong {
+    margin-right: 5px;
+}
