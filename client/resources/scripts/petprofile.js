@@ -15,9 +15,17 @@ async function populatePetProfile() {
         document.getElementById('petBreed').textContent = pet.breed;
         document.getElementById('petAge').textContent = pet.age;
         document.getElementById('petGender').textContent = pet.gender;
-        // INPUT THE REST OF THE FIELDS WHEN API IS WORKING
+        
+        const adoptionFormUrl = `adoptionform.html?petId=${petId}`;
+        
+        const adoptionFormLink = document.createElement('a');
+        adoptionFormLink.href = adoptionFormUrl;
+        adoptionFormLink.textContent = 'Click here to fill out the adoption form';
+        
+        const linkContainer = document.getElementById('adoptionFormLinkContainer');
+        linkContainer.appendChild(adoptionFormLink);
     } else {
-        // error handling
+        
         console.error('Pet not found');
     }
 }
