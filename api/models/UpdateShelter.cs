@@ -20,6 +20,7 @@ namespace api.models
             cmd.CommandText = @"UPDATE Shelter 
                                 SET Username = @Username, 
                                     PasswordHash = @PasswordHash, 
+                                    Salt = @Salt,
                                     Pets_Uploaded = @Pets_Uploaded, 
                                     Address = @Address, 
                                     PhoneNumber = @PhoneNumber, 
@@ -28,7 +29,7 @@ namespace api.models
                                     Pets_For_Adoption = @Pets_For_Adoption, 
                                     Pets_Adopted = @Pets_Adopted, 
                                     Message_From_User = @Message_From_User, 
-                                    Approval_Status = @Approval_Status 
+                                    Approval_Status = @Approval_Status,
                                 WHERE ShelterId = @ShelterId";
             cmd.Parameters.AddWithValue("@ShelterId", id);
             cmd.Parameters.AddWithValue("@PasswordHash", updatedShelter.PasswordHash);

@@ -26,18 +26,17 @@ namespace api.models
             using var cmd = new MySqlCommand(cs);
 
             cmd.Connection = con;
-            cmd.CommandText = @"INSERT INTO Users(UserId, Email, Username, PasswordHash, Salt, FirstName, LastName, Address, PhoneNumber, Role, FavoritePets) VALUES(@UserId, @Email, @Username, @PasswordHash, @Salt, @FirstName, @LastName, @Address, @PhoneNumber, @Role, @FavoritePets)";
+            cmd.CommandText = @"INSERT INTO Users(UserId, Email, PasswordHash, Salt, FirstName, LastName, Address, PhoneNumber, FavoritePets, Role) VALUES(@UserId, @Email, @PasswordHash, @Salt, @FirstName, @LastName, @Address, @PhoneNumber, @FavoritePets, @Role)";
             cmd.Parameters.AddWithValue("@UserId", value.UserID);
             cmd.Parameters.AddWithValue("@Email", value.Email);
-            cmd.Parameters.AddWithValue("@UserName", value.Username);
             cmd.Parameters.AddWithValue("@PasswordHash", hashedPassword); // Use hashed password
             cmd.Parameters.AddWithValue("@Salt", salt); // Store salt in the database
             cmd.Parameters.AddWithValue("@FirstName", value.FirstName);
             cmd.Parameters.AddWithValue("@LastName", value.LastName);
             cmd.Parameters.AddWithValue("@Address", value.Address);
             cmd.Parameters.AddWithValue("@PhoneNumber", value.PhoneNumber);
-            cmd.Parameters.AddWithValue("@Role", value.UserType);
             cmd.Parameters.AddWithValue("@FavoritePets", value.FavoritePets);
+            cmd.Parameters.AddWithValue("@Role", value.Role);
             cmd.Prepare();
             cmd.ExecuteNonQuery();
         }

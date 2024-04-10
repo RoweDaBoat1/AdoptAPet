@@ -7,15 +7,14 @@ namespace api.models
         public string Breed {get; set;}
         public int Age {get; set;}
         public string Gender {get; set;}
-        public string Location {get; set;}
         public string IntakeDate {get; set;}
         public string Weight {get; set;}
         public string Attitude {get; set;}
         public string AboutMe {get; set;}
-        public int ShelterID {get; set;}
-        public string AdoptionStatus {get; set;}
         public string Height {get; set;}
         public string HouseTrained {get; set;}
         public string PetType {get; set;}
+        public bool AdoptionStatus {get; set;}
+        public int ShelterID {get; set;}
     }
 }
