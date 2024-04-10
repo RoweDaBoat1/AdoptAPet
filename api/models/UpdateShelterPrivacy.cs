@@ -28,7 +28,7 @@ namespace api.models
                                     Height = @Height,
                                     HouseTrained = @HouseTrained,
                                     AdoptionStatus = @AdoptionStatus,
-                                WHERE UserId = @PetID";
+                                WHERE PetID = @PetID";
             cmd.Parameters.AddWithValue("@PetID", id);
             cmd.Parameters.AddWithValue("@Breed", updatedShelterPrivacy.Breed);
             cmd.Parameters.AddWithValue("@Age", updatedShelterPrivacy.Age);
