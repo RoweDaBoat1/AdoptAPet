@@ -19,7 +19,7 @@
 
 /* Banner */
 .banner {
-    background-image: url('/Users/maren_ohara/source/repos/321/group8/AdoptAPet/client/resources/styles/images/banner.jpg'); /* Replace 'banner.jpg' with your banner image URL */
+    background-image: url('./images/banner.jpg'); 
     background-size: cover;
     height: 500px; 
     color: #fff;
