@@ -15,12 +15,12 @@ namespace api.Controllers
     {
 
         [HttpPost("login")]
-        public IActionResult Login(string username, string password)
+        public IActionResult Login(string email, string password, string userType)
         {
             IAuthService authObject = new AuthenticationManager();
 
             // Call authentication manager to validate credentials
-            bool isAuthenticated = authObject.AuthenticateUser(username, password);
+            bool isAuthenticated = authObject.AuthenticateUser(email, password, userType);
 
             if (isAuthenticated)
             {
@@ -29,7 +29,7 @@ namespace api.Controllers
 
             return Unauthorized("Authentication failed"); // Return unauthorized status if authentication fails
         }
-        
+
         // PUT: api/authentication/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)

@@ -16,7 +16,7 @@ namespace api.models
         }
 
         // Method to authenticate user
-        public bool AuthenticateUser(string username, string password)
+        public bool AuthenticateUser(string email, string password, string userType)
         {
             // Retrieve hashed password and salt from the database based on the provided username
             string hashedPasswordFromDatabase;
@@ -27,7 +27,7 @@ namespace api.models
             string cs = myConnection.cs;
             
             // Query to fetch hashed password and salt from the database
-            string query = "SELECT PasswordHash, Salt FROM Users WHERE Username = @Username";
+            string query = "SELECT PasswordHash, Salt FROM {userType} WHERE Email = @Email";
 
             using (MySqlConnection connection = new MySqlConnection(cs))
             {
@@ -35,7 +35,7 @@ namespace api.models
 
                 using (MySqlCommand cmd = new MySqlCommand(query, connection))
                 {
-                    cmd.Parameters.AddWithValue("@Username", username);
+                    cmd.Parameters.AddWithValue("@Email", email);
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -46,7 +46,7 @@ namespace api.models
                         }
                         else
                         {
-                            // Username not found in the database
+                            // Email not found in the database
                             return false;
                         }
                     }
