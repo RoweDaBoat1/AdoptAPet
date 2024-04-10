@@ -39,15 +39,11 @@ async function handleAddUser(){
         //username, passwordHash, fname, lname, address, role, and favorite pets are temporary
         userId: crypto.randomUUID(),
         userEmail: document.getElementById('userEmail').value,
-        username: "test",
-        passwordHash: "1234",
-        firstName: "John",
-        lastName: "Doe",
-        Address: "123 Dirt Rd",
-        //fullName: document.getElementById('fullName').value,
+        firstName: document.getElementById('firstName'),
+        lastName: document.getElementById('lastName'),
         phoneNumber: document.getElementById('userPhone').value,
-        //userZip: document.getElementById('userZip').value,
-        //userPassword : document.getElementById('userPassword').value
+        userZip: document.getElementById('userZip').value,
+        password : document.getElementById('userPassword').value,
         role: "user",
         favoritePets: 0
     }
@@ -160,6 +156,7 @@ async function handleAddShelter(){
         state: document.getElementById('shelterState').value,
         zip: document.getElementById('shelterZip').value,
         password : document.getElementById('shelterPassword').value,
+        approvalStatus: "Pending",
         approved: false
     }
     await saveShelter(shelter)
@@ -178,9 +175,10 @@ async function saveShelter(shelter){
 
 async function handleShelterApproval(id, button){
     //1
-    const shelter = shelters.find(shelter => shelter.id === id);
+    const shelter = shelters.find(shelter => shelter.id === id)
     if (shelter) {
-        shelter.approved = !shelter.approved;
+        shelter.approved = !shelter.approved
+        shelter.approvalStatus = "approved"
         console.log(shelter.approved)
     }
     //2 have put api method in backend that changes approved to opposite
@@ -198,7 +196,7 @@ async function handleShelterApproval(id, button){
     // Update the icon color
     icon.style.color = shelter.approved ? "green" : "black";
 
-    populateTable()
+    populateShelterTable()
 }
 
 // Function to display success message
@@ -225,29 +223,29 @@ async function handleShelterApproval(id, button){
 // }
 
 // Example function for signup
-//function signup(userType) {
+//function signup(role) {
     // Perform signup process
     // If signup is successful, show success message
     //showSuccessMessage('Signup successful!'); // You can customize the message
 //}
 
 
-// function signup(userType) {
+// function signup(role) {
 //     var userData = {}
 
 //     // Collect common fields
 //     userData.id = crypto.randomUUID()
-//     userData.email = document.getElementById(userType + 'Email').value
-//     userData.addressLine = document.getElementById(userType + 'AddressLine').value
-//     userData.city = document.getElementById(userType + 'City').value
-//     userData.state = document.getElementById(userType + 'State').value
-//     userData.zip = document.getElementById(userType + 'Zip')
-//     userData.password = document.getElementById(userType + 'Password').value
+//     userData.email = document.getElementById(role + 'Email').value
+//     userData.addressLine = document.getElementById(role + 'AddressLine').value
+//     userData.city = document.getElementById(role + 'City').value
+//     userData.state = document.getElementById(role + 'State').value
+//     userData.zip = document.getElementById(role + 'Zip')
+//     userData.password = document.getElementById(role + 'Password').value
 
 //     // Collect user type-specific fields
-//     if (userType === 'user') {
+//     if (role === 'user') {
 //         userData.fullName = document.getElementById('name').value
-//     } else if (userType === 'shelter') {
+//     } else if (role === 'shelter') {
 //         userData.shelterName = document.getElementById('shelterName').value
 //         userData.phone = document.getElementById('shelterPhone').value
         
@@ -265,13 +263,13 @@ async function handleShelterApproval(id, button){
 
 //     // Signup endpoint
 //     app.post('/signup', (req, res) => {
-//         const { email, password, userType } = req.body;
+//         const { email, password, role } = req.body;
 //         let additionalData = {};
 //         // Additional data specific to user type
-//         if (userType === 'user') {
+//         if (role === 'user') {
 //             const { fullName, city, state } = req.body;
 //             additionalData = { fullName, city, state };
-//         } else if (userType === 'admin') {
+//         } else if (role === 'admin') {
 //             const { shelterName, phone, address } = req.body;
 //             additionalData = { shelterName, phone, address };
 //         }
@@ -287,9 +285,9 @@ async function handleShelterApproval(id, button){
 //         const newUser = {
 //             email,
 //             password,
-//             userType,
+//             role,
 //             ...additionalData,
-//             approved: userType === 'admin' ? false : true // Set approval status for admin accounts
+//             approved: role === 'admin' ? false : true // Set approval status for admin accounts
 //         };
 //         users.push(newUser);
 //         // Optionally, you can send a confirmation email or perform other actions here
