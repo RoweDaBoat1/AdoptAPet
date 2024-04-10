@@ -18,6 +18,7 @@ builder.Services.AddCors(options => {
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<AuthenticationManager>();
+builder.Services.AddScoped<JwtService>();
 
 var app = builder.Build();
 

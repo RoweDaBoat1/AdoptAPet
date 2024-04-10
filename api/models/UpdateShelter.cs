@@ -31,16 +31,15 @@ namespace api.models
                                     Approval_Status = @Approval_Status 
                                 WHERE ShelterId = @ShelterId";
             cmd.Parameters.AddWithValue("@ShelterId", id);
-            cmd.Parameters.AddWithValue("@Username", updatedShelter.Username);
             cmd.Parameters.AddWithValue("@PasswordHash", updatedShelter.PasswordHash);
-            cmd.Parameters.AddWithValue("@Pets_Uploaded", updatedShelter.Pets_Uploaded);
+            cmd.Parameters.AddWithValue("@Salt", updatedShelter.Salt);
             cmd.Parameters.AddWithValue("@Address", updatedShelter.Address);
             cmd.Parameters.AddWithValue("@PhoneNumber", updatedShelter.Phone_Number);
             cmd.Parameters.AddWithValue("@Email", updatedShelter.Email);
             cmd.Parameters.AddWithValue("@Shelter_Name", updatedShelter.Shelter_Name);
+            cmd.Parameters.AddWithValue("@Role", updatedShelter.Role);
             cmd.Parameters.AddWithValue("@Pets_For_Adoption", updatedShelter.Pets_For_Adoption);
             cmd.Parameters.AddWithValue("@Pets_Adopted", updatedShelter.Pets_Adopted);
-            cmd.Parameters.AddWithValue("@Message_From_User", updatedShelter.Message_From_User);
             cmd.Parameters.AddWithValue("@Approval_Status", updatedShelter.Approval_Status);
             
             cmd.ExecuteNonQuery();

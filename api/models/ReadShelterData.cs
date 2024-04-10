@@ -24,22 +24,21 @@ namespace api.models
             using MySqlDataReader rdr = cmd.ExecuteReader();
 
             List<Shelter> allShelters = new List<Shelter>();
-            while(rdr.Read())
+            while (rdr.Read())
             {
                 allShelters.Add(new Shelter()
                 {
                     ShelterID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
-                    Username = rdr.IsDBNull(1) ? null : rdr.GetString(1),
-                    PasswordHash = rdr.IsDBNull(2) ? null : rdr.GetString(2),
-                    Pets_Uploaded = rdr.IsDBNull(3) ? 0 : rdr.GetInt32(3),
-                    Address = rdr.IsDBNull(4) ? null : rdr.GetString(4),
-                    Phone_Number = rdr.IsDBNull(5) ? null : rdr.GetString(5),
-                    Email = rdr.IsDBNull(6) ? null : rdr.GetString(6),
-                    Shelter_Name = rdr.IsDBNull(7) ? null : rdr.GetString(7),
+                    PasswordHash = rdr.IsDBNull(1) ? null : rdr.GetString(1),
+                    Salt = rdr.IsDBNull(2) ? null : rdr.GetString(2),
+                    Address = rdr.IsDBNull(3) ? null : rdr.GetString(3),
+                    Phone_Number = rdr.IsDBNull(4) ? null : rdr.GetString(4),
+                    Email = rdr.IsDBNull(5) ? null : rdr.GetString(5),
+                    Shelter_Name = rdr.IsDBNull(6) ? null : rdr.GetString(6),
+                    Role = rdr.IsDBNull(7) ? null : rdr.GetString(7),
                     Pets_For_Adoption = rdr.IsDBNull(8) ? null : rdr.GetString(8),
-                    Pets_Adopted  = rdr.IsDBNull(9) ? null : rdr.GetString(9),
-                    Message_From_User = rdr.IsDBNull(10) ? null : rdr.GetString(10),
-                    Approval_Status = rdr.IsDBNull(11) ? null : rdr.GetString(11)
+                    Pets_Adopted = rdr.IsDBNull(9) ? null : rdr.GetString(9),
+                    Approval_Status = rdr.IsDBNull(10) ? null : rdr.GetString(10)
                 });
             }
 
@@ -62,20 +61,19 @@ namespace api.models
 
             rdr.Read();
             return new Shelter()
-                {
-                    ShelterID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
-                    Username = rdr.IsDBNull(1) ? null : rdr.GetString(1),
-                    PasswordHash = rdr.IsDBNull(2) ? null : rdr.GetString(2),
-                    Pets_Uploaded = rdr.IsDBNull(3) ? 0 : rdr.GetInt32(3),
-                    Address = rdr.IsDBNull(4) ? null : rdr.GetString(4),
-                    Phone_Number = rdr.IsDBNull(5) ? null : rdr.GetString(5),
-                    Email = rdr.IsDBNull(6) ? null : rdr.GetString(6),
-                    Shelter_Name = rdr.IsDBNull(7) ? null : rdr.GetString(7),
-                    Pets_For_Adoption = rdr.IsDBNull(8) ? null : rdr.GetString(8),
-                    Pets_Adopted  = rdr.IsDBNull(9) ? null : rdr.GetString(9),
-                    Message_From_User = rdr.IsDBNull(10) ? null : rdr.GetString(10),
-                    Approval_Status = rdr.IsDBNull(11) ? null : rdr.GetString(11)
-                };
+            {
+                ShelterID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
+                PasswordHash = rdr.IsDBNull(1) ? null : rdr.GetString(1),
+                Salt = rdr.IsDBNull(2) ? null : rdr.GetString(2),
+                Address = rdr.IsDBNull(3) ? null : rdr.GetString(3),
+                Phone_Number = rdr.IsDBNull(4) ? null : rdr.GetString(4),
+                Email = rdr.IsDBNull(5) ? null : rdr.GetString(5),
+                Shelter_Name = rdr.IsDBNull(6) ? null : rdr.GetString(6),
+                Role = rdr.IsDBNull(7) ? null : rdr.GetString(7),
+                Pets_For_Adoption = rdr.IsDBNull(8) ? null : rdr.GetString(8),
+                Pets_Adopted = rdr.IsDBNull(9) ? null : rdr.GetString(9),
+                Approval_Status = rdr.IsDBNull(10) ? null : rdr.GetString(10)
+            };
         }
     }
 }

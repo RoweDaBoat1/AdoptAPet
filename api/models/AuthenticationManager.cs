@@ -27,7 +27,7 @@ namespace api.models
             string cs = myConnection.cs;
             
             // Query to fetch hashed password and salt from the database
-            string query = "SELECT PasswordHash, Salt FROM {userType} WHERE Email = @Email";
+            string query = $"SELECT PasswordHash, Salt FROM {userType} WHERE Email = @Email";
 
             using (MySqlConnection connection = new MySqlConnection(cs))
             {

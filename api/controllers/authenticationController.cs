@@ -11,8 +11,14 @@ namespace api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class authenticationController : ControllerBase
+    public class AuthenticationController : ControllerBase
     {
+        private readonly JwtService _jwtService;
+
+        public AuthenticationController(JwtService jwtService)
+        {
+            _jwtService = jwtService;
+        }
 
         [HttpPost("login")]
         public IActionResult Login(string email, string password, string userType)
@@ -24,7 +30,9 @@ namespace api.Controllers
 
             if (isAuthenticated)
             {
-                return Ok("Authentication successful"); // Return success message on successful login
+                // Generate JWT token using JwtService
+                var token = _jwtService.GenerateToken(email, userType);
+                return Ok(new { token }); // Return the token
             }
 
             return Unauthorized("Authentication failed"); // Return unauthorized status if authentication fails
