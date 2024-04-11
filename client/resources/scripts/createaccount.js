@@ -1,11 +1,10 @@
-// import ApiUrls from './apiUrls.js';
-// const apiUrls = new ApiUrls();
+//const test = new apiUrls();
 
-// const shelterUrl = "https://localhost:5016/api/shelters"
-// const userUrl = "https://localhost:5016/api/users"
+const shelterUrl = "http://localhost:5016/api/shelters"
+const userUrl = "http://localhost:5016/api/users"
 
-const shelterUrl = apiUrls.shelterUrl
-const userUrl = apiUrls.userUrl
+// const shelterUrl = test.shelterUrl
+// const userUrl = test.userUrl
 
 async function handleUButtonClick(){
     await handleAddUser()
@@ -30,8 +29,8 @@ async function handleSButtonClick(){
 // }
 
 async function handleOnLoad(){
+
     await populateShelterTable()
-    await populateAppShelterTable()
 }
 //USER FUNCTIONS
 async function handleAddUser(){
@@ -61,7 +60,7 @@ async function saveUser(user){
 }
 //SHELTER FUNCTIONS
 async function getAllShelters(){
-    let response = await fetch(userUrl)
+    let response = await fetch(shelterUrl)
     shelters = await response.json()
     console.log(shelters)
 }
@@ -79,10 +78,12 @@ async function populateShelterTable(){
             <th>City</th>
             <th>State</th>
             <th>Zip Code</th>
-            <th>Approve Account</th>
+            <th>Status</th>
+            <th>Approve</th>
         </tr>`
     shelters.forEach(function(shelter){
-        if(shelter.approved == false){
+        //change approval button to use approvalStatus
+        if(shelter.approvalStatus != "approved"){
             html+= `
             <tr>
                 <td>${shelter.id}</td>
@@ -93,12 +94,11 @@ async function populateShelterTable(){
                 <td>${shelter.city}</td>
                 <td>${shelter.state}</td>
                 <td>${shelter.zip}</td>
-                <td><button class="btn btn-link" onclick="handleShelterApproval('${shelter.id}')"><i class="far ${shelter.approved ? 'fa-check-square' : 'fa-square'}" style="color: ${shelter.approved ? 'green' : 'black'};"></i></button></td>
+                <td>${shelter.approvalStatus}</td>
+                <td><button class="btn btn-primary" onclick="handleShelterApproval('${shelter.id}')">Approve</button></td>
             </tr>
             `
         }
-            //maybe ad <td> for shelter.password? idk if not having it will mess up the backend
-            //<td><button class="btn btn-link" onclick="handleShelterApproval('${shelter.id}')"><i class="fa${shelter.approved ? 's' : 'r'} fa-heart" style="color: ${shelter.approved ? 'red' : 'black'};"></i></button></td>
     })
     
     html += `
@@ -107,47 +107,9 @@ async function populateShelterTable(){
     document.getElementById('shelterTable').innerHTML = html
 }
 
-async function populateAppShelterTable(){
-    await getAllShelters()
-    // Filter shelters to get only approved ones
-    let approvedShelters = shelters.filter(shelter => shelter.approved)
-    let html = `
-    <table class="table table-striped">
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Address Line</th>
-            <th>City</th>
-            <th>State</th>
-            <th>Zip Code</th>
-            <th>Approve Account</th>
-        </tr>`;
-    approvedShelters.forEach(function(shelter){
-        html += `
-        <tr>
-            <td>${shelter.id}</td>
-            <td>${shelter.name}</td>
-            <td>${shelter.email}</td>
-            <td>${shelter.phone}</td>
-            <td>${shelter.addressLine}</td>
-            <td>${shelter.city}</td>
-            <td>${shelter.state}</td>
-            <td>${shelter.zip}</td>
-            <td><button class="btn btn-link" onclick="handleShelterApproval('${shelter.id}', this)"><i class="far fa-check-square" style="color: green;"></i></button></td>
-        </tr>`;
-    });
-    
-    html += `
-    </table>`;
-    document.getElementById('appShelterTable').innerHTML = html;
-}
-
-
 async function handleAddShelter(){
     let shelter = {
-        //id: crypto.randomUUID(),
+        id: crypto.randomUUID(),
         shelterName: document.getElementById('shelterName').value,
         email: document.getElementById('shelterEmail').value,
         phone: document.getElementById('shelterPhone').value,
@@ -156,8 +118,7 @@ async function handleAddShelter(){
         state: document.getElementById('shelterState').value,
         zip: document.getElementById('shelterZip').value,
         password : document.getElementById('shelterPassword').value,
-        approvalStatus: "Pending",
-        approved: false
+        approvalStatus: "pending"
     }
     await saveShelter(shelter)
     populateShelterTable()
@@ -173,13 +134,12 @@ async function saveShelter(shelter){
     })
 }
 
-async function handleShelterApproval(id, button){
+async function handleShelterApproval(id){
     //1
     const shelter = shelters.find(shelter => shelter.id === id)
     if (shelter) {
-        shelter.approved = !shelter.approved
         shelter.approvalStatus = "approved"
-        console.log(shelter.approved)
+        console.log(shelter.approvalStatus)
     }
     //2 have put api method in backend that changes approved to opposite
     await fetch(shelterUrl + '/' +id,{
@@ -189,38 +149,9 @@ async function handleShelterApproval(id, button){
             "Content-type" : "application/json; charset=UTF-8"
         }
     })
-    // Update the button icon
-    const icon = button.querySelector("i");
-    icon.classList.toggle("fa-square");
-    icon.classList.toggle("fa-check-square");
-    // Update the icon color
-    icon.style.color = shelter.approved ? "green" : "black";
 
     populateShelterTable()
 }
-
-// Function to display success message
-// function showSuccessMessage(message) {
-//     var modal = document.createElement('div');
-//     modal.className = 'success-modal';
-//     modal.innerHTML = `
-//         <div class="modal-dialog">
-//             <div class="modal-content">
-//                 <div class="modal-header">
-//                     <h5 class="modal-title">Success!</h5>
-//                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-//                 </div>
-//                 <div class="modal-body">
-//                     <p>${message}</p>
-//                 </div>
-//             </div>
-//         </div>
-//     `;
-//     document.body.appendChild(modal);
-//     setTimeout(function() {
-//         modal.remove();
-//     }, 3000);
-// }
 
 // Example function for signup
 //function signup(role) {

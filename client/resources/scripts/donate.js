@@ -1,9 +1,11 @@
 // import ApiUrls from './apiUrls.js';
 // const apiUrls = new ApiUrls();
 
-//const donationUrl = "https://localhost:5016/api/donations"
+const donationUrl = "http://localhost:5016/api/donations"
+const shelterUrl = "http://localhost:5016/api/shelters"
 
-const donationUrl = apiUrls.donationUrl
+// const donationUrl = apiUrls.donationUrl
+// const shelterUrl = apiUrls.shelterUrl
 let donations = []
 
 
@@ -51,13 +53,13 @@ function handleOnLoad(){
     }
         
     async function populateShelterDropdown() {
-        await populateAppShelterTable(); // Call the function to populate the shelter table
+        await getAllShelters()
         let dropdown = document.getElementById('shelterName'); // Get the shelter dropdown element
         dropdown.innerHTML = ''; // Clear existing options
             
         // Iterate through the approved shelters and add them as options to the dropdown
         shelters.forEach(function(shelter) {
-            if (shelter.approved) { // Check if the shelter is approved
+            if (shelter.approvalStatus == "approved") { // Check if the shelter is approved
                 let option = document.createElement('option'); // Create a new option element
                 option.value = shelter.shelterName; // Set the value attribute to shelter name
                 option.textContent = shelter.shelterName; // Set the text content to shelter name
@@ -76,6 +78,12 @@ function handleOnLoad(){
         let response = await fetch(apiUrls.donationUrl)
         donation = await response.json()
         console.log(donations)
+    }
+
+    async function getAllShelters(){
+        let response = await fetch(shelterUrl)
+        shelters = await response.json()
+        console.log(shelters)
     }
         
     function handleChange(donation) {
