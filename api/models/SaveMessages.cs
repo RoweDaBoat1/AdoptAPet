@@ -16,7 +16,7 @@ namespace api.models
 
             using var cmd = new MySqlCommand(cs);
 
-            cmd.CommandText = @"INSET INTO Messages(MessageId, UserID, Message, Email, Timestamp, ShelterID) VALUES(@MessageID, @UserID, @Message, @Email, @Timestamp, @ShelterID))";
+            cmd.CommandText = @"INSERT INTO Messages(MessageId, UserID, Message, Email, Timestamp, ShelterID) VALUES(@MessageID, @UserID, @Message, @Email, @Timestamp, @ShelterID))";
             cmd.Parameters.AddWithValue("@MessageId", value.MessageID);
             cmd.Parameters.AddWithValue("@UserID", value.UserID);
             cmd.Parameters.AddWithValue("@Message", value.Message);

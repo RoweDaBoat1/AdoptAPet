@@ -1,19 +1,22 @@
 //const test = new apiUrls();
 
 const shelterUrl = "http://localhost:5016/api/shelters"
-const userUrl = "http://localhost:5016/api/users"
+const userUrl = "http://localhost:5016/api/user"
+//idk if this is what its called
+//const shelterPrivacyUrl ="http://localhost:5016/api/ShelterPrivacy"
 
+let shelterPrivacy
 // const shelterUrl = test.shelterUrl
 // const userUrl = test.userUrl
 
 async function handleUButtonClick(){
     await handleAddUser()
-    window.location.href = "login.html"
+    //window.location.href = "login.html"
 }
 
 async function handleSButtonClick(){
     await handleAddShelter()
-    window.location.href = "login.html"
+    //window.location.href = "login.html"
 }
 
 // function login() {
@@ -37,14 +40,14 @@ async function handleAddUser(){
     let user = {
         //username, passwordHash, fname, lname, address, role, and favorite pets are temporary
         userId: crypto.randomUUID(),
-        userEmail: document.getElementById('userEmail').value,
+        email: document.getElementById('userEmail').value,
+        password : document.getElementById('userPassword').value,
         firstName: document.getElementById('firstName'),
         lastName: document.getElementById('lastName'),
+        address: document.getElementById('userZip').value,
         phoneNumber: document.getElementById('userPhone').value,
-        userZip: document.getElementById('userZip').value,
-        password : document.getElementById('userPassword').value,
-        role: "user",
-        favoritePets: 0
+        favoritePets: 0,
+        role: "user"
     }
     await saveUser(user)
 }
@@ -58,11 +61,19 @@ async function saveUser(user){
             }
     })
 }
+
+async function getAllUsers(){
+    let response = await fetch(userUrl)
+    return await response.json()
+}
 //SHELTER FUNCTIONS
 async function getAllShelters(){
-    let response = await fetch(shelterUrl)
-    shelters = await response.json()
-    console.log(shelters)
+    let response = await fetch(shelterUrl);
+    return await response.json();
+
+    // let response = await fetch(shelterUrl)
+    // shelters = await response.json()
+    // console.log(shelters)
 }
 
 async function populateShelterTable(){
@@ -109,7 +120,7 @@ async function populateShelterTable(){
 
 async function handleAddShelter(){
     let shelter = {
-        id: crypto.randomUUID(),
+        shelterid: crypto.randomUUID(),
         shelterName: document.getElementById('shelterName').value,
         email: document.getElementById('shelterEmail').value,
         phone: document.getElementById('shelterPhone').value,
@@ -120,7 +131,18 @@ async function handleAddShelter(){
         password : document.getElementById('shelterPassword').value,
         approvalStatus: "pending"
     }
+
+    shelterPrivacy = {
+        id: shelterid,
+        intakeDatePrivate: false,
+        weightPrivate: false,
+        attitudePrivate: false,
+        aboutMePrivate: false,
+        heightPrivate: false,
+        houseTrainedPrivate: false
+    }
     await saveShelter(shelter)
+    await saveShelterPrivacy(shelterPrivacy)
     populateShelterTable()
 }
 
@@ -128,6 +150,16 @@ async function saveShelter(shelter){
     await fetch(shelterUrl, {
             method: "POST",
             body: JSON.stringify(shelter),
+            headers: {
+                "Content-type" : "application/json; charset=UTF-8"
+            }
+    })
+}
+
+async function saveShelterPrivacy(shelterPrivacy){
+    await fetch(shelterPrivacyUrl, {
+            method: "POST",
+            body: JSON.stringify(shelterPrivacy),
             headers: {
                 "Content-type" : "application/json; charset=UTF-8"
             }

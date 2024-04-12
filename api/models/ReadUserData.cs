@@ -15,7 +15,7 @@ namespace api.models
             using var con = new MySqlConnection(cs);
             con.Open();
 
-            string stm = "SELECT * FROM Users";
+            string stm = "SELECT * FROM User";
             using var cmd = new MySqlCommand(stm, con);
 
 

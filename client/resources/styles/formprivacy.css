@@ -1,0 +1,21 @@
+
+
+.form-row {
+    display: flex;
+    align-items: center; /* Vertically center items within each row */
+    margin-bottom: 10px; /* Adjust margin as needed for spacing between rows */
+}
+
+.form-label {
+    flex: 1; /* Expand to fill available space */
+}
+
+.form-field {
+    flex: 1; /* Expand to fill available space */
+    text-align: right; /* Align field to the right */
+    margin-left: 10px; /* Adjust margin as needed for spacing between label and field */
+}
+
+
+  
+    

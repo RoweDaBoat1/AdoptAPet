@@ -15,7 +15,7 @@ namespace api.models
 
             using var cmd = new MySqlCommand(cs);
 
-            cmd.CommandText = @"INSET INTO Description(DescriptionID, LocationID, Description, Location) VALUES(@DescriptionID, @LocationID, @Description, @Location))";
+            cmd.CommandText = @"INSERT INTO Description(DescriptionID, LocationID, Description, Location) VALUES(@DescriptionID, @LocationID, @Description, @Location))";
             cmd.Parameters.AddWithValue("@DescriptionID", value.DescriptionID);
             cmd.Parameters.AddWithValue("@LocationID", value.LocationID);
             cmd.Parameters.AddWithValue("@Description", value.Description);

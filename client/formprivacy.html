@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listing Settings</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="./resources/styles/addlisting.css">
+    <link rel="stylesheet" href ="./resources/styles/login.css">
+    <link rel="stylesheet" href="./resources/styles/formprivacy.css">
+</head>
+<body onload="handleOnLoad()">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+            </div>
+            <div class="col-8" style="text-align: center;">
+                <h5>Edit your pet data privacy preferences by selecting which fields on your pet profile will be kept private. If a field is not on the list that means it is required by AdoptAPet. </h5>
+            </div>
+            <div class="col">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+            </div>
+            <div class="col-4">
+              <div id="app"></div>
+            </div>
+          <div class="col">
+          </div>
+        </div>
+      </div>
+      <script>
+        const apiUrls = {
+          baseurl: 'http://localhost:5016/api',
+          petUrl: 'http://localhost:5016/api/pets',
+          shelterUrl: 'http://localhost:5016/api/shelters',
+          userUrl: 'http://localhost:5016/api/user',
+          donationUrl: 'http://localhost:5016/api/donation',
+          shelterPrivacyUrl: 'http://localhost:5016/api/ShelterPrivacy'
+        };
+    </script> 
+    <script src="./resources/scripts/createaccount.js"></script>
+    <script src="./resources/scripts/formprivacy.js"></script>
+</body>
+</html>

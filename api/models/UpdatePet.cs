@@ -17,7 +17,7 @@ namespace api.models
             using var cmd = new MySqlCommand();
             cmd.Connection = con;
 
-            cmd.CommandText = @"UPDATE Pet 
+            cmd.CommandText = @"UPDATE Pets 
                                 SET Name = @Name, 
                                     Breed = @Breed, 
                                     Age = @Age, 
