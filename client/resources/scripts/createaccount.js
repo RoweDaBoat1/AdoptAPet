@@ -76,6 +76,11 @@ async function getAllShelters(){
     // console.log(shelters)
 }
 
+async function getAllShelterPrivacy(){
+    let response = await fetch(shelterPrivacyUrl)
+    return await response.json()
+}
+
 async function populateShelterTable(){
     await getAllShelters()
     let html = `

@@ -242,7 +242,7 @@ async function savePet(pet){
 //     populateTable()
 // }
 
-async function handlePetAdoption(id, button){
+async function handlePetAdoption(id){
     //1
     const pet = pets.find(pet => pet.id === id);
     if (pet) {

@@ -6,7 +6,8 @@ const shelterPrivacyUrl = apiUrls.shelterPrivacyUrl
 
 
 async function handleOnLoad() {
-    let shelter = await getAllShelters();
+    let shelterPrivacy = await getAllShelterPrivacy()
+    //let shelter = await getAllShelters();
     let html = `
     <form onsubmit="handleSubmit()" style="text-align: left;">
     
@@ -46,7 +47,7 @@ async function handleOnLoad() {
             <input type="checkbox" id="houseTrainedPrivate" class="toggle" name="houseTrainedPrivate">
         </div>
     </div>
-        <button class="btn btn-primary" onclick="handleSavePrivacy('${shelter.shelterId}')" style="float: center;">Save Preferences</button>
+        <button class="btn btn-primary" onclick="handleSavePrivacy('${shelterPrivacy.shelterId}')" style="float: center;">Save Preferences</button>
     </form>
     `
     document.getElementById('app').innerHTML = html
