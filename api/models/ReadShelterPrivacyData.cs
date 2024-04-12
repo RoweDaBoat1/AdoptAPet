@@ -26,7 +26,7 @@ namespace api.models
             {
                 allShelterPrivacy.Add(new ShelterPrivacy()
                 {
-                    PetID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
+                    ShelterID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
                     Breed = rdr.IsDBNull(1) ? false : rdr.GetBoolean(1),
                     Age = rdr.IsDBNull(2) ? false : rdr.GetBoolean(2),
                     Gender = rdr.IsDBNull(3) ? false : rdr.GetBoolean(3),
@@ -51,7 +51,7 @@ namespace api.models
             using var con = new MySqlConnection(cs);
             con.Open();
 
-            string stm = "SELECT * FROM ShelterPrivacy WHERE PetID = @ID";
+            string stm = "SELECT * FROM ShelterPrivacy WHERE ShelterID = @ID";
             using var cmd = new MySqlCommand(stm, con);
             cmd.Parameters.AddWithValue("@ID", ID);
             cmd.Prepare();
@@ -60,7 +60,7 @@ namespace api.models
             rdr.Read();
             return new ShelterPrivacy()
             {
-                PetID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
+                ShelterID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
                 Breed = rdr.IsDBNull(1) ? false : rdr.GetBoolean(1),
                 Age = rdr.IsDBNull(2) ? false : rdr.GetBoolean(2),
                 Gender = rdr.IsDBNull(3) ? false : rdr.GetBoolean(3),

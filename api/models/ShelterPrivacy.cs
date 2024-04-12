@@ -7,7 +7,7 @@ namespace api.models
 {
     public class ShelterPrivacy
     {
-        public int PetID{get;set;}
+        public int ShelterID{get;set;}
         public bool Breed {get; set;}
         public bool Age {get; set;}
         public bool Gender {get; set;}

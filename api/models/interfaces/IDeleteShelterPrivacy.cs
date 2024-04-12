@@ -7,6 +7,6 @@ namespace api.models.interfaces
 {
     public interface IDeleteShelterPrivacy
     {
-        void DeleteShelterPrivacy(int PetID);
+        void DeleteShelterPrivacy(int ShelterID);
     }
 }

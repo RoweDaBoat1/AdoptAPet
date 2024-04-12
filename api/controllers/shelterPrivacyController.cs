@@ -46,7 +46,7 @@ namespace api.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] ShelterPrivacy updatedShelterPrivacy)
         {
-            if (id != updatedShelterPrivacy.PetID)
+            if (id != updatedShelterPrivacy.ShelterID)
             {
                 return BadRequest();
             }
