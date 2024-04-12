@@ -1,9 +1,11 @@
 // import ApiUrls from './apiUrls.js';
 // const apiUrls = new ApiUrls();
 
-//const donationUrl = "https://localhost:5016/api/donations"
+const donationUrl = "http://localhost:5016/api/donation"
+const shelterUrl = "http://localhost:5016/api/shelters"
 
-const donationUrl = apiUrls.donationUrl
+// const donationUrl = apiUrls.donationUrl
+// const shelterUrl = apiUrls.shelterUrl
 let donations = []
 
 
@@ -13,16 +15,16 @@ function handleOnLoad(){
     populateShelterDropdown();
     let html = `
     <form onsubmit = "handleSubmit()" style="text-align: center;">
-    <label for = "shelterName">Select Shelter</label><br>
-    <select name="shelterName" id="shelterName">
+    <label for = "shelterName">Select Shelter:</label><br>
+    <select name="shelterName" id="shelterName" style="margin-bottom: 10px;">
     <option value="null">-</option>
     <option value="schc">Shelby County HC</option>
     <option value="tmac">Tuscaloosa Metro AC</option>
     <option value="more">another shelter</option>
     <option value="evenmore">and yet another</option>
     </select><br>
-    <label for = "name">Full Name</label><br>
-        <input type = "text" id = "name" name = "name"><br>
+    <input type="text" id="firstName" placeholder="First Name" style="margin-bottom: 10px;"><br>
+    <input type="text" id="lastName" placeholder="Last Name" style="margin-bottom: 10px;"><br>
         <label for = "email">Email</label><br>
         <input type = "email" id = "email" name = "email"><br>
         <label for="donation">Donation Amount:</label><br>
@@ -51,13 +53,13 @@ function handleOnLoad(){
     }
         
     async function populateShelterDropdown() {
-        await populateAppShelterTable(); // Call the function to populate the shelter table
+        await getAllShelters()
         let dropdown = document.getElementById('shelterName'); // Get the shelter dropdown element
         dropdown.innerHTML = ''; // Clear existing options
             
         // Iterate through the approved shelters and add them as options to the dropdown
         shelters.forEach(function(shelter) {
-            if (shelter.approved) { // Check if the shelter is approved
+            if (shelter.approvalStatus == "approved") { // Check if the shelter is approved
                 let option = document.createElement('option'); // Create a new option element
                 option.value = shelter.shelterName; // Set the value attribute to shelter name
                 option.textContent = shelter.shelterName; // Set the text content to shelter name
@@ -66,16 +68,22 @@ function handleOnLoad(){
         });
     }
 
-    function handleButtonClick(){
-        //post function?
-        console.log(hello)
-        window.location.href = 'https://www.metroanimalshelter.org/donate'
+    async function handleButtonClick(){
+        await handleAddDonation()
+        console.log('hello')
+        //window.location.href = 'https://www.metroanimalshelter.org/donate'
     }
         
     async function getAllDonations(){
         let response = await fetch(apiUrls.donationUrl)
         donation = await response.json()
         console.log(donations)
+    }
+
+    async function getAllShelters(){
+        let response = await fetch(shelterUrl)
+        shelters = await response.json()
+        console.log(shelters)
     }
         
     function handleChange(donation) {
@@ -144,19 +152,19 @@ async function handleAddDonation(){
     }
     var donationDate = new Date()
     let donation = {
-        id: crypto.randomUUID(),
-        shelterName: document.getElementById('shelterName').value, 
+        donationId: crypto.randomUUID(),
+        userId: document.getElementById('shelterName').value, 
+        amount: customAmount,
+        donationDate: donationDate.toISOString(),
         name: name,
-        email: email,
-        donation: customAmount,
-        donationDate: donationDate.toISOString()
+        //email: email,
     }
     await saveDonation(donation)
     //populateTable()
 }
 
 async function saveDonation(donation){
-    await fetch(apiUrls.donationUrl, {
+    await fetch(donationUrl, {
             method: "POST",
             body: JSON.stringify(donation),
             headers: {

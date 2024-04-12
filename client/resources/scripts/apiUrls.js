@@ -1,16 +1,21 @@
 // apiUrls.js
 
-class ApiUrls {
+class apiUrls {
+    baseUrl;
+    petUrl;
+    shelterUrl;
+    userUrl;
+    donationUrl;
     constructor() {
-        this.baseUrl = 'https://localhost:5016/api';
-        this.petUrl = `${this.baseUrl}/pets`;
-        this.shelterUrl = `${this.baseUrl}/Shelters`;
-        this.userUrl = `${this.baseUrl}/Users`;
-        this.donationUrl = `${this.baseUrl}/donations`
+        baseUrl = 'http://localhost:5016/api';
+        petUrl = `${baseUrl}/pets`;
+        shelterUrl = `${baseUrl}/Shelters`;
+        userUrl = `${baseUrl}/Users`;
+        donationUrl = `${baseUrl}/donations`
     }
 }
 // Export the ApiUrls class so that it can be imported into other files
-export default ApiUrls;
+//export default apiUrls;
 
 // How to use/reference in other js files (below)
 

@@ -17,7 +17,7 @@ namespace api.models
             using var cmd = new MySqlCommand();
             cmd.Connection = con;
 
-            cmd.CommandText = "DELETE FROM Pet WHERE PetId = @PetId";
+            cmd.CommandText = "DELETE FROM Pets WHERE PetId = @PetId";
             cmd.Parameters.AddWithValue("@PetId", id);
             
             cmd.ExecuteNonQuery();

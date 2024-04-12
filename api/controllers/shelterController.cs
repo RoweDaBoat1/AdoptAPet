@@ -14,7 +14,7 @@ namespace api.Controllers
     [ApiController]
     public class sheltersController : ControllerBase
     {
-        // GET: api/Shelters
+        // GET: api/Shelter
         [EnableCors("OpenPolicy")]
         [HttpGet]
         public List<Shelter> GetAllShelters()
@@ -23,7 +23,7 @@ namespace api.Controllers
             return readObject.GetAllShelters();
         }
 
-        // GET: api/Shelters/5
+        // GET: api/Shelter/5
         [EnableCors("OpenPolicy")]
         [HttpGet("{id}", Name = "GetShelterByID")]
         public Shelter GetShelterByID(int ID)
@@ -32,7 +32,7 @@ namespace api.Controllers
             return readObject.GetShelter(ID);
         }
 
-        // POST: api/Shelters
+        // POST: api/Shelter
         [EnableCors("OpenPolicy")]
         [HttpPost]
         public void Post([FromBody] Shelter value)
@@ -41,7 +41,7 @@ namespace api.Controllers
             insertObject.InsertShelter(value);
         }
 
-        // PUT: api/Shelters/5
+        // PUT: api/Shelter/5
         [EnableCors("OpenPolicy")]
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Shelter updatedShelter)
@@ -57,7 +57,7 @@ namespace api.Controllers
             return NoContent();
         }
 
-        // DELETE: api/Shelters/5
+        // DELETE: api/Shelter/5
         [EnableCors("OpenPolicy")]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)

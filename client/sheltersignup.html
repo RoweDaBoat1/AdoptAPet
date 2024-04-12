@@ -52,7 +52,7 @@
                     <input type="text" id="addressLine" placeholder="Address" required><br>
                     <input type="text" id="shelterCity" placeholder="City" required><br>
                     <input type="text" id="shelterState" placeholder="State" required><br>
-                    <input type="number" id="shelterZip" placeholder="Zip/Postal Code" required><br>
+                    <input type="text" id="shelterZip" placeholder="Zip/Postal Code" required><br>
                     <label for = "shelterPassword">Password</label><br>
                     <input type="password" id="shelterPassword" placeholder="New Password" required><br>
                     <!-- <button onclick="signup('shelter')">Sign Up</button> -->
@@ -65,14 +65,14 @@
         </div>
       </div>
     <script>
-        // Retrieve userType from URL query parameters
+        // Retrieve role from URL query parameters
         const urlParams = new URLSearchParams(window.location.search);
-        const userType = urlParams.get('userType');
-        // Show the corresponding signup form based on userType
-        if (userType === 'shelter') {
+        const role = urlParams.get('role');
+        // Show the corresponding signup form based on role
+        if (role === 'shelter') {
             document.getElementById('shelterSignupForm').style.display = 'block';
         } else {
-            // Handle invalid or unknown userType
+            // Handle invalid or unknown role
         }
     </script>
     <script>
@@ -85,6 +85,9 @@
       };
   </script> 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="./resources/scripts/createaccount.js"></script>
 </body>
 </html>

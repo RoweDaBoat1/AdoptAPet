@@ -15,7 +15,7 @@ namespace api.models
             using var con = new MySqlConnection(cs);
             con.Open();
 
-            string stm = "SELECT * FROM Users";
+            string stm = "SELECT * FROM User";
             using var cmd = new MySqlCommand(stm, con);
 
 
@@ -32,7 +32,7 @@ namespace api.models
                     Salt = rdr.IsDBNull(3) ? null : rdr.GetString(3),
                     FirstName = rdr.IsDBNull(4) ? null : rdr.GetString(4),
                     LastName = rdr.IsDBNull(5) ? null : rdr.GetString(5),
-                    Address = rdr.IsDBNull(6) ? null : rdr.GetString(6),
+                    ZipCode = rdr.IsDBNull(6) ? null : rdr.GetString(6),
                     PhoneNumber = rdr.IsDBNull(7) ? null : rdr.GetString(7),
                     FavoritePets = rdr.IsDBNull(8) ? null : rdr.GetString(8),
                     Role = rdr.IsDBNull(9) ? null : rdr.GetString(9)
@@ -52,7 +52,7 @@ namespace api.models
             {
                 con.Open();
 
-                string stm = "SELECT * FROM Users WHERE UserID = @ID";
+                string stm = "SELECT * FROM User WHERE UserID = @ID";
                 using (var cmd = new MySqlCommand(stm, con))
                 {
                     cmd.Parameters.AddWithValue("@ID", ID);
@@ -68,7 +68,7 @@ namespace api.models
                                 Salt = rdr.IsDBNull(3) ? null : rdr.GetString(3),
                                 FirstName = rdr.IsDBNull(4) ? null : rdr.GetString(4),
                                 LastName = rdr.IsDBNull(5) ? null : rdr.GetString(5),
-                                Address = rdr.IsDBNull(6) ? null : rdr.GetString(6),
+                                ZipCode = rdr.IsDBNull(6) ? null : rdr.GetString(6),
                                 PhoneNumber = rdr.IsDBNull(7) ? null : rdr.GetString(7),
                                 FavoritePets = rdr.IsDBNull(8) ? null : rdr.GetString(8),
                                 Role = rdr.IsDBNull(9) ? null : rdr.GetString(9)

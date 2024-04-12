@@ -22,7 +22,10 @@ namespace api.models
                                     PasswordHash = @PasswordHash, 
                                     Salt = @Salt,
                                     Pets_Uploaded = @Pets_Uploaded, 
-                                    Address = @Address, 
+                                    AddressLine = @AddressLine, 
+                                    City = @City, 
+                                    State = @State, 
+                                    ZipCode = @ZipCode, 
                                     PhoneNumber = @PhoneNumber, 
                                     Email = @Email, 
                                     Shelter_Name = @Shelter_Name, 
@@ -34,7 +37,10 @@ namespace api.models
             cmd.Parameters.AddWithValue("@ShelterId", id);
             cmd.Parameters.AddWithValue("@PasswordHash", updatedShelter.PasswordHash);
             cmd.Parameters.AddWithValue("@Salt", updatedShelter.Salt);
-            cmd.Parameters.AddWithValue("@Address", updatedShelter.Address);
+            cmd.Parameters.AddWithValue("@AddressLine", updatedShelter.AddressLine);
+            cmd.Parameters.AddWithValue("@City", updatedShelter.City);
+            cmd.Parameters.AddWithValue("@State", updatedShelter.State);
+            cmd.Parameters.AddWithValue("@ZipCode", updatedShelter.ZipCode);
             cmd.Parameters.AddWithValue("@PhoneNumber", updatedShelter.Phone_Number);
             cmd.Parameters.AddWithValue("@Email", updatedShelter.Email);
             cmd.Parameters.AddWithValue("@Shelter_Name", updatedShelter.Shelter_Name);
