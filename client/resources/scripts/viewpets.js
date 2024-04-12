@@ -11,7 +11,7 @@ async function fetchData() {
 async function populateCards() {
   const petsContainer = document.querySelector('.pets');
 
-  pets = await fetchData()
+  const pets = await fetchData()
   pets.forEach(pet => {
     const petCard = document.createElement('div');
     petCard.classList.add('pet-card');
