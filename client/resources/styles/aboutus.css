@@ -63,18 +63,24 @@
     padding: 10px;
 }
 
-
-.about-section {
-    margin-bottom: 40px;
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
-.about-section h2 {
-    margin-bottom: 20px;
+.text {
+    flex: 1;
+    margin-right: 20px; /* Adjust spacing between text and image */
+}
+
+.image {
+    flex: 1;
 }
 
 .about-image {
-    width: 100%;
-    max-width: 500px;
+    max-width: 100%;
+    height: auto;
     display: block;
     margin: 20px auto;
 }
