@@ -37,7 +37,7 @@ namespace api.models
                     Height = rdr.IsDBNull(9) ? null : rdr.GetString(9),
                     HouseTrained = rdr.IsDBNull(10) ? null : rdr.GetString(10),
                     PetType = rdr.IsDBNull(11) ? null : rdr.GetString(11),
-                    AdoptionStatus = rdr.IsDBNull(12) ? false : rdr.GetBoolean(12),
+                    AdoptionStatus = rdr.IsDBNull(12) ? null : rdr.GetString(12),
                     ShelterID = rdr.IsDBNull(13) ? 0 : rdr.GetInt32(13)
                 });
             }
@@ -74,7 +74,7 @@ namespace api.models
                     Height = rdr.IsDBNull(9) ? null : rdr.GetString(9),
                     HouseTrained = rdr.IsDBNull(10) ? null : rdr.GetString(10),
                     PetType = rdr.IsDBNull(11) ? null : rdr.GetString(11),
-                    AdoptionStatus = rdr.IsDBNull(12) ? false : rdr.GetBoolean(12),
+                    AdoptionStatus = rdr.IsDBNull(12) ? null : rdr.GetString(12),
                     ShelterID = rdr.IsDBNull(13) ? 0 : rdr.GetInt32(13)
                 };
         }

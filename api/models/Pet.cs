@@ -14,7 +14,7 @@ namespace api.models
         public string Height {get; set;}
         public string HouseTrained {get; set;}
         public string PetType {get; set;}
-        public bool AdoptionStatus {get; set;}
+        public string AdoptionStatus {get; set;}
         public int ShelterID {get; set;}
     }
 }
