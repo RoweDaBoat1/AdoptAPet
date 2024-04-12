@@ -5,18 +5,7 @@ async function fetchData() {
   const data = response.json()
   return data
 
-    // .then(response => {
-    //   if (!response.ok) {
-    //     throw new Error('Network response was not ok');
-    //   }
-    //   return response.json();
-    // })
-    // .then(data => {
-    //   return data; 
-    // })
-    // .catch(error => {
-    //   console.error('There was a problem fetching the data:', error);
-    // });
+    
 }
 
 async function populateCards() {

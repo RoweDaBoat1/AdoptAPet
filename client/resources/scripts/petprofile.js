@@ -15,7 +15,12 @@ async function populatePetProfile() {
         document.getElementById('petBreed').textContent = pet.breed;
         document.getElementById('petAge').textContent = pet.age;
         document.getElementById('petGender').textContent = pet.gender;
-        document.getElementById('aboutMe').textContent = pet.aboutme;
+        document.getElementById('weight').textContent = pet.weight;
+        document.getElementById('attitude').textContent = pet.attitude;
+        document.getElementById('aboutMe').textContent = pet.aboutMe;
+        document.getElementById('height').textContent = pet.height;
+        document.getElementById('houseTrained').textContent = pet.houseTrained;
+        document.getElementById('petType').textContent = pet.petType;
 
         
         const adoptionFormUrl = `adoptionform.html?petId=${petId}`;
