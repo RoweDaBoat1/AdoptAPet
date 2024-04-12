@@ -1,4 +1,4 @@
-//const userUrl = "https://localhost:5016/api/users"
+//const userUrl = "http://localhost:5016/api/users"
 
 //just for testing
 const users = [

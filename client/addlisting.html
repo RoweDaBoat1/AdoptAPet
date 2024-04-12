@@ -9,28 +9,37 @@
     <link rel="stylesheet" href="./resources/styles/addlisting.css">
 </head>
 <body onload="handleOnLoad()">
+  
+  <div id="petTable"></div>
     <div class="container">
         <div class="row">
-          <div class="col">
+          <div class="col-3">
           </div>
-          <div class="col-6">
+          <div class="col-6"> 
             <h1 style="text-align: center;">Pet Listing Hub</h1>
           </div>
-          <div class="col">
+          <div class="col-3">
           </div>
         </div>
         <div class="row">
-          <div class="col">
+          <div class="col-3">
           </div>
-          <div class="col-6">
-            <div id="app" class="card">
-                <div id="petTable"></div>
-            </div>
+          <div class="col-6" class="card">
+            <div id="app"></div>
           </div>
-          <div class="col">
+          <div class="col-3">
           </div>
         </div>
-      </div>
+        <div class="row">
+          <div class="col-3">
+          </div>
+          <div class="col-6">
+          </div>
+          <div class="col-3">
+          </div>
+        </div>
+    </div>
+
     <script>
         const apiUrls = {
           baseurl: 'https://localhost:5016/api',

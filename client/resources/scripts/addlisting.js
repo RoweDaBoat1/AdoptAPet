@@ -1,6 +1,6 @@
-//const petUrl = "https://localhost:5016/api/pets"
+const petUrl = "http://localhost:5016/api/pets"
 
-const petUrl = apiUrls.petUrl
+//const petUrl = apiUrls.petUrl
 
 let pets = []
 
@@ -28,13 +28,13 @@ function handleOnLoad(){
         <form onsubmit = "return false" enctype="multipart/form-data">
             <h3>Add Pet Listing</h3>
             <input type="text" id="name" placeholder="Name" required style="margin-bottom: 10px;"><br>
-            <label for = "shelterName">Pet Type:</label><br>
+            <label for ="type">Pet Type:</label><br>
             <select name="type" id="type" required style="margin-bottom: 10px;">
                 <option value="null">-</option>
                 <option value="dog">Dog</option>
                 <option value="cat">Cat</option>
             </select><br>
-            <input type="number" id="age" placeholder="Age"  required><br>
+            <input type="number" id="age" placeholder="Age"><br>
             <label for = "breed">Breed:</label><br>
             <select name="breed" id="breed" onchange="handleChange(breed)" style="margin-bottom: 10px;">
                 <option value="null">-</option>
@@ -59,9 +59,9 @@ function handleOnLoad(){
                 <option value="female">F</option>
             </select><br>
             <label for = "intakeDate">Intake Date:</label><br>
-            <input type="date" id="intakeDate" placeholder="Intake Date" style="margin-bottom: 10px;" required><br>
+            <input type="date" id="intakeDate" placeholder="Intake Date" style="margin-bottom: 10px;"><br>
             <input type="text" id="weight" placeholder="Weight" style="margin-bottom: 10px;"><br>
-            <input type="text" id="height" placeholder="Height" required style="margin-bottom: 10px;"><br>
+            <input type="text" id="height" placeholder="Height" style="margin-bottom: 10px;"><br>
             <label>Attitude:</label><br>
                 <input type="checkbox" id="attitudeAggressive" name="attitude" value="aggressive">
                 <label for="attitudeAggressive">Aggressive</label><br>
@@ -76,12 +76,12 @@ function handleOnLoad(){
                 <input type="checkbox" id="attitudePlayful" name="attitude" value="playful">
                 <label for="attitudePlayful">Playful</label><br>
             <label for = "houseTrained">Housetrained:</label><br>
-            <select name="houseTrained" id="houseTrained" style="margin-bottom: 10px;" required><br>
+            <select name="houseTrained" id="houseTrained" style="margin-bottom: 10px;"><br>
                 <option value="null">-</option>
                 <option value="yes">Yes</option>
                 <option value="no">No</option>
             </select><br>
-            <textarea id="aboutMe" placeholder="About" style="width:400px; height:100px" required></textarea><br>
+            <textarea id="aboutMe" placeholder="About" style="width:400px; height:100px"></textarea><br>
             <label for="imageUpload" style="margin-top: 10px;">Upload Image:</label>
             <input type="file" id="imageUpload" accept="image/*" style="margin-top: 10px;"required>
             <div id="imagePreview" style="margin-top: 10px;"></div>
@@ -127,11 +127,12 @@ async function populateTable(){
             <th>House Trained</th>
             <th>Type</th>
             <th>Adoption Status</th>
-            <th>Adopted</th>
+            <th>Edit</th>
+            <th>Delete</th>
         </tr>`
     pets.forEach(function(pet){
         //add more logic into the if statement (shelterid) so that shelters only see their own animals
-        if(pet.adopted == false){
+        if(pet.adoptionStatus != "adopted"){
             html+= `
             <tr>
                 <td>${pet.id}</td>
@@ -148,7 +149,6 @@ async function populateTable(){
                 <td>${pet.houseTrained}</td>
                 <td>${pet.type}</td>
                 <td>${pet.adoptionStatus}</td>
-                <td>${pet.adopted}</td>
                 <td><button class = "btn btn-warning" onclick= "handlePetEdit('${pet.id}')">Edit</button></td>
                 <td><button class = "btn btn-danger" onclick= "handlePetAdoption('${pet.id}')">Delete</button></td>
             </tr>
@@ -192,7 +192,6 @@ async function handleAddPet(){
         weight: document.getElementById('weight').value,
         attitudes: attitudes,
         aboutMe :document.getElementById('aboutMe').value,
-        adopted: false,
         adoptionStatus: "Open",
         height :document.getElementById('height').value,
         houseTrained :document.getElementById('houseTrained').value,
@@ -246,7 +245,7 @@ async function handlePetAdoption(id, button){
     //1
     const pet = pets.find(pet => pet.id === id);
     if (pet) {
-        pet.adopted = !pet.adopted;
+        pet.adoptionStatus = "adopted";
         console.log(pet.adopted)
     }
     //2
@@ -263,7 +262,7 @@ async function handlePetAdoption(id, button){
 function handlePetEdit(pet){
     let html = `
     <form onsubmit = "return false">
-    <h3>Add Pet Listing</h3>
+    <h3>Edit Pet Listing</h3>
     <input type="text" id="name" placeholder="Name" required style="margin-bottom: 10px;"><br>
     <label for = "shelterName">Pet Type:</label><br>
     <select name="type" id="type" required style="margin-bottom: 10px;">
@@ -303,10 +302,16 @@ function handlePetEdit(pet){
         <option value="no">No</option>
     </select><br>
     <textarea id="aboutMe" placeholder="About" style="width:400px; height:100px" required></textarea><br>
+    <label for = "adoptionStatus">Adoption Status:</label><br>
+    <select name="adoptionStatus" id="adoptionStatus" style="margin-bottom: 10px;" required><br>
+        <option value="open">open</option>
+        <option value="pending">pending</option>
+        <option value="adopted">adopted</option>
+    </select><br>
     <label for="imageUpload" style="margin-top: 10px;">Upload Image:</label>
     <input type="file" id="imageUpload" accept="image/*" style="margin-top: 10px;"required>
     <div id="imagePreview" style="margin-top: 10px;"></div>
-    <button style="margin-top: 10px;" class="btn btn-primary" onclick="handleUpdatePet('${pet.id}')">Add Pet</button> 
+    <button style="margin-top: 10px;" class="btn btn-primary" onclick="handleUpdatePet('${pet.id}')">Update</button> 
 </form>
     `
     document.getElementById('app').innerHTML = html
@@ -317,6 +322,7 @@ function handlePetEdit(pet){
     document.getElementById('intakeDate').innerHTML = pet.intakeDate
     document.getElementById('weight').innerHTML = pet.weight
     document.getElementById('aboutMe').innerHTML = pet.aboutMe
+    document.getElementById('adoptionStatus').innerHTML = pet.adoptionStatus
     document.getElementById('height').innerHTML = pet.height
     document.getElementById('houseTrained').innerHTML = pet.houseTrained
     document.getElementById('type').innerHTML = pet.type
@@ -343,7 +349,7 @@ async function handleUpdatePet(id){
         attitudes: attitudes,
         aboutMe :document.getElementById('aboutMe').value,
         adopted: adopted,
-        adoptionStatus: adoptionStatus,
+        adoptionStatus: document.getElementById('adoptionStatus').value,
         height :document.getElementById('height').value,
         houseTrained :document.getElementById('houseTrained').value,
         petType: document.getElementById('type').value,
