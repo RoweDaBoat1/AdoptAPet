@@ -8,6 +8,7 @@ namespace api.models
         public int Age {get; set;}
         public string Gender {get; set;}
         public string IntakeDate {get; set;}
+        public string PostDate {get; set;}
         public string Weight {get; set;}
         public string Attitude {get; set;}
         public string AboutMe {get; set;}

@@ -26,6 +26,7 @@ namespace api.models
                                         Age = @Age, 
                                         Gender = @Gender, 
                                         IntakeDate = @IntakeDate, 
+                                        PostDate = @PostDate, 
                                         Weight = @Weight, 
                                         Attitude = @Attitude, 
                                         AboutMe = @AboutMe,
@@ -41,6 +42,7 @@ namespace api.models
                 cmd.Parameters.AddWithValue("@Age", updatedPet.Age);
                 cmd.Parameters.AddWithValue("@Gender", updatedPet.Gender);
                 cmd.Parameters.AddWithValue("@IntakeDate", updatedPet.IntakeDate);
+                cmd.Parameters.AddWithValue("@PostDate", updatedPet.PostDate);
                 cmd.Parameters.AddWithValue("@Weight", updatedPet.Weight);
                 cmd.Parameters.AddWithValue("@Attitude", updatedPet.Attitude);
                 cmd.Parameters.AddWithValue("@AboutMe", updatedPet.AboutMe);

@@ -31,14 +31,15 @@ namespace api.models
                     Age = rdr.IsDBNull(3) ? 0 : rdr.GetInt32(3),
                     Gender = rdr.IsDBNull(4) ? null : rdr.GetString(4),
                     IntakeDate = rdr.IsDBNull(5) ? null : rdr.GetString(5),
-                    Weight = rdr.IsDBNull(6) ? null : rdr.GetString(6),
-                    Attitude = rdr.IsDBNull(7) ? null : rdr.GetString(7),
-                    AboutMe = rdr.IsDBNull(8) ? null : rdr.GetString(8),
-                    Height = rdr.IsDBNull(9) ? null : rdr.GetString(9),
-                    HouseTrained = rdr.IsDBNull(10) ? null : rdr.GetString(10),
-                    PetType = rdr.IsDBNull(11) ? null : rdr.GetString(11),
-                    AdoptionStatus = rdr.IsDBNull(12) ? null : rdr.GetString(12),
-                    ShelterID = rdr.IsDBNull(13) ? 0 : rdr.GetInt32(13)
+                    PostDate = rdr.IsDBNull(6) ? null : rdr.GetString(6),
+                    Weight = rdr.IsDBNull(7) ? null : rdr.GetString(7),
+                    Attitude = rdr.IsDBNull(8) ? null : rdr.GetString(8),
+                    AboutMe = rdr.IsDBNull(9) ? null : rdr.GetString(9),
+                    Height = rdr.IsDBNull(10) ? null : rdr.GetString(10),
+                    HouseTrained = rdr.IsDBNull(11) ? null : rdr.GetString(11),
+                    PetType = rdr.IsDBNull(12) ? null : rdr.GetString(12),
+                    AdoptionStatus = rdr.IsDBNull(13) ? null : rdr.GetString(13),
+                    ShelterID = rdr.IsDBNull(14) ? 0 : rdr.GetInt32(14)
                 });
             }
 
@@ -68,14 +69,15 @@ namespace api.models
                     Age = rdr.IsDBNull(3) ? 0 : rdr.GetInt32(3),
                     Gender = rdr.IsDBNull(4) ? null : rdr.GetString(4),
                     IntakeDate = rdr.IsDBNull(5) ? null : rdr.GetString(5),
-                    Weight = rdr.IsDBNull(6) ? null : rdr.GetString(6),
-                    Attitude = rdr.IsDBNull(7) ? null : rdr.GetString(7),
-                    AboutMe = rdr.IsDBNull(8) ? null : rdr.GetString(8),
-                    Height = rdr.IsDBNull(9) ? null : rdr.GetString(9),
-                    HouseTrained = rdr.IsDBNull(10) ? null : rdr.GetString(10),
-                    PetType = rdr.IsDBNull(11) ? null : rdr.GetString(11),
-                    AdoptionStatus = rdr.IsDBNull(12) ? null : rdr.GetString(12),
-                    ShelterID = rdr.IsDBNull(13) ? 0 : rdr.GetInt32(13)
+                    PostDate = rdr.IsDBNull(6) ? null : rdr.GetString(6),
+                    Weight = rdr.IsDBNull(7) ? null : rdr.GetString(7),
+                    Attitude = rdr.IsDBNull(8) ? null : rdr.GetString(8),
+                    AboutMe = rdr.IsDBNull(9) ? null : rdr.GetString(9),
+                    Height = rdr.IsDBNull(10) ? null : rdr.GetString(10),
+                    HouseTrained = rdr.IsDBNull(11) ? null : rdr.GetString(11),
+                    PetType = rdr.IsDBNull(12) ? null : rdr.GetString(12),
+                    AdoptionStatus = rdr.IsDBNull(13) ? null : rdr.GetString(13),
+                    ShelterID = rdr.IsDBNull(14) ? 0 : rdr.GetInt32(14)
                 };
         }
     }

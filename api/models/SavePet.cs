@@ -18,13 +18,14 @@ namespace api.models
 
             using var cmd = new MySqlCommand(cs);
 
-            cmd.CommandText = @"INSERT INTO Pets(PetId, Name, Breed, Age, Gender, IntakeDate, Weight, Attitude, AboutMe, Height, HouseTrained, PetType, ShelterID, AdoptionStatus) VALUES(@PetID, @Name, @Breed, @Age, @Gender, @IntakeDate, @Weight, @Attitude, @AboutMe, @Height, @HouseTrained, @PetType, @ShelterID, @AdoptionStatus))";
+            cmd.CommandText = @"INSERT INTO Pets(PetId, Name, Breed, Age, Gender, IntakeDate, PostDate, Weight, Attitude, AboutMe, Height, HouseTrained, PetType, ShelterID, AdoptionStatus) VALUES(@PetID, @Name, @Breed, @Age, @Gender, @IntakeDate, @PostDate, @Weight, @Attitude, @AboutMe, @Height, @HouseTrained, @PetType, @ShelterID, @AdoptionStatus))";
             cmd.Parameters.AddWithValue("@PetId", value.PetID);
             cmd.Parameters.AddWithValue("@Name", value.Name);
             cmd.Parameters.AddWithValue("@Breed", value.Breed);
             cmd.Parameters.AddWithValue("@Age", value.Age);
             cmd.Parameters.AddWithValue("@Gender", value.Gender);
             cmd.Parameters.AddWithValue("@IntakeDate", value.IntakeDate);
+            cmd.Parameters.AddWithValue("@PostDate", value.PostDate);
             cmd.Parameters.AddWithValue("@Weight", value.Weight);
             cmd.Parameters.AddWithValue("@Attitude", value.Attitude);
             cmd.Parameters.AddWithValue("@AboutMe", value.AboutMe);
