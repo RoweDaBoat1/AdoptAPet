@@ -26,11 +26,14 @@ namespace api.models
             using var cmd = new MySqlCommand(cs);
 
             cmd.Connection = con;
-            cmd.CommandText = @"INSERT INTO Shelter(ShelterId, PasswordHash, Salt, Address, Phone_Number, Email, Shelter_Name, Role, Pets_For_Adoption, Pets_Adopted, Approval_Status) VALUES (@ShelterId, @PasswordHash, @Salt, @Address, @Phone_Number, @Email, @Shelter_Name, @Role, @Pets_For_Adoption, @Pets_Adopted, @Approval_Status)";
+            cmd.CommandText = @"INSERT INTO Shelter(ShelterId, PasswordHash, Salt, AddressLine, City, State, ZipCode, Phone_Number, Email, Shelter_Name, Role, Pets_For_Adoption, Pets_Adopted, Approval_Status) VALUES (@ShelterId, @PasswordHash, @Salt, @AddressLine, @City, @State, @ZipCode, @Phone_Number, @Email, @Shelter_Name, @Role, @Pets_For_Adoption, @Pets_Adopted, @Approval_Status)";
             cmd.Parameters.AddWithValue("@ShelterId", value.ShelterID);
             cmd.Parameters.AddWithValue("@PasswordHash", hashedPassword); // Use hashed password
             cmd.Parameters.AddWithValue("@Salt", salt); // Store salt in the database
-            cmd.Parameters.AddWithValue("@Address", value.Address);
+            cmd.Parameters.AddWithValue("@AddressLine", value.AddressLine);
+            cmd.Parameters.AddWithValue("@City", value.City);
+            cmd.Parameters.AddWithValue("@State", value.State);
+            cmd.Parameters.AddWithValue("@ZipCode", value.ZipCode);
             cmd.Parameters.AddWithValue("@Phone_Number", value.Phone_Number);
             cmd.Parameters.AddWithValue("@Email", value.Email);
             cmd.Parameters.AddWithValue("@Shelter_Name", value.Shelter_Name);

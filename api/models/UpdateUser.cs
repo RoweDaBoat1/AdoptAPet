@@ -23,7 +23,7 @@ namespace api.models
                                     Salt = @Salt
                                     FirstName = @FirstName, 
                                     LastName = @LastName, 
-                                    Address = @Address, 
+                                    ZipCode = @ZipCode, 
                                     PhoneNumber = @PhoneNumber, 
                                     FavoritePets = @FavoritePets 
                                 WHERE UserId = @UserId";
@@ -34,7 +34,7 @@ namespace api.models
             cmd.Parameters.AddWithValue("@Salt", updatedUser.Salt);
             cmd.Parameters.AddWithValue("@FirstName", updatedUser.FirstName);
             cmd.Parameters.AddWithValue("@LastName", updatedUser.LastName);
-            cmd.Parameters.AddWithValue("@Address", updatedUser.Address);
+            cmd.Parameters.AddWithValue("@ZipCode", updatedUser.ZipCode);
             cmd.Parameters.AddWithValue("@PhoneNumber", updatedUser.PhoneNumber);
             cmd.Parameters.AddWithValue("@FavoritePets", updatedUser.FavoritePets);
             
