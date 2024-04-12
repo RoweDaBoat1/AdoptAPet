@@ -2,7 +2,7 @@
 
 const shelterPrivacyUrl = apiUrls.shelterPrivacyUrl
 // may not actually need this url since the id is added to the object in createaccount.js but also might since the save button uses id
-//const shelterUrl = "http://localhost:5016/api/shelters"
+//const shelterUrl = "http://localhost:5016/api/shelter"
 
 
 async function handleOnLoad() {
