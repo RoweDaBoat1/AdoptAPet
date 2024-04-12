@@ -15,6 +15,8 @@ async function populatePetProfile() {
         document.getElementById('petBreed').textContent = pet.breed;
         document.getElementById('petAge').textContent = pet.age;
         document.getElementById('petGender').textContent = pet.gender;
+        document.getElementById('aboutMe').textContent = pet.aboutme;
+
         
         const adoptionFormUrl = `adoptionform.html?petId=${petId}`;
         
