@@ -192,10 +192,11 @@ async function handleAddPet(){
         weight: document.getElementById('weight').value,
         attitudes: attitudes,
         aboutMe :document.getElementById('aboutMe').value,
-        adoptionStatus: "Open",
+        adoptionStatus: "open",
         height :document.getElementById('height').value,
         houseTrained :document.getElementById('houseTrained').value,
         petType: document.getElementById('type').value,
+        imageUrl: imageUrl
         //shelter id
     }
     await savePet(pet)
@@ -212,19 +213,19 @@ async function savePet(pet){
     })
 }
 
-async function uploadImage(imageFile) {
-    let formData = new FormData()
-    formData.append('image', imageFile)
+// async function uploadImage(imageFile) {
+//     let formData = new FormData()
+//     formData.append('image', imageFile)
 
-    let response = await fetch('/upload/image', {
-        method: 'POST',
-        body: formData
-    })
+//     let response = await fetch('/upload/image', {
+//         method: 'POST',
+//         body: formData
+//     })
 
-    let imageUrl = await response.text()
+//     let imageUrl = await response.text()
     
-    return imageUrl
-}
+//     return imageUrl
+// }
 
 // async function handlePetDelete(id){
 //     pets.forEach(pet =>{
@@ -263,15 +264,15 @@ function handlePetEdit(pet){
     let html = `
     <form onsubmit = "return false">
     <h3>Edit Pet Listing</h3>
-    <input type="text" id="name" placeholder="Name" required style="margin-bottom: 10px;"><br>
-    <label for = "shelterName">Pet Type:</label><br>
-    <select name="type" id="type" required style="margin-bottom: 10px;">
+    <input type="text" id="name" placeholder="Name" style="margin-bottom: 10px;"><br>
+    <label for = "type">Pet Type:</label><br>
+    <select name="type" id="type" style="margin-bottom: 10px;">
         <option value="null">-</option>
         <option value="dog">Dog</option>
         <option value="cat">Cat</option>
     </select><br>
     <input type="text" id="breed" placeholder="Breed" style="margin-bottom: 10px;"><br>
-    <input type="number" id="age" placeholder="Age" style="margin-bottom: 10px;" required><br>
+    <input type="number" id="age" placeholder="Age" style="margin-bottom: 10px;"><br>
     <label for = "gender">Gender:</label><br>
     <select name="type" id="type" style="margin-bottom: 10px;">
         <option value="null">-</option>
@@ -279,9 +280,9 @@ function handlePetEdit(pet){
         <option value="female">F</option>
     </select><br>
     <label for = "intakeDate">Intake Date:</label><br>
-    <input type="date" id="intakeDate" placeholder="Intake Date" style="margin-bottom: 10px;" required><br>
+    <input type="date" id="intakeDate" placeholder="Intake Date" style="margin-bottom: 10px;"><br>
     <input type="text" id="weight" placeholder="Weight" style="margin-bottom: 10px;"><br>
-    <input type="text" id="height" placeholder="Height" required style="margin-bottom: 10px;"><br>
+    <input type="text" id="height" placeholder="Height" style="margin-bottom: 10px;"><br>
     <label>Attitude:</label><br>
         <input type="checkbox" id="attitudeAggressive" name="attitude" value="aggressive">
         <label for="attitudeAggressive">Aggressive</label><br>
@@ -296,36 +297,40 @@ function handlePetEdit(pet){
         <input type="checkbox" id="attitudePlayful" name="attitude" value="playful">
         <label for="attitudePlayful">Playful</label><br>
     <label for = "houseTrained">Housetrained:</label><br>
-    <select name="houseTrained" id="houseTrained" style="margin-bottom: 10px;" required><br>
+    <select name="houseTrained" id="houseTrained" style="margin-bottom: 10px;"><br>
         <option value="null">-</option>
         <option value="yes">Yes</option>
         <option value="no">No</option>
     </select><br>
-    <textarea id="aboutMe" placeholder="About" style="width:400px; height:100px" required></textarea><br>
+    <textarea id="aboutMe" placeholder="About" style="width:400px; height:100px"></textarea><br>
     <label for = "adoptionStatus">Adoption Status:</label><br>
-    <select name="adoptionStatus" id="adoptionStatus" style="margin-bottom: 10px;" required><br>
+    <select name="adoptionStatus" id="adoptionStatus" style="margin-bottom: 10px;><br>
         <option value="open">open</option>
         <option value="pending">pending</option>
         <option value="adopted">adopted</option>
     </select><br>
     <label for="imageUpload" style="margin-top: 10px;">Upload Image:</label>
-    <input type="file" id="imageUpload" accept="image/*" style="margin-top: 10px;"required>
+    <input type="file" id="imageUpload" accept="image/*" style="margin-top: 10px;">
     <div id="imagePreview" style="margin-top: 10px;"></div>
     <button style="margin-top: 10px;" class="btn btn-primary" onclick="handleUpdatePet('${pet.id}')">Update</button> 
 </form>
     `
     document.getElementById('app').innerHTML = html
-    document.getElementById('name').innerHTML = pet.name
-    document.getElementById('breed').innerHTML = pet.breed
-    document.getElementById('age').innerHTML = pet.age
-    document.getElementById('gender').innerHTML = pet.gender
-    document.getElementById('intakeDate').innerHTML = pet.intakeDate
-    document.getElementById('weight').innerHTML = pet.weight
-    document.getElementById('aboutMe').innerHTML = pet.aboutMe
-    document.getElementById('adoptionStatus').innerHTML = pet.adoptionStatus
-    document.getElementById('height').innerHTML = pet.height
-    document.getElementById('houseTrained').innerHTML = pet.houseTrained
-    document.getElementById('type').innerHTML = pet.type
+    document.getElementById('name').value = pet.name
+    document.getElementById('breed').value = pet.breed
+    document.getElementById('age').value = pet.age
+    document.getElementById('gender').value = pet.gender
+    document.getElementById('intakeDate').value = pet.intakeDate
+    document.getElementById('weight').value = pet.weight
+    document.getElementById('aboutMe').value = pet.aboutMe
+    document.getElementById('adoptionStatus').value = pet.adoptionStatus
+    document.getElementById('height').value = pet.height
+    document.getElementById('houseTrained').value = pet.houseTrained
+    document.getElementById('type').value = pet.type
+
+    const breedSelect = document.getElementById('breed');
+    breedSelect.value = pet.breed;
+    handleChange(breedSelect);
 
     pet.attitudes.forEach(function(attitude) {
         document.getElementById('attitude' + attitude.charAt(0).toUpperCase() + attitude.slice(1)).checked = true

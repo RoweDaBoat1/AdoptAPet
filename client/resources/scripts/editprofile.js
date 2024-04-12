@@ -1,18 +1,19 @@
-//const userUrl = "http://localhost:5016/api/users"
+//const userUrl = "http://localhost:5016/api/user"
 
 //just for testing
-const users = [
-    { fullName: 'John Doe', userEmail: 'john@example.com', phoneNumber: '1234567890', userZip: '12345', userPassword: 'password' }
-]
+// const users = [
+//     { firstName: 'John', lastName: 'Doe', userEmail: 'john@example.com', phoneNumber: '1234567890', userZip: '12345', userPassword: 'password' }
+// ]
 
 function handleOnLoad(){
-    populateTable(users)
+    populateTable()
 }
 
 // //function to see who is logged in and retrieve their data
 
 
-function populateTable(users) {
+async function populateTable() {
+    await getAllUsers()
     let html = `
         <table id="userTable">
             <tr>
@@ -23,12 +24,16 @@ function populateTable(users) {
     users.forEach(function(user) {
         html += `
             <tr>
-                <td>First and Last Name:</td>
-                <td><span id="fullName">${user.fullName}</span></td>
+                <td>First Name:</td>
+                <td><span id="firstName">${user.firstName}</span></td>
+            </tr>
+            <tr>
+                <td>Last Name:</td>
+                <td><span id="lastName">${user.lastName}</span></td>
             </tr>
             <tr>
                 <td>Email:</td>
-                <td><span id="email">${user.userEmail}</span></td>
+                <td><span id="email">${user.email}</span></td>
             </tr>
             <tr>
                 <td>Phone:</td>
@@ -36,11 +41,11 @@ function populateTable(users) {
             </tr>
             <tr>
                 <td>Zip/Postal Code:</td>
-                <td><span id="zip">${user.userZip}</span></td>
+                <td><span id="zip">${user.ZipCode}</span></td>
             </tr>
             <tr>
                 <td>Password:</td>
-                <td><span id="password">${user.userPassword}</span></td>
+                <td><span id="password">${user.password}</span></td>
             </tr>
             <tr>
                 <td colspan="2">
@@ -96,6 +101,19 @@ async function saveChanges() {
     // }).catch(error => {
     //     // Handle error
     // });
+}
+
+async function getAllUsers() {
+    // Perform asynchronous data retrieval (e.g., fetch API call)
+    // Assign the fetched data to the users variable
+    // Example:
+    const response = await fetch(userUrl);
+    users = await response.json();
+    // For demonstration purposes, a mock array of users is used
+    // users = [
+    //     { firstName: 'John', lastName: 'Doe', email: 'john@example.com' },
+    //     { firstName: 'Jane', lastName: 'Doe', email: 'jane@example.com' }
+    // ];
 }
 
 // async function handleUpdateUser(id){

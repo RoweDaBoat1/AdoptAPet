@@ -59,19 +59,22 @@
             <div class="col-6" style="text-align: center;">
                 <div class="card">
                     <!--<form>-->
-                    <div id="loginForm">  
-                        <h2>Login</h2>
-                        <label>Account type:</label><br>
-                        <input type="radio" id="typeUser" name="role" value="user" checked>
-                        <label for="typeUser">user</label>
-                        <input type="radio" id="typeShelter" name="role" value="shelter">
-                        <label for="typeShelter">shelter</label>
-                        <input type="radio" id="typeAdmin" name="role" value="admin">
-                        <label for="typeAdmin">admin</label><br>
-                        <input type="text" id="email" placeholder="Email"><br>
-                        <input type="password" id="password" placeholder="Password"><br>
-                        <button style="margin-top: 10px;" class="btn btn-primary" onclick="login()">Login</button><br>
-                        <a href="forgotpassword.html" style="margin-top: 10px;">Forgot Password?</a>
+                    <div> 
+                        <form id="loginForm">
+
+                            <h2>Login</h2>
+                            <label>Account type:</label><br>
+                            <input type="radio" id="typeUser" name="role" value="user" checked>
+                            <label for="typeUser">user</label>
+                            <input type="radio" id="typeShelter" name="role" value="shelter">
+                            <label for="typeShelter">shelter</label>
+                            <input type="radio" id="typeAdmin" name="role" value="admin">
+                            <label for="typeAdmin">admin</label><br>
+                            <input type="email" id="email" placeholder="Email"><br>
+                            <input type="password" id="password" placeholder="Password"><br>
+                            <button type="submit"style="margin-top: 10px;" class="btn btn-primary">Login</button><br>
+                            <a href="forgotpassword.html" style="margin-top: 10px;">Forgot Password?</a>
+                        </form> 
                     </div>
                     <div id="signupButtons">
                         <p>Don't have an account? Select your user type:</p>
@@ -102,5 +105,6 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="./resources/scripts/createaccount.js"></script>
+<script src="./resources/scripts/login.js"></script>
 </body>
 </html>

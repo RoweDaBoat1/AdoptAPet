@@ -18,7 +18,7 @@ namespace api.models
 
             using var cmd = new MySqlCommand(cs);
 
-            cmd.CommandText = @"INSET INTO Pet(PetId, Name, Breed, Age, Gender, IntakeDate, Weight, Attitude, AboutMe, Height, HouseTrained, PetType, ShelterID, AdoptionStatus) VALUES(@PetID, @Name, @Breed, @Age, @Gender, @IntakeDate, @Weight, @Attitude, @AboutMe, @Height, @HouseTrained, @PetType, @ShelterID, @AdoptionStatus))";
+            cmd.CommandText = @"INSERT INTO Pets(PetId, Name, Breed, Age, Gender, IntakeDate, Weight, Attitude, AboutMe, Height, HouseTrained, PetType, ShelterID, AdoptionStatus) VALUES(@PetID, @Name, @Breed, @Age, @Gender, @IntakeDate, @Weight, @Attitude, @AboutMe, @Height, @HouseTrained, @PetType, @ShelterID, @AdoptionStatus))";
             cmd.Parameters.AddWithValue("@PetId", value.PetID);
             cmd.Parameters.AddWithValue("@Name", value.Name);
             cmd.Parameters.AddWithValue("@Breed", value.Breed);
