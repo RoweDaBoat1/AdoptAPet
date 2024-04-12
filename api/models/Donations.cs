@@ -8,9 +8,11 @@ namespace api.models.interfaces
     public class Donations
     {
         public int DonationID {get; set;}
-        public int UserID {get; set;}
-        public int Amount {get; set;}
+        public double Amount {get; set;}
         public string DonationDate {get; set;}
-        public string Name {get; set;}
+        public string ShelterName{get;set;}
+        public string Email{get;set;}
+        public string FirstName {get; set;}
+        public string LastName{get;set;}
     }
 }

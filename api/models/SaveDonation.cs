@@ -17,10 +17,12 @@ namespace api.models
 
             cmd.CommandText = @"INSERT INTO Donations(DonationId, UserID, Amount, DonationDate, Name) VALUES(@DonationId, @UserID, @Amount, @DonationDate, @Name))";
             cmd.Parameters.AddWithValue("@DonationId", value.DonationID);
-            cmd.Parameters.AddWithValue("@UserID", value.UserID);
             cmd.Parameters.AddWithValue("@Amount", value.Amount);
             cmd.Parameters.AddWithValue("@DonationDate", value.DonationDate);
-            cmd.Parameters.AddWithValue("@Name", value.Name);
+            cmd.Parameters.AddWithValue("@ShelterName", value.ShelterName);
+            cmd.Parameters.AddWithValue("@Email", value.Email);
+            cmd.Parameters.AddWithValue("@LastName", value.FirstName);
+            cmd.Parameters.AddWithValue("@FirstName", value.LastName);
             cmd.Prepare();
             cmd.ExecuteNonQuery();
         }
