@@ -17,8 +17,8 @@ namespace api.models
 
             using var cmd = new MySqlCommand(cs);
 
-            cmd.CommandText = @"INSERT INTO ShelterPrivacy(PetID, Breed, Age, Gender, IntakeDate, Weight, Attitude, AboutMe, Height, HouseTrained, AdoptionStatus) VALUES(@PetID, @Breed, @Age, @Gender, @IntakeDate, @Weight, @Attitude, @AboutMe, @Height, @HouseTrained, @AdoptionStatus))";
-            cmd.Parameters.AddWithValue("@PetID", value.PetID);
+            cmd.CommandText = @"INSERT INTO ShelterPrivacy(ShelterID, Breed, Age, Gender, IntakeDate, Weight, Attitude, AboutMe, Height, HouseTrained, AdoptionStatus) VALUES(@ShelterID, @Breed, @Age, @Gender, @IntakeDate, @Weight, @Attitude, @AboutMe, @Height, @HouseTrained, @AdoptionStatus))";
+            cmd.Parameters.AddWithValue("@ShelterID", value.ShelterID);
             cmd.Parameters.AddWithValue("@Breed", value.Breed);
             cmd.Parameters.AddWithValue("@Age", value.Age);
             cmd.Parameters.AddWithValue("@Gender", value.Gender);
