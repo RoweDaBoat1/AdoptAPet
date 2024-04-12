@@ -10,7 +10,7 @@ namespace api.Controllers
     [ApiController]
     public class userController : ControllerBase
     {
-        // GET: api/Users
+        // GET: api/User
         [EnableCors("OpenPolicy")]
         [HttpGet]
         public List<User> GetAllUsers()
@@ -19,7 +19,7 @@ namespace api.Controllers
             return readObject.GetAllUsers();
         }
 
-        // GET: api/Users/5
+        // GET: api/User/5
         [EnableCors("OpenPolicy")]
         [HttpGet("{id}", Name = "GetUserByID")]
         public User GetUserByID(int id)  // Change parameter name to 'id'
@@ -29,7 +29,7 @@ namespace api.Controllers
         }
 
 
-        // POST: api/Users
+        // POST: api/User
         [EnableCors("OpenPolicy")]
         [HttpPost]
         public void Post([FromBody] User value)
@@ -38,7 +38,7 @@ namespace api.Controllers
             insertObject.InsertUser(value);
         }
 
-        // PUT: api/Users/5
+        // PUT: api/User/5
         [EnableCors("OpenPolicy")]
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] User updatedUser)
@@ -54,7 +54,7 @@ namespace api.Controllers
             return NoContent();
         }
 
-        // DELETE: api/Users/5
+        // DELETE: api/User/5
         [EnableCors("OpenPolicy")]
         [HttpDelete("{id}")]
         public IActionResult Delete(int ID)
