@@ -26,10 +26,12 @@ namespace api.models
                 allDonations.Add(new Donations()
                 {
                     DonationID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
-                    UserID = rdr.IsDBNull(1) ? 0 : rdr.GetInt32(1),
-                    Amount = rdr.IsDBNull(2) ? 0 : rdr.GetInt32(2),
-                    DonationDate = rdr.IsDBNull(3) ? null : rdr.GetString(3),
-                    Name = rdr.IsDBNull(4) ? null : rdr.GetString(4)
+                    Amount = rdr.IsDBNull(1) ? 0 : rdr.GetDouble(1),
+                    DonationDate = rdr.IsDBNull(2) ? null : rdr.GetString(2),
+                    ShelterName = rdr.IsDBNull(3) ? null : rdr.GetString(3),
+                    Email = rdr.IsDBNull(4) ? null : rdr.GetString(4),
+                    FirstName = rdr.IsDBNull(5) ? null : rdr.GetString(5),
+                    LastName = rdr.IsDBNull(6) ? null : rdr.GetString(6)
                 });
             }
 
@@ -54,10 +56,12 @@ namespace api.models
             return new Donations()
                 {
                     DonationID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
-                    UserID = rdr.IsDBNull(1) ? 0 : rdr.GetInt32(1),
-                    Amount = rdr.IsDBNull(2) ? 0 : rdr.GetInt32(2),
-                    DonationDate = rdr.IsDBNull(3) ? null : rdr.GetString(3),
-                    Name = rdr.IsDBNull(4) ? null : rdr.GetString(4)
+                    Amount = rdr.IsDBNull(1) ? 0 : rdr.GetDouble(1),
+                    DonationDate = rdr.IsDBNull(2) ? null : rdr.GetString(2),
+                    ShelterName = rdr.IsDBNull(3) ? null : rdr.GetString(3),
+                    Email = rdr.IsDBNull(4) ? null : rdr.GetString(4),
+                    FirstName = rdr.IsDBNull(5) ? null : rdr.GetString(5),
+                    LastName = rdr.IsDBNull(6) ? null : rdr.GetString(6)
                 };
         }
     }

@@ -17,17 +17,21 @@ namespace api.models
             cmd.Connection = con;
 
             cmd.CommandText = @"UPDATE Donations
-                                SET DonationId = @DonationID, 
-                                    UserID = @UserID, 
-                                    Amount= @Amount, 
+                                SET DonationID = @DonationID, 
+                                    Amount = @Amount, 
                                     DonationDate = @DonationDate, 
-                                    Name = @Name, 
-                                WHERE DonationId = @DonationId";
-            cmd.Parameters.AddWithValue("@DonationId", updatedDonation.DonationID);
-            cmd.Parameters.AddWithValue("@UserID", updatedDonation.UserID);
+                                    ShelterName = @ShelterName, 
+                                    Email = @Email, 
+                                    FirstName = @FirstName, 
+                                    LastName = @LastName,
+                                WHERE DonationID = @DonationID";
+            cmd.Parameters.AddWithValue("@DonationID", updatedDonation.DonationID);
             cmd.Parameters.AddWithValue("@Amount", updatedDonation.Amount);
             cmd.Parameters.AddWithValue("@DonationDate", updatedDonation.DonationDate);
-            cmd.Parameters.AddWithValue("@Name", updatedDonation.Name);
+            cmd.Parameters.AddWithValue("@ShelterName", updatedDonation.ShelterName);
+            cmd.Parameters.AddWithValue("@Email", updatedDonation.Email);
+            cmd.Parameters.AddWithValue("@FirstName", updatedDonation.FirstName);
+            cmd.Parameters.AddWithValue("@LastName", updatedDonation.LastName);
             
             cmd.ExecuteNonQuery();
         }
