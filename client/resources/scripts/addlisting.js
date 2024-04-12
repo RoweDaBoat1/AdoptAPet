@@ -28,8 +28,8 @@ function handleOnLoad(){
         <form onsubmit = "return false" enctype="multipart/form-data">
             <h3>Add Pet Listing</h3>
             <input type="text" id="name" placeholder="Name" required style="margin-bottom: 10px;"><br>
-            <label for ="type">Pet Type:</label><br>
-            <select name="type" id="type" required style="margin-bottom: 10px;">
+            <label for ="petType">Pet Type:</label><br>
+            <select name="petType" id="petType" required style="margin-bottom: 10px;">
                 <option value="null">-</option>
                 <option value="dog">Dog</option>
                 <option value="cat">Cat</option>
@@ -83,7 +83,7 @@ function handleOnLoad(){
             </select><br>
             <textarea id="aboutMe" placeholder="About" style="width:400px; height:100px"></textarea><br>
             <label for="imageUpload" style="margin-top: 10px;">Upload Image:</label>
-            <input type="file" id="imageUpload" accept="image/*" style="margin-top: 10px;"required>
+            <input type="file" id="imageUpload" accept="image/*" style="margin-top: 10px;">
             <div id="imagePreview" style="margin-top: 10px;"></div>
             <button style="margin-top: 10px;" class="btn btn-primary" onclick="handleAddPet()">Add Pet</button> 
         </form>
@@ -135,7 +135,7 @@ async function populateTable(){
         if(pet.adoptionStatus != "adopted"){
             html+= `
             <tr>
-                <td>${pet.id}</td>
+                <td>${pet.petID}</td>
                 <td>${pet.name}</td>
                 <td>${pet.breed}</td>
                 <td>${pet.age}</td>
@@ -143,14 +143,14 @@ async function populateTable(){
                 <td>${pet.intakeDate}</td>
                 <td>${pet.postDate}</td>
                 <td>${pet.weight}</td>
-                <td>${pet.attitudes}</td>
+                <td>${pet.attitude}</td>
                 <td>${pet.aboutMe}</td>
                 <td>${pet.height}</td>
                 <td>${pet.houseTrained}</td>
-                <td>${pet.type}</td>
+                <td>${pet.petType}</td>
                 <td>${pet.adoptionStatus}</td>
-                <td><button class = "btn btn-warning" onclick= "handlePetEdit('${pet.id}')">Edit</button></td>
-                <td><button class = "btn btn-danger" onclick= "handlePetAdoption('${pet.id}')">Delete</button></td>
+                <td><button class = "btn btn-warning" onclick= "handlePetEdit('${pet.petID}')">Edit</button></td>
+                <td><button class = "btn btn-danger" onclick= "handlePetAdoption('${pet.petID}')">Delete</button></td>
             </tr>
             `
         }
@@ -173,16 +173,16 @@ async function handleAddPet(){
         otherInput = breedValue
     }
 
-    let attitudes = []
+    let attitude = []
     document.querySelectorAll('input[name="attitude"]:checked').forEach(function(checkbox) {
-        attitudes.push(checkbox.value)
+        attitude.push(checkbox.value)
     })
 
-    let imageFile = document.getElementById('imageUpload').files[0];
-    let imageUrl = await uploadImage(imageFile);
+    //let imageFile = document.getElementById('imageUpload').files[0];
+    //let imageUrl = await uploadImage(imageFile);
 
     let pet = {
-        id: crypto.randomUUID(), 
+        petId: crypto.randomUUID(), 
         name: document.getElementById('name').value, 
         breed: otherInput, 
         age :document.getElementById('age').value,
@@ -190,13 +190,13 @@ async function handleAddPet(){
         intakeDate :document.getElementById('intakeDate').value,
         postDate: postDate.toISOString(),
         weight: document.getElementById('weight').value,
-        attitudes: attitudes,
+        attitude: attitude,
         aboutMe :document.getElementById('aboutMe').value,
         adoptionStatus: "open",
         height :document.getElementById('height').value,
         houseTrained :document.getElementById('houseTrained').value,
-        petType: document.getElementById('type').value,
-        imageUrl: imageUrl
+        petType: document.getElementById('petType').value,
+        //imageUrl: imageUrl
         //shelter id
     }
     await savePet(pet)
@@ -242,15 +242,15 @@ async function savePet(pet){
 //     populateTable()
 // }
 
-async function handlePetAdoption(id){
+async function handlePetAdoption(petID){
     //1
-    const pet = pets.find(pet => pet.id === id);
+    const pet = pets.find(pet => pet.petID === petID);
     if (pet) {
         pet.adoptionStatus = "adopted";
         console.log(pet.adopted)
     }
     //2
-    await fetch(petUrl + '/' +id,{
+    await fetch(petUrl + '/' +petID,{
         method: "PUT",
         body: JSON.stringify(pet),
         headers: {
@@ -265,8 +265,8 @@ function handlePetEdit(pet){
     <form onsubmit = "return false">
     <h3>Edit Pet Listing</h3>
     <input type="text" id="name" placeholder="Name" style="margin-bottom: 10px;"><br>
-    <label for = "type">Pet Type:</label><br>
-    <select name="type" id="type" style="margin-bottom: 10px;">
+    <label for = "petType">Pet Type:</label><br>
+    <select name="petType" id="petType" style="margin-bottom: 10px;">
         <option value="null">-</option>
         <option value="dog">Dog</option>
         <option value="cat">Cat</option>
@@ -326,13 +326,13 @@ function handlePetEdit(pet){
     document.getElementById('adoptionStatus').value = pet.adoptionStatus
     document.getElementById('height').value = pet.height
     document.getElementById('houseTrained').value = pet.houseTrained
-    document.getElementById('type').value = pet.type
+    document.getElementById('petType').value = pet.petType
 
     const breedSelect = document.getElementById('breed');
     breedSelect.value = pet.breed;
     handleChange(breedSelect);
 
-    pet.attitudes.forEach(function(attitude) {
+    pet.attitude.forEach(function(attitude) {
         document.getElementById('attitude' + attitude.charAt(0).toUpperCase() + attitude.slice(1)).checked = true
     })
 }
@@ -357,7 +357,7 @@ async function handleUpdatePet(id){
         adoptionStatus: document.getElementById('adoptionStatus').value,
         height :document.getElementById('height').value,
         houseTrained :document.getElementById('houseTrained').value,
-        petType: document.getElementById('type').value,
+        petType: document.getElementById('petType').value,
     }
     await fetch(petUrl + '/' + pet.id,{
         method: "PUT",
