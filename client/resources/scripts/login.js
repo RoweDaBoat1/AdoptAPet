@@ -1,3 +1,5 @@
+const authenticationUrl = "http://localhost:5016/api/authentication"
+
 document.getElementById('loginForm').addEventListener('submit', async function(event) {
     event.preventDefault(); // Prevent default form submission
 
@@ -6,7 +8,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     const password = document.getElementById('password').value;
 
     // Send login request to backend API
-    const response = await fetch('/api/authentication', {
+    const response = await fetch(authenticationUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
