@@ -16,7 +16,7 @@ namespace api.models
         }
 
         // Method to authenticate user
-        public bool AuthenticateUser(string email, string password, string userType)
+        public bool AuthenticateUser(string email, string password, string role)
         {
             // Retrieve hashed password and salt from the database based on the provided username
             string hashedPasswordFromDatabase;
@@ -27,7 +27,7 @@ namespace api.models
             string cs = myConnection.cs;
             
             // Query to fetch hashed password and salt from the database
-            string query = $"SELECT PasswordHash, Salt FROM {userType} WHERE Email = @Email";
+            string query = $"SELECT PasswordHash, Salt FROM {role} WHERE Email = @Email";
 
             using (MySqlConnection connection = new MySqlConnection(cs))
             {

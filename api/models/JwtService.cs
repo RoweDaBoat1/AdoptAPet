@@ -17,7 +17,7 @@ namespace api.models
             _issuer = issuer ?? "AdoptAPet";
         }
 
-    public string GenerateToken(string email, string userType)
+    public string GenerateToken(string email, string role)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Convert.FromBase64String(_secretKey);
@@ -27,7 +27,7 @@ namespace api.models
             Subject = new ClaimsIdentity(new Claim[]
             {
                 new Claim(ClaimTypes.Email, email),
-                new Claim(ClaimTypes.Role, userType)
+                new Claim(ClaimTypes.Role, role)
             }),
             Expires = DateTime.UtcNow.AddDays(1), // Token expiration time
             Issuer = _issuer,
