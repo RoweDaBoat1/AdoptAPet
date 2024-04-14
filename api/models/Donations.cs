@@ -9,7 +9,7 @@ namespace api.models.interfaces
     {
         public int DonationID {get; set;}
         public double Amount {get; set;}
-        public string DonationDate {get; set;}
+        public DateTime DonationDate {get; set;}
         public string ShelterName{get;set;}
         public string Email{get;set;}
         public string FirstName {get; set;}

@@ -27,16 +27,13 @@ namespace api.models
                 allShelterPrivacy.Add(new ShelterPrivacy()
                 {
                     ShelterID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
-                    Breed = rdr.IsDBNull(1) ? false : rdr.GetBoolean(1),
-                    Age = rdr.IsDBNull(2) ? false : rdr.GetBoolean(2),
-                    Gender = rdr.IsDBNull(3) ? false : rdr.GetBoolean(3),
-                    IntakeDate = rdr.IsDBNull(4) ? false : rdr.GetBoolean(4),
-                    Weight = rdr.IsDBNull(5) ? false : rdr.GetBoolean(5),
-                    Attitude = rdr.IsDBNull(6) ? false : rdr.GetBoolean(6),
-                    AboutMe = rdr.IsDBNull(7) ? false : rdr.GetBoolean(7),
-                    Height = rdr.IsDBNull(8) ? false : rdr.GetBoolean(8),
-                    HouseTrained = rdr.IsDBNull(9) ? false : rdr.GetBoolean(9),
-                    AdoptionStatus = rdr.IsDBNull(10) ? false : rdr.GetBoolean(10)
+                    IntakeDatePrivate = rdr.IsDBNull(1) ? false : rdr.GetBoolean(1),
+                    WeightPrivate = rdr.IsDBNull(2) ? false : rdr.GetBoolean(2),
+                    AttitudePrivate = rdr.IsDBNull(3) ? false : rdr.GetBoolean(3),
+                    AboutMePrivate = rdr.IsDBNull(4) ? false : rdr.GetBoolean(4),
+                    HeightPrivate = rdr.IsDBNull(5) ? false : rdr.GetBoolean(5),
+                    HouseTrainedPrivate = rdr.IsDBNull(6) ? false : rdr.GetBoolean(6),
+                    DistancePref = rdr.IsDBNull(7) ? null : rdr.GetString(7),
                 });
             }
 
@@ -61,16 +58,13 @@ namespace api.models
             return new ShelterPrivacy()
             {
                 ShelterID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
-                Breed = rdr.IsDBNull(1) ? false : rdr.GetBoolean(1),
-                Age = rdr.IsDBNull(2) ? false : rdr.GetBoolean(2),
-                Gender = rdr.IsDBNull(3) ? false : rdr.GetBoolean(3),
-                IntakeDate = rdr.IsDBNull(4) ? false : rdr.GetBoolean(4),
-                Weight = rdr.IsDBNull(5) ? false : rdr.GetBoolean(5),
-                Attitude = rdr.IsDBNull(6) ? false : rdr.GetBoolean(6),
-                AboutMe = rdr.IsDBNull(7) ? false : rdr.GetBoolean(7),
-                Height = rdr.IsDBNull(8) ? false : rdr.GetBoolean(8),
-                HouseTrained = rdr.IsDBNull(9) ? false : rdr.GetBoolean(9),
-                AdoptionStatus = rdr.IsDBNull(10) ? false : rdr.GetBoolean(10)
+                IntakeDatePrivate = rdr.IsDBNull(1) ? false : rdr.GetBoolean(1),
+                WeightPrivate = rdr.IsDBNull(2) ? false : rdr.GetBoolean(2),
+                AttitudePrivate = rdr.IsDBNull(3) ? false : rdr.GetBoolean(3),
+                AboutMePrivate = rdr.IsDBNull(4) ? false : rdr.GetBoolean(4),
+                HeightPrivate = rdr.IsDBNull(5) ? false : rdr.GetBoolean(5),
+                HouseTrainedPrivate = rdr.IsDBNull(6) ? false : rdr.GetBoolean(6),
+                DistancePref = rdr.IsDBNull(7) ? null : rdr.GetString(7),
             };
         }
     }

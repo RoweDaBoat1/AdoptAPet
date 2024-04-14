@@ -20,9 +20,10 @@ namespace api.models
             cmd.CommandText = @"UPDATE ShelterPost 
                                 SET ShelterID = @ShelterID, 
                                     Title = @Title, 
-                                    Message = @Message,
-                                WHERE UserId = @PetID";
-            cmd.Parameters.AddWithValue("@ShelterID", id);
+                                    Message = @Message
+                                WHERE ShelterPostID = @ShelterPostID";
+            cmd.Parameters.AddWithValue("@ShelterPostID", id);
+            cmd.Parameters.AddWithValue("@ShelterID", updatedShelterPost.ShelterID);
             cmd.Parameters.AddWithValue("@Title", updatedShelterPost.Title);
             cmd.Parameters.AddWithValue("@Message", updatedShelterPost.Message);
             

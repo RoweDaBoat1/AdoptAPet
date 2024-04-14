@@ -27,7 +27,7 @@ namespace api.models
                 {
                     DonationID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
                     Amount = rdr.IsDBNull(1) ? 0 : rdr.GetDouble(1),
-                    DonationDate = rdr.IsDBNull(2) ? null : rdr.GetString(2),
+                    DonationDate = rdr.IsDBNull(2) ? DateTime.MinValue : rdr.GetDateTime(2),
                     ShelterName = rdr.IsDBNull(3) ? null : rdr.GetString(3),
                     Email = rdr.IsDBNull(4) ? null : rdr.GetString(4),
                     FirstName = rdr.IsDBNull(5) ? null : rdr.GetString(5),
@@ -57,7 +57,7 @@ namespace api.models
                 {
                     DonationID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
                     Amount = rdr.IsDBNull(1) ? 0 : rdr.GetDouble(1),
-                    DonationDate = rdr.IsDBNull(2) ? null : rdr.GetString(2),
+                    DonationDate = rdr.IsDBNull(2) ? DateTime.MinValue : rdr.GetDateTime(2),
                     ShelterName = rdr.IsDBNull(3) ? null : rdr.GetString(3),
                     Email = rdr.IsDBNull(4) ? null : rdr.GetString(4),
                     FirstName = rdr.IsDBNull(5) ? null : rdr.GetString(5),

@@ -18,8 +18,6 @@ namespace api.models
         public string Email {get;set;}
         public string Shelter_Name{get;set;}
         public string Role {get; set;}
-        public int Pets_For_Adoption {get;set;}
-        public int Pets_Adopted {get;set;}
         public string Approval_Status {get;set;}
 
     }

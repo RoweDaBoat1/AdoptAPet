@@ -8,15 +8,12 @@ namespace api.models
     public class ShelterPrivacy
     {
         public int ShelterID{get;set;}
-        public bool Breed {get; set;}
-        public bool Age {get; set;}
-        public bool Gender {get; set;}
-        public bool IntakeDate {get; set;}
-        public bool Weight {get; set;}
-        public bool Attitude {get; set;}
-        public bool AboutMe {get; set;}
-        public bool Height {get; set;}
-        public bool HouseTrained {get; set;}
-        public bool AdoptionStatus {get; set;}
+        public bool IntakeDatePrivate {get; set;}
+        public bool WeightPrivate {get; set;}
+        public bool AttitudePrivate {get; set;}
+        public bool AboutMePrivate {get; set;}
+        public bool HeightPrivate {get; set;}
+        public bool HouseTrainedPrivate {get; set;}
+        public string DistancePref {get; set;}
     }
 }

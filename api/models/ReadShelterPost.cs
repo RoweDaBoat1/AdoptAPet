@@ -26,9 +26,10 @@ namespace api.models
             {
                 allShelterPost.Add(new ShelterPost()
                 {
-                    ShelterID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
-                    Title = rdr.IsDBNull(1) ? null : rdr.GetString(1),
-                    Message = rdr.IsDBNull(2) ? null : rdr.GetString(2)
+                    ShelterPostID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
+                    ShelterID = rdr.IsDBNull(1) ? 0 : rdr.GetInt32(1),
+                    Title = rdr.IsDBNull(2) ? null : rdr.GetString(2),
+                    Message = rdr.IsDBNull(3) ? null : rdr.GetString(3)
                 });
             }
 
@@ -43,7 +44,7 @@ namespace api.models
             using var con = new MySqlConnection(cs);
             con.Open();
 
-            string stm = "SELECT * FROM ShelterPost WHERE ShelterID = @ID";
+            string stm = "SELECT * FROM ShelterPost WHERE ShelterPostID = @ID";
             using var cmd = new MySqlCommand(stm, con);
             cmd.Parameters.AddWithValue("@ID", ID);
             cmd.Prepare();
@@ -52,9 +53,10 @@ namespace api.models
             rdr.Read();
             return new ShelterPost()
             {
-                ShelterID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
-                Title = rdr.IsDBNull(1) ? null : rdr.GetString(1),
-                Message = rdr.IsDBNull(2) ? null : rdr.GetString(2)
+                ShelterPostID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
+                ShelterID = rdr.IsDBNull(1) ? 0 : rdr.GetInt32(1),
+                Title = rdr.IsDBNull(2) ? null : rdr.GetString(2),
+                Message = rdr.IsDBNull(3) ? null : rdr.GetString(3)
             };
         }
     }

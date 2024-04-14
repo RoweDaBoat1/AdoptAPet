@@ -39,9 +39,7 @@ namespace api.models
                     Email = rdr.IsDBNull(8) ? null : rdr.GetString(8),
                     Shelter_Name = rdr.IsDBNull(9) ? null : rdr.GetString(9),
                     Role = rdr.IsDBNull(10) ? null : rdr.GetString(10),
-                    Pets_For_Adoption = rdr.IsDBNull(11) ? 0 : rdr.GetInt32(11),
-                    Pets_Adopted = rdr.IsDBNull(12) ? 0 : rdr.GetInt32(12),
-                    Approval_Status = rdr.IsDBNull(13) ? null : rdr.GetString(13)
+                    Approval_Status = rdr.IsDBNull(11) ? null : rdr.GetString(11)
                 });
             }
 
@@ -76,9 +74,7 @@ namespace api.models
                 Email = rdr.IsDBNull(8) ? null : rdr.GetString(8),
                 Shelter_Name = rdr.IsDBNull(9) ? null : rdr.GetString(9),
                 Role = rdr.IsDBNull(10) ? null : rdr.GetString(10),
-                Pets_For_Adoption = rdr.IsDBNull(11) ? 0 : rdr.GetInt32(11),
-                Pets_Adopted = rdr.IsDBNull(12) ? 0 : rdr.GetInt32(12),
-                Approval_Status = rdr.IsDBNull(13) ? null : rdr.GetString(13)
+                Approval_Status = rdr.IsDBNull(11) ? null : rdr.GetString(11)
             };
         }
     }

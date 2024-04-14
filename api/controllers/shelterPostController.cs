@@ -25,11 +25,11 @@ namespace api.Controllers
 
         // GET: api/ShelterPosts/5
         [EnableCors("OpenPolicy")]
-        [HttpGet("{id}", Name = "GetShelterPostByID")]
-        public ShelterPost GetShelterPostByID(int ID)
+        [HttpGet("{ShelterPostID}", Name = "GetShelterPostByID")]
+        public ShelterPost GetShelterPostByID(int ShelterPostID)
         {
             IGetShelterPost readObject = new ReadShelterPostData();
-            return readObject.GetShelterPost(ID);
+            return readObject.GetShelterPost(ShelterPostID);
         }
 
         // POST: api/ShelterPosts
@@ -43,16 +43,16 @@ namespace api.Controllers
 
         // PUT: api/ShelterPosts/5
         [EnableCors("OpenPolicy")]
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] ShelterPost updatedShelterPost)
+        [HttpPut("{ShelterPostID}")]
+        public IActionResult Put(int ShelterPostID, [FromBody] ShelterPost updatedShelterPost)
         {
-            if (id != updatedShelterPost.ShelterID)
+            if (ShelterPostID != updatedShelterPost.ShelterPostID)
             {
                 return BadRequest();
             }
 
             IUpdateShelterPost updateObject = new UpdateShelterPostData();
-            updateObject.UpdateShelterPost(id, updatedShelterPost);
+            updateObject.UpdateShelterPost(ShelterPostID, updatedShelterPost);
 
             return NoContent();
         }

@@ -29,8 +29,6 @@ namespace api.models
                                     PhoneNumber = @PhoneNumber, 
                                     Email = @Email, 
                                     Shelter_Name = @Shelter_Name, 
-                                    Pets_For_Adoption = @Pets_For_Adoption, 
-                                    Pets_Adopted = @Pets_Adopted, 
                                     Message_From_User = @Message_From_User, 
                                     Approval_Status = @Approval_Status,
                                 WHERE ShelterId = @ShelterId";
@@ -45,8 +43,6 @@ namespace api.models
             cmd.Parameters.AddWithValue("@Email", updatedShelter.Email);
             cmd.Parameters.AddWithValue("@Shelter_Name", updatedShelter.Shelter_Name);
             cmd.Parameters.AddWithValue("@Role", updatedShelter.Role);
-            cmd.Parameters.AddWithValue("@Pets_For_Adoption", updatedShelter.Pets_For_Adoption);
-            cmd.Parameters.AddWithValue("@Pets_Adopted", updatedShelter.Pets_Adopted);
             cmd.Parameters.AddWithValue("@Approval_Status", updatedShelter.Approval_Status);
             
             cmd.ExecuteNonQuery();

@@ -18,28 +18,22 @@ namespace api.models
             cmd.Connection = con;
 
             cmd.CommandText = @"UPDATE ShelterPrivacy 
-                                SET Breed = @Breed, 
-                                    Age = @Age, 
-                                    Gender = @Gender,
-                                    IntakeDate = @IntakeDate, 
-                                    Weight = @Weight, 
-                                    Attitude = @Attitude, 
-                                    AboutMe = @AboutMe, 
-                                    Height = @Height,
-                                    HouseTrained = @HouseTrained,
-                                    AdoptionStatus = @AdoptionStatus,
+                                SET IntakeDatePrivate  = @IntakeDatePrivate, 
+                                    WeightPrivatePrivate = @WeightPrivate, 
+                                    AttitudePrivate = @AttitudePrivate, 
+                                    AboutMePrivate = @AboutMePrivate, 
+                                    HeightPrivate = @HeightPrivate, 
+                                    HouseTrainedPrivate = @HouseTrainedPrivate,
+                                    DistancePref = @DistancePref,
                                 WHERE ShelterID = @ShelterID";
             cmd.Parameters.AddWithValue("@ShelterID", id);
-            cmd.Parameters.AddWithValue("@Breed", updatedShelterPrivacy.Breed);
-            cmd.Parameters.AddWithValue("@Age", updatedShelterPrivacy.Age);
-            cmd.Parameters.AddWithValue("@Gender", updatedShelterPrivacy.Gender);
-            cmd.Parameters.AddWithValue("@IntakeDate", updatedShelterPrivacy.IntakeDate);
-            cmd.Parameters.AddWithValue("@Weight", updatedShelterPrivacy.Weight);
-            cmd.Parameters.AddWithValue("@Attitude", updatedShelterPrivacy.Attitude);
-            cmd.Parameters.AddWithValue("@AboutMe", updatedShelterPrivacy.AboutMe);
-            cmd.Parameters.AddWithValue("@Height", updatedShelterPrivacy.Height);
-            cmd.Parameters.AddWithValue("@HouseTrained", updatedShelterPrivacy.HouseTrained);
-            cmd.Parameters.AddWithValue("@AdoptionStatus", updatedShelterPrivacy.AdoptionStatus);
+            cmd.Parameters.AddWithValue("@IntakeDate", updatedShelterPrivacy.IntakeDatePrivate);
+            cmd.Parameters.AddWithValue("@Weight", updatedShelterPrivacy.WeightPrivate);
+            cmd.Parameters.AddWithValue("@Attitude", updatedShelterPrivacy.AttitudePrivate);
+            cmd.Parameters.AddWithValue("@AboutMe", updatedShelterPrivacy.AboutMePrivate);
+            cmd.Parameters.AddWithValue("@Height", updatedShelterPrivacy.HeightPrivate);
+            cmd.Parameters.AddWithValue("@HouseTrained", updatedShelterPrivacy.HouseTrainedPrivate);
+            cmd.Parameters.AddWithValue("@DistancePref", updatedShelterPrivacy.DistancePref);
             
             cmd.ExecuteNonQuery();
         }

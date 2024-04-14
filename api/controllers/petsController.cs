@@ -25,11 +25,11 @@ namespace api.Controllers
 
         // GET: api/pets/5
         [EnableCors("OpenPolicy")]
-        [HttpGet("{id}", Name = "GetPetByID")]
-        public Pet GetPetByID(int ID)
+        [HttpGet("{PetID}", Name = "GetPetByID")]
+        public Pet GetPetByID(int PetID)
         {
             IGetPet readObject = new ReadPetData();
-            return readObject.GetPet(ID);
+            return readObject.GetPet(PetID);
         }
 
         // POST: api/pets
@@ -43,16 +43,16 @@ namespace api.Controllers
 
         // PUT: api/pets/5
         [EnableCors("OpenPolicy")]
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Pet updatedPet)
+        [HttpPut("{PetID}")]
+        public IActionResult Put(int PetID, [FromBody] Pet updatedPet)
         {
-            if (id != updatedPet.PetID)
+            if (PetID != updatedPet.PetID)
             {
                 return BadRequest();
             }
 
             IUpdatePet updateObject = new UpdatePetData();
-            updateObject.UpdatePet(id, updatedPet);
+            updateObject.UpdatePet(PetID, updatedPet);
 
             return NoContent();
         }

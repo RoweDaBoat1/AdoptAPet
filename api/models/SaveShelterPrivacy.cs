@@ -17,18 +17,16 @@ namespace api.models
 
             using var cmd = new MySqlCommand(cs);
 
-            cmd.CommandText = @"INSERT INTO ShelterPrivacy(ShelterID, Breed, Age, Gender, IntakeDate, Weight, Attitude, AboutMe, Height, HouseTrained, AdoptionStatus) VALUES(@ShelterID, @Breed, @Age, @Gender, @IntakeDate, @Weight, @Attitude, @AboutMe, @Height, @HouseTrained, @AdoptionStatus))";
+            cmd.Connection = con;
+            cmd.CommandText = @"INSERT INTO ShelterPrivacy(ShelterID, IntakeDatePrivate, WeightPrivate, AttitudePrivate, AboutMePrivate, HeightPrivate, HouseTrainedPrivate, DistancePref) VALUES(@ShelterID, @IntakeDatePrivate, @WeightPrivate, @AttitudePrivate, @AboutMePrivate, @HeightPrivate, @HouseTrainedPrivate, @DistancePref)";
             cmd.Parameters.AddWithValue("@ShelterID", value.ShelterID);
-            cmd.Parameters.AddWithValue("@Breed", value.Breed);
-            cmd.Parameters.AddWithValue("@Age", value.Age);
-            cmd.Parameters.AddWithValue("@Gender", value.Gender);
-            cmd.Parameters.AddWithValue("@IntakeDate", value.IntakeDate);
-            cmd.Parameters.AddWithValue("@Weight", value.Weight);
-            cmd.Parameters.AddWithValue("@Attitude", value.Attitude);
-            cmd.Parameters.AddWithValue("@AboutMe", value.AboutMe);
-            cmd.Parameters.AddWithValue("@Height", value.Height);
-            cmd.Parameters.AddWithValue("@HouseTrained", value.HouseTrained);
-            cmd.Parameters.AddWithValue("@AdoptionStatus", value.AdoptionStatus);
+            cmd.Parameters.AddWithValue("@IntakeDatePrivate", value.IntakeDatePrivate);
+            cmd.Parameters.AddWithValue("@WeightPrivate", value.WeightPrivate);
+            cmd.Parameters.AddWithValue("@AttitudePrivate", value.AttitudePrivate);
+            cmd.Parameters.AddWithValue("@AboutMePrivate", value.AboutMePrivate);
+            cmd.Parameters.AddWithValue("@HeightPrivate", value.HeightPrivate);
+            cmd.Parameters.AddWithValue("@HouseTrainedPrivate", value.HouseTrainedPrivate);
+            cmd.Parameters.AddWithValue("@DistancePref", value.DistancePref);
             cmd.Prepare();
             cmd.ExecuteNonQuery();
         }

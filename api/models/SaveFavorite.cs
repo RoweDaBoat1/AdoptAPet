@@ -16,7 +16,8 @@ namespace api.models
 
             using var cmd = new MySqlCommand(cs);
 
-            cmd.CommandText = @"INSERT INTO Favorites(UserID, PetID, FavoriteDate) VALUES(@UserID, @PetID, @FavoriteDate))";
+            cmd.Connection = con;
+            cmd.CommandText = @"INSERT INTO Favorites(UserID, PetID, FavoriteDate) VALUES(@UserID, @PetID, @FavoriteDate)";
             cmd.Parameters.AddWithValue("@UserID", value.UserID);
             cmd.Parameters.AddWithValue("@PetID", value.PetID);
             cmd.Parameters.AddWithValue("@FavoriteDate", value.FavoriteDate);
