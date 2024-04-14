@@ -24,10 +24,42 @@
                     </ul>
                 </div>
             </li>
-            <li><a href="login.html">Login</a></li>
+            <li><a id="loginLogoutLink" href="login.html">Login</a></li>
         </ul>
       </div>
     
     look at our awesome analytics :D (:'D) <!--Made me giggle thank you-->
+    <script src="./resources/scripts/login.js"></script>
+    <script>
+        // Inside a script tag at the end of your HTML file
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginLogoutLink = document.getElementById('loginLogoutLink')
+            // Function to update the login/logout link text
+            const updateLoginLogoutLink = () => {
+            const token = localStorage.getItem('jwt')
+                if (token) {
+                // If token is present, display "LOGOUT" link
+                    loginLogoutLink.textContent = 'Logout'
+                } else {
+                // If token is not present, display "LOGIN" link
+                    loginLogoutLink.textContent = 'Login'
+                }
+            }
+            // Call the function to update the link text when the page loads
+            updateLoginLogoutLink()
+            // Add click event listener to handle logout logic
+            loginLogoutLink.addEventListener('click', () => {
+                const token = localStorage.getItem('jwt')
+                if (token) {
+                    // If token is present, remove it from local storage
+                    localStorage.removeItem('jwt')
+                    // Update the login/logout link text
+                    updateLoginLogoutLink()
+                    // Redirect to login page or perform other logout actions
+                    // window.location.href = 'login.html';
+                }
+            })
+        })
+    </script>
 </body>
 </html>

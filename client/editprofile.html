@@ -48,7 +48,7 @@
                     </ul>
                 </div>
             </li>
-            <li><a href="login.html">Login</a></li>
+            <li><a id="loginLogoutLink" href="login.html">Login</a></li>
         </ul>
       </div>
     
@@ -72,43 +72,52 @@
           </div>
         </div>
       </div>
-    <!-- <script>
-        function handleEdit() {
-            document.getElementById('fullName').contentEditable = true
-            document.getElementById('userEmail').contentEditable = true
-            document.getElementById('userPhone').contentEditable = true
-            document.getElementById('userZip').contentEditable = true
-            document.getElementById('userPassword').contentEditable = true
-            
-        }
-
-        function updateData() {
-            var fullName = document.getElementById('fullName').innerText;
-            var userEmail = document.getElementById('userEmail').innerText;
-            var userPhone = document.getElementById('userPhone').innerText;
-            var userZip = document.getElementById('userZip').innerText;
-            var userPassword = document.getElementById('userPassword').innerText;
-
-            // Perform update operation, for example, send data to the server
-            console.log("Updated username:", username);
-            console.log("Updated email:", email);
-            // You can send this data to the server using AJAX or any other method
-        }
-    </script> -->
     <script>
         const apiUrls = {
-          baseurl: 'https://localhost:5016/api',
-          petUrl: 'https://localhost:5016/api/pets',
-          shelterUrl: 'https://localhost:5016/api/shelters',
-          userUrl: 'https://localhost:5016/api/users',
-          donationUrl: 'https://localhost:5016/api/donations'
+            baseurl: 'https://localhost:5016/api',
+            petUrl: 'https://localhost:5016/api/pets',
+            shelterUrl: 'https://localhost:5016/api/shelters',
+            userUrl: 'https://localhost:5016/api/users',
+            donationUrl: 'https://localhost:5016/api/donations'
         };
-    </script> 
+        </script> 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="./resources/scripts/createaccount.js"></script>
+    <script src="./resources/scripts/login.js"></script>
     <script src="./resources/scripts/editprofile.js"></script>
+        <script>
+            // Inside a script tag at the end of your HTML file
+            document.addEventListener('DOMContentLoaded', () => {
+                const loginLogoutLink = document.getElementById('loginLogoutLink')
+                // Function to update the login/logout link text
+                const updateLoginLogoutLink = () => {
+                const token = localStorage.getItem('jwt')
+                    if (token) {
+                    // If token is present, display "LOGOUT" link
+                        loginLogoutLink.textContent = 'Logout'
+                    } else {
+                    // If token is not present, display "LOGIN" link
+                        loginLogoutLink.textContent = 'Login'
+                    }
+                }
+                // Call the function to update the link text when the page loads
+                updateLoginLogoutLink()
+                // Add click event listener to handle logout logic
+                loginLogoutLink.addEventListener('click', () => {
+                    const token = localStorage.getItem('jwt')
+                    if (token) {
+                        // If token is present, remove it from local storage
+                        localStorage.removeItem('jwt')
+                        // Update the login/logout link text
+                        updateLoginLogoutLink()
+                        // Redirect to login page or perform other logout actions
+                        // window.location.href = 'login.html';
+                    }
+                })
+            })
+        </script>
 </body>
 </html>

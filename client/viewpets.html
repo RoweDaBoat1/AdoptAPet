@@ -28,7 +28,7 @@
                 </ul>
             </div>
         </li>
-        <li><a href="login.html">Login</a></li>
+        <li><a id="loginLogoutLink" href="login.html">Login</a></li>
     </ul>
   </div>
  
@@ -124,12 +124,43 @@
         </div>
     </div>
       
-    
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+    <script src="./resources/scripts/login.js"></script>
     <script src="./resources/scripts/viewpets.js"></script>
 
+    <script>
+      // Inside a script tag at the end of your HTML file
+      document.addEventListener('DOMContentLoaded', () => {
+          const loginLogoutLink = document.getElementById('loginLogoutLink');
+          // Function to update the login/logout link text
+          const updateLoginLogoutLink = () => {
+          const token = localStorage.getItem('jwt');
+              if (token) {
+              // If token is present, display "LOGOUT" link
+                  loginLogoutLink.textContent = 'Logout'
+              } else {
+              // If token is not present, display "LOGIN" link
+                  loginLogoutLink.textContent = 'Login'
+              }
+          }
+          // Call the function to update the link text when the page loads
+          updateLoginLogoutLink()
+          // Add click event listener to handle logout logic
+          loginLogoutLink.addEventListener('click', () => {
+              const token = localStorage.getItem('jwt')
+              if (token) {
+                  // If token is present, remove it from local storage
+                  localStorage.removeItem('jwt')
+                  // Update the login/logout link text
+                  updateLoginLogoutLink()
+                  // Redirect to login page or perform other logout actions
+                  // window.location.href = 'login.html';
+              }
+          })
+      })
+  </script>
 </body>
 </html>

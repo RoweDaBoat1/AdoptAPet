@@ -3,13 +3,14 @@
 const shelterUrl = "http://localhost:5016/api/shelters"
 const userUrl = "http://localhost:5016/api/user"
 //idk if this is what its called
-//const shelterPrivacyUrl ="http://localhost:5016/api/shelterPrivacy"
+const shelterPrivacyUrl ="http://localhost:5016/api/shelterPrivacy"
 
 let shelterPrivacy
 // const shelterUrl = test.shelterUrl
 // const userUrl = test.userUrl
 
 async function handleUButtonClick(){
+    console.log('hello')
     await handleAddUser()
     //window.location.href = "login.html"
 }
