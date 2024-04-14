@@ -21,17 +21,17 @@ namespace api.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login(string email, string password, string userType)
+        public IActionResult Login(string email, string password, string role)
         {
             IAuthService authObject = new AuthenticationManager();
 
             // Call authentication manager to validate credentials
-            bool isAuthenticated = authObject.AuthenticateUser(email, password, userType);
+            bool isAuthenticated = authObject.AuthenticateUser(email, password, role);
 
             if (isAuthenticated)
             {
                 // Generate JWT token using JwtService
-                var token = _jwtService.GenerateToken(email, userType);
+                var token = _jwtService.GenerateToken(email, role);
                 return Ok(new { token }); // Return the token
             }
 

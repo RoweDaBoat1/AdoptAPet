@@ -83,7 +83,7 @@ function handleOnLoad(){
     async function getAllShelters(){
         let response = await fetch(shelterUrl)
         shelters = await response.json()
-        console.log(shelters)
+        //console.log(shelters)
     }
         
     function handleChange(donation) {
@@ -134,8 +134,9 @@ function handleOnLoad(){
 // }
 
 async function handleAddDonation(){
-    var name = document.getElementById('name').value
-    var email = document.getElementById('name').value
+    var firstName = document.getElementById('firstName').value
+    var lastName = document.getElementById('lastName').value
+    var email = document.getElementById('email').value
     var isAnonymous = document.querySelector('input[name="anonymous"]:checked').value === "true"
 
     var donationValue = document.getElementById("donation").value
@@ -147,17 +148,19 @@ async function handleAddDonation(){
     }
 
     if (isAnonymous) {
-        name = "null"
+        firstName = "null"
+        lastName = "null"
         email = "null"
     }
     var donationDate = new Date()
     let donation = {
         donationId: crypto.randomUUID(),
-        userId: document.getElementById('shelterName').value, 
         amount: customAmount,
         donationDate: donationDate.toISOString(),
-        name: name,
-        //email: email,
+        shelterName: document.getElementById('shelterName').value, 
+        email: email,
+        firstName: firstName,
+        lastName: lastName
     }
     await saveDonation(donation)
     //populateTable()

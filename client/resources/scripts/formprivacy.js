@@ -47,6 +47,12 @@ async function handleOnLoad() {
             <input type="checkbox" id="houseTrainedPrivate" class="toggle" name="houseTrainedPrivate">
         </div>
     </div>
+    <div class="form-row">
+        <div class="form-label">Distance Preference for Adopters:</div>
+        <div class="form-field">
+            <input type="text" id="distancePref" name="distancePref" placeholder="miles">
+        </div>
+    </div>
         <button class="btn btn-primary" onclick="handleSavePrivacy('${shelterPrivacy.shelterId}')" style="float: center;">Save Preferences</button>
     </form>
     `
@@ -57,6 +63,7 @@ async function handleOnLoad() {
     document.getElementById('aboutMePrivate').checked = shelterPrivacy.aboutMePrivate
     document.getElementById('heightPrivate').checked = shelterPrivacy.heightPrivate
     document.getElementById('houseTrainedPrivate').checked = shelterPrivacy.houseTrainedPrivate
+    document.getElementById('distancePref').innerHTML = shelterPrivacy.distancePref
 }
 
 async function handleSavePrivacy(shelterId){
@@ -68,6 +75,7 @@ async function handleSavePrivacy(shelterId){
         aboutMePrivate :document.getElementById('aboutMe').value,
         heightPrivate :document.getElementById('height').value,
         houseTrainedPrivate :document.getElementById('houseTrained').value,
+        distancePref: document.getElementById('distancePref').value,
     }
     await fetch(shelterPrivacyUrl + '/' + pet.id,{
         method: "PUT",

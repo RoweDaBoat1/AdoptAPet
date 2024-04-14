@@ -3,7 +3,7 @@
 const shelterUrl = "http://localhost:5016/api/shelters"
 const userUrl = "http://localhost:5016/api/user"
 //idk if this is what its called
-//const shelterPrivacyUrl ="http://localhost:5016/api/ShelterPrivacy"
+//const shelterPrivacyUrl ="http://localhost:5016/api/shelterPrivacy"
 
 let shelterPrivacy
 // const shelterUrl = test.shelterUrl
@@ -19,18 +19,6 @@ async function handleSButtonClick(){
     //window.location.href = "login.html"
 }
 
-// function login() {
-//     var email = document.getElementById('email').value;
-//     var password = document.getElementById('password').value;
-
-//     if(email == "admin@aap.org" && password == "w00fme0w"){
-//         userType = 'admin'
-//     }
-//     // Perform login authentication here
-//     showSuccessMessage('Login successful!'); // You can customize the message
-//     console.log('Logging in with email:', email, 'and password:', password);
-// }
-
 async function handleOnLoad(){
 
     await populateShelterTable()
@@ -40,14 +28,15 @@ async function handleAddUser(){
     let user = {
         //username, passwordHash, fname, lname, address, role, and favorite pets are temporary
         userId: crypto.randomUUID(),
-        email: document.getElementById('userEmail').value,
-        password : document.getElementById('userPassword').value,
+        email: document.getElementById('email').value,
+        passwordHash : document.getElementById('password').value,
+        salt: '',
         firstName: document.getElementById('firstName'),
         lastName: document.getElementById('lastName'),
-        address: document.getElementById('userZip').value,
-        phoneNumber: document.getElementById('userPhone').value,
+        zipCode: document.getElementById('zipCode').value,
+        phoneNumber: document.getElementById('phoneNumber').value,
         favoritePets: 0,
-        role: "user"
+        role: "User"
     }
     await saveUser(user)
 }
@@ -68,12 +57,12 @@ async function getAllUsers(){
 }
 //SHELTER FUNCTIONS
 async function getAllShelters(){
-    let response = await fetch(shelterUrl);
-    return await response.json();
+    // let response = await fetch(shelterUrl);
+    // return await response.json();
 
-    // let response = await fetch(shelterUrl)
-    // shelters = await response.json()
-    // console.log(shelters)
+    let response = await fetch(shelterUrl)
+    shelters = await response.json()
+    //console.log(shelters)
 }
 
 async function getAllShelterPrivacy(){
@@ -102,7 +91,7 @@ async function populateShelterTable(){
         if(shelter.approvalStatus != "approved"){
             html+= `
             <tr>
-                <td>${shelter.id}</td>
+                <td>${shelter.shelterID}</td>
                 <td>${shelter.name}</td>
                 <td>${shelter.email}</td>
                 <td>${shelter.phone}</td>
@@ -111,7 +100,7 @@ async function populateShelterTable(){
                 <td>${shelter.state}</td>
                 <td>${shelter.zip}</td>
                 <td>${shelter.approvalStatus}</td>
-                <td><button class="btn btn-primary" onclick="handleShelterApproval('${shelter.id}')">Approve</button></td>
+                <td><button class="btn btn-primary" onclick="handleShelterApproval('${shelter.shelterID}')">Approve</button></td>
             </tr>
             `
         }
@@ -125,26 +114,30 @@ async function populateShelterTable(){
 
 async function handleAddShelter(){
     let shelter = {
-        shelterid: crypto.randomUUID(),
-        shelterName: document.getElementById('shelterName').value,
-        email: document.getElementById('shelterEmail').value,
-        phone: document.getElementById('shelterPhone').value,
+        shelterID: crypto.randomUUID(),
+        password : document.getElementById('shelterPassword').value,
         addressLine: document.getElementById('shelterAddressLine').value,
         city: document.getElementById('shelterCity').value,
         state: document.getElementById('shelterState').value,
-        zip: document.getElementById('shelterZip').value,
-        password : document.getElementById('shelterPassword').value,
+        zipCode: document.getElementById('shelterZip').value,
+        phoneNumber: document.getElementById('shelterPhone').value,
+        email: document.getElementById('shelterEmail').value,
+        shelterName: document.getElementById('shelterName').value,
+        role: "Shelter",
+        // petsForAdoption: 0,
+        // petsAdopted: 0,
         approvalStatus: "pending"
     }
 
     shelterPrivacy = {
-        id: shelterid,
+        shelterID: shelter.shelterID,
         intakeDatePrivate: false,
         weightPrivate: false,
         attitudePrivate: false,
         aboutMePrivate: false,
         heightPrivate: false,
-        houseTrainedPrivate: false
+        houseTrainedPrivate: false,
+        distancePref: 'none'
     }
     await saveShelter(shelter)
     await saveShelterPrivacy(shelterPrivacy)
@@ -171,15 +164,15 @@ async function saveShelterPrivacy(shelterPrivacy){
     })
 }
 
-async function handleShelterApproval(id){
+async function handleShelterApproval(shelterID){
     //1
-    const shelter = shelters.find(shelter => shelter.id === id)
+    const shelter = shelters.find(shelter => shelter.shelterID === shelterID)
     if (shelter) {
         shelter.approvalStatus = "approved"
         console.log(shelter.approvalStatus)
     }
     //2 have put api method in backend that changes approved to opposite
-    await fetch(shelterUrl + '/' +id,{
+    await fetch(shelterUrl + '/' +shelterID,{
         method: "PUT",
         body: JSON.stringify(shelter),
         headers: {

@@ -41,7 +41,7 @@ async function populateTable() {
             </tr>
             <tr>
                 <td>Zip/Postal Code:</td>
-                <td><span id="zip">${user.ZipCode}</span></td>
+                <td><span id="zip">${user.zipCode}</span></td>
             </tr>
             <tr>
                 <td>Password:</td>
@@ -50,7 +50,7 @@ async function populateTable() {
             <tr>
                 <td colspan="2">
                     <button class="btn btn-primary" onclick="toggleEdit()">Edit</button>
-                    <button class="btn btn-primary" onclick="saveChanges()">Save</button>
+                    <button class="btn btn-primary" onclick="saveChanges('${user.userId}')">Save</button>
                 </td>
             </tr>`;
     });
@@ -71,16 +71,36 @@ function toggleEdit() {
     });
 }
 
-async function saveChanges() {
+async function saveChanges(userId) {
     const cells = document.querySelectorAll('#userTable span');
     cells.forEach(function(cell) {
         const input = cell.querySelector('input');
         if (input) {
             cell.innerText = input.value;
+        } else {
+            console.error('No input element found in cell:', cell);
         }
     });
+    // const cells = document.querySelectorAll('#userTable span');
+    // cells.forEach(function(cell) {
+    //     const input = cell.querySelector('input');
+    //     if (input) {
+    //         cell.innerText = input.value;
+    //     }
+    // });
+    let user = {
+        userId: userId,
+        email: document.getElementById('email').value,
+        passwordHash: document.getElementById('password'),
+        firstName: document.getElementById('firstName').value,
+        lastName: document.getElementById('lastName').value,
+        zipCode: document.getElementById('zipCode').value,
+        phoneNumber: document.getElementById('phoneNumber').value,
+        favoritePets: favoritePets,
+        role: role
+    }
 
-    await fetch(userUrl + '/' + user.id,{
+    await fetch(userUrl + '/' + user.userId,{
         method: "PUT",
         body: JSON.stringify(user),
         headers: {
