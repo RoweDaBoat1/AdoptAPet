@@ -28,15 +28,15 @@ async function handleOnLoad(){
 async function handleAddUser(){
     let user = {
         //username, passwordHash, fname, lname, address, role, and favorite pets are temporary
-        userId: crypto.randomUUID(),
+        // userId: crypto.randomUUID(),
         email: document.getElementById('email').value,
         passwordHash : document.getElementById('password').value,
         salt: '',
-        firstName: document.getElementById('firstName'),
-        lastName: document.getElementById('lastName'),
+        firstName: document.getElementById('firstName').value,
+        lastName: document.getElementById('lastName').value,
         zipCode: document.getElementById('zipCode').value,
         phoneNumber: document.getElementById('phoneNumber').value,
-        favoritePets: 0,
+        favoritePets: "0",
         role: "User"
     }
     await saveUser(user)
