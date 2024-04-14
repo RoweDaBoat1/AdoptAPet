@@ -50,7 +50,7 @@ namespace api.Controllers
             insertObject.InsertShelter(value);
         }
 
-        // PUT: api/Shelter/5
+        // PUT: api/Shelters/5
         [EnableCors("OpenPolicy")]
         [HttpPut("{ShelterID}")]
         public IActionResult Put(int ShelterID, [FromBody] Shelter updatedShelter)

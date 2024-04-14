@@ -89,18 +89,18 @@ async function populateShelterTable(){
         </tr>`
     shelters.forEach(function(shelter){
         //change approval button to use approvalStatus
-        if(shelter.approvalStatus != "approved"){
+        if(shelter.approval_Status != "Approved"){
             html+= `
             <tr>
                 <td>${shelter.shelterID}</td>
-                <td>${shelter.name}</td>
+                <td>${shelter.shelter_Name}</td>
                 <td>${shelter.email}</td>
-                <td>${shelter.phone}</td>
+                <td>${shelter.phone_Number}</td>
                 <td>${shelter.addressLine}</td>
                 <td>${shelter.city}</td>
                 <td>${shelter.state}</td>
-                <td>${shelter.zip}</td>
-                <td>${shelter.approvalStatus}</td>
+                <td>${shelter.zipCode}</td>
+                <td>${shelter.approval_Status}</td>
                 <td><button class="btn btn-primary" onclick="handleShelterApproval('${shelter.shelterID}')">Approve</button></td>
             </tr>
             `
@@ -165,24 +165,35 @@ async function saveShelterPrivacy(shelterPrivacy){
     })
 }
 
-async function handleShelterApproval(shelterID){
-    //1
-    const shelter = shelters.find(shelter => shelter.shelterID === shelterID)
-    if (shelter) {
-        shelter.approvalStatus = "approved"
-        console.log(shelter.approvalStatus)
-    }
-    //2 have put api method in backend that changes approved to opposite
-    await fetch(shelterUrl + '/' +shelterID,{
-        method: "PUT",
-        body: JSON.stringify(shelter),
-        headers: {
-            "Content-type" : "application/json; charset=UTF-8"
+async function handleShelterApproval(shelterID) {
+    try {
+        // Fetch the shelter data from the backend
+        const response = await fetch(shelterUrl + '/' + shelterID);
+        if (!response.ok) {
+            throw new Error('Failed to fetch shelter data');
         }
-    })
+        const shelter = await response.json();
 
-    populateShelterTable()
+        // Update the approval status to "approved"
+        shelter.approval_Status = "Approved";
+
+        // Send the updated shelter data to the backend
+        await fetch(shelterUrl + '/' + shelterID, {
+            method: "PUT",
+            body: JSON.stringify(shelter),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        });
+
+        // Refresh the shelter table
+        populateShelterTable();
+    } catch (error) {
+        console.error('Error:', error);
+        // Handle the error (e.g., display an error message to the user)
+    }
 }
+
 
 // Example function for signup
 //function signup(role) {
