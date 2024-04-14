@@ -10,6 +10,25 @@
     <link rel="stylesheet" href="./resources/styles/formprivacy.css">
 </head>
 <body onload="handleOnLoad()">
+    <div class="menu_bar">
+        <h1 class="logo"> <a href="homepage.html"><img src="./resources/styles/images/AAP logo.png" alt="Logo"></a></h1>
+    
+        <ul>
+            <li><a href="homepage.html">Home</a></li>
+            <li>
+                <a href="#">More <i class="fas fa-caret-down"></i></a>
+            
+                <div class="dropdown_menu">
+                    <ul>            
+                        <li><a href="aboutus.html">About Us</a></li>
+                        <li><a href="viewpets.html">View Pets</a></li>
+                        <li><a href="donation.html">Donate</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li><a id="loginLogoutLink" href="login.html">Login</a></li>
+        </ul>
+      </div>
     <div class="container">
         <div class="row">
             <div class="col">
@@ -31,16 +50,49 @@
         </div>
       </div>
       <script>
-        const apiUrls = {
-          baseurl: 'http://localhost:5016/api',
-          petUrl: 'http://localhost:5016/api/pets',
-          shelterUrl: 'http://localhost:5016/api/shelters',
-          userUrl: 'http://localhost:5016/api/user',
-          donationUrl: 'http://localhost:5016/api/donation',
-          shelterPrivacyUrl: 'http://localhost:5016/api/ShelterPrivacy'
-        };
-    </script> 
+          const apiUrls = {
+              baseurl: 'http://localhost:5016/api',
+              petUrl: 'http://localhost:5016/api/pets',
+              shelterUrl: 'http://localhost:5016/api/shelters',
+              userUrl: 'http://localhost:5016/api/user',
+              donationUrl: 'http://localhost:5016/api/donation',
+              shelterPrivacyUrl: 'http://localhost:5016/api/ShelterPrivacy'
+            };
+            </script> 
     <script src="./resources/scripts/createaccount.js"></script>
+    <script src="./resources/scripts/login.js"></script>
     <script src="./resources/scripts/formprivacy.js"></script>
+            <script>
+              // Inside a script tag at the end of your HTML file
+              document.addEventListener('DOMContentLoaded', () => {
+                  const loginLogoutLink = document.getElementById('loginLogoutLink')
+                  // Function to update the login/logout link text
+                  const updateLoginLogoutLink = () => {
+                  const token = localStorage.getItem('jwt')
+                      if (token) {
+                      // If token is present, display "LOGOUT" link
+                          loginLogoutLink.textContent = 'Logout'
+                      } else {
+                      // If token is not present, display "LOGIN" link
+                          loginLogoutLink.textContent = 'Login'
+                      }
+                  }
+                  // Call the function to update the link text when the page loads
+                  updateLoginLogoutLink()
+                  // Add click event listener to handle logout logic
+                  loginLogoutLink.addEventListener('click', () => {
+                      const token = localStorage.getItem('jwt')
+                      if (token) {
+                          // If token is present, remove it from local storage
+                          localStorage.removeItem('jwt')  
+                          // Update the login/logout link text
+                          updateLoginLogoutLink()
+          
+                          // Redirect to login page or perform other logout actions
+                          // window.location.href = 'login.html';
+                      }
+                  })
+              })
+          </script>
 </body>
 </html>
