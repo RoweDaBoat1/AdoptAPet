@@ -59,7 +59,7 @@ function handleOnLoad(){
                 <option value="female">F</option>
             </select><br>
             <label for = "intakeDate">Intake Date:</label><br>
-            <input type="date" id="intakeDate" placeholder="Intake Date" style="margin-bottom: 10px;"><br>
+            <input type="text" id="intakeDate" placeholder="mm/dd/yyyy" style="margin-bottom: 10px;"><br>
             <input type="text" id="weight" placeholder="Weight" style="margin-bottom: 10px;"><br>
             <input type="text" id="height" placeholder="Height" style="margin-bottom: 10px;"><br>
             <label>Attitude:</label><br>
@@ -188,14 +188,15 @@ async function handleAddPet(){
         age :document.getElementById('age').value,
         gender :document.getElementById('gender').value,
         intakeDate :document.getElementById('intakeDate').value,
-        postDate: postDate.toISOString(),
+        postDate: postDate,
         weight: document.getElementById('weight').value,
         attitude: attitude,
         aboutMe :document.getElementById('aboutMe').value,
-        adoptionStatus: "open",
         height :document.getElementById('height').value,
         houseTrained :document.getElementById('houseTrained').value,
         petType: document.getElementById('petType').value,
+        adoptionStatus: "open",
+        shelterID: 1
         //imageUrl: imageUrl
         //shelter id
     }
@@ -247,7 +248,7 @@ async function handlePetAdoption(petID){
     const pet = pets.find(pet => pet.petID === petID);
     if (pet) {
         pet.adoptionStatus = "adopted";
-        console.log(pet.adopted)
+        console.log(pet.adoptionStatus)
     }
     //2
     await fetch(petUrl + '/' +petID,{
@@ -312,7 +313,7 @@ function handlePetEdit(pet){
     <label for="imageUpload" style="margin-top: 10px;">Upload Image:</label>
     <input type="file" id="imageUpload" accept="image/*" style="margin-top: 10px;">
     <div id="imagePreview" style="margin-top: 10px;"></div>
-    <button style="margin-top: 10px;" class="btn btn-primary" onclick="handleUpdatePet('${pet.id}')">Update</button> 
+    <button style="margin-top: 10px;" class="btn btn-primary" onclick="handleUpdatePet('${pet.petID}')">Update</button> 
 </form>
     `
     document.getElementById('app').innerHTML = html
@@ -337,13 +338,13 @@ function handlePetEdit(pet){
     })
 }
 
-async function handleUpdatePet(id){
-    let attitudes = []
+async function handleUpdatePet(petID){
+    let attitude = []
     document.querySelectorAll('input[name="attitude"]:checked').forEach(function(checkbox) {
-        attitudes.push(checkbox.value)
+        attitude.push(checkbox.value)
     })
     let pet = {
-        id: id, 
+        petID: petID, 
         name: document.getElementById('name').value, 
         breed: document.getElementById('breed').value, 
         age :document.getElementById('age').value,
@@ -351,7 +352,7 @@ async function handleUpdatePet(id){
         intakeDate :document.getElementById('intakeDate').value,
         postDate: postDate.toISOString(),
         weight: document.getElementById('weight').value,
-        attitudes: attitudes,
+        attitude: attitude,
         aboutMe :document.getElementById('aboutMe').value,
         adopted: adopted,
         adoptionStatus: document.getElementById('adoptionStatus').value,
@@ -359,7 +360,7 @@ async function handleUpdatePet(id){
         houseTrained :document.getElementById('houseTrained').value,
         petType: document.getElementById('petType').value,
     }
-    await fetch(petUrl + '/' + pet.id,{
+    await fetch(petUrl + '/' + pet.petID,{
         method: "PUT",
         body: JSON.stringify(pet),
         headers: {
