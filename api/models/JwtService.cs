@@ -6,8 +6,8 @@ using System.IdentityModel.Tokens.Jwt;
 namespace api.models
 {
     public class JwtService
-{
-    private readonly string _secretKey;
+    {
+        private readonly string _secretKey;
         private readonly string _issuer;
 
         public JwtService(string secretKey = null, string issuer = null)
@@ -17,25 +17,26 @@ namespace api.models
             _issuer = issuer ?? "AdoptAPet";
         }
 
-    public string GenerateToken(string email, string role)
-    {
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Convert.FromBase64String(_secretKey);
-
-        var tokenDescriptor = new SecurityTokenDescriptor
+        public string GenerateToken(string userId, string role)
         {
-            Subject = new ClaimsIdentity(new Claim[]
-            {
-                new Claim(ClaimTypes.Email, email),
-                new Claim(ClaimTypes.Role, role)
-            }),
-            Expires = DateTime.UtcNow.AddDays(1), // Token expiration time
-            Issuer = _issuer,
-            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-        };
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Convert.FromBase64String(_secretKey);
 
-        var token = tokenHandler.CreateToken(tokenDescriptor);
-        return tokenHandler.WriteToken(token);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                        new Claim(ClaimTypes.NameIdentifier, userId), // Include user ID claim
+                        new Claim(ClaimTypes.Role, role) // Change email claim to role claim
+                }),
+                Expires = DateTime.UtcNow.AddDays(1), // Token expiration time
+                Issuer = _issuer,
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
+        }
+
     }
-}
 }

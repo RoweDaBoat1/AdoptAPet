@@ -9,55 +9,58 @@ using MySql.Data.MySqlClient;
 namespace api.models
 {
     public class AuthenticationManager : IAuthService
+{
+    public AuthenticationManager()
     {
+    }
 
-        public AuthenticationManager()
+    // Method to authenticate user
+    public (bool, string) AuthenticateUser(string email, string password, string role)
+    {
+        string hashedPasswordFromDatabase;
+        string saltFromDatabase;
+        string userId;
+
+        // Your database connection string
+        ConnectionString myConnection = new ConnectionString();
+        string cs = myConnection.cs;
+
+        // Query to fetch hashed password, salt, and user ID from the database based on the provided email
+        string query = $"SELECT PasswordHash, Salt, {role}ID FROM {role} WHERE Email = @Email";
+
+        using (MySqlConnection connection = new MySqlConnection(cs))
         {
-        }
+            connection.Open();
 
-        // Method to authenticate user
-        public bool AuthenticateUser(string email, string password, string role)
-        {
-            // Retrieve hashed password and salt from the database based on the provided username
-            string hashedPasswordFromDatabase;
-            string saltFromDatabase;
-
-            // Your database connection string
-            ConnectionString myConnection = new ConnectionString();
-            string cs = myConnection.cs;
-            
-            // Query to fetch hashed password and salt from the database
-            string query = $"SELECT PasswordHash, Salt FROM {role} WHERE Email = @Email";
-
-            using (MySqlConnection connection = new MySqlConnection(cs))
+            using (MySqlCommand cmd = new MySqlCommand(query, connection))
             {
-                connection.Open();
+                cmd.Parameters.AddWithValue("@Email", email);
 
-                using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
-                    cmd.Parameters.AddWithValue("@Email", email);
-
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    if (reader.Read())
                     {
-                        if (reader.Read())
-                        {
-                            hashedPasswordFromDatabase = reader.GetString("PasswordHash");
-                            saltFromDatabase = reader.GetString("Salt");
-                        }
-                        else
-                        {
-                            // Email not found in the database
-                            return false;
-                        }
+                        hashedPasswordFromDatabase = reader.GetString("PasswordHash");
+                        saltFromDatabase = reader.GetString("Salt");
+                        userId = reader.GetInt32($"{role}ID").ToString();
+                    }
+                    else
+                    {
+                        // Email not found in the database
+                        return (false, null);
                     }
                 }
             }
-
-            // Hash the provided password using the retrieved salt
-            string hashedPasswordEntered = PasswordHasher.AuthenticationHashPassword(password, saltFromDatabase);
-
-            // Compare the hashed passwords
-            return hashedPasswordFromDatabase == hashedPasswordEntered;
         }
+
+        // Hash the provided password using the retrieved salt
+        string hashedPasswordEntered = PasswordHasher.AuthenticationHashPassword(password, saltFromDatabase);
+
+        // Compare the hashed passwords
+        bool isAuthenticated = hashedPasswordFromDatabase == hashedPasswordEntered;
+
+        return (isAuthenticated, userId);
     }
+}
+
 }

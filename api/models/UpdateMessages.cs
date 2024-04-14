@@ -17,12 +17,12 @@ namespace api.models
             using var cmd = new MySqlCommand();
             cmd.Connection = con;
 
-            cmd.CommandText = @"UPDATE Message 
+            cmd.CommandText = @"UPDATE Messages 
                                 SET UserID = @UserID, 
                                     Message = @Message, 
                                     Email = @Email, 
                                     Timestamp = @Timestamp, 
-                                    ShelterID = @ShelterID, 
+                                    ShelterID = @ShelterID 
                                 WHERE MessageId = @MessageID";
             cmd.Parameters.AddWithValue("@MessageID", id);
             cmd.Parameters.AddWithValue("@UserID", updatedMessage.UserID);

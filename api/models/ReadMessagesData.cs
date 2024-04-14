@@ -30,7 +30,7 @@ namespace api.models
                     UserID = rdr.IsDBNull(1) ? 0 : rdr.GetInt32(1),
                     Message = rdr.IsDBNull(2) ? null : rdr.GetString(2),
                     Email = rdr.IsDBNull(3) ? null : rdr.GetString(3),
-                    Timestamp = rdr.IsDBNull(4) ? null : rdr.GetString(4),
+                    Timestamp = rdr.IsDBNull(4) ? DateTime.MinValue : rdr.GetDateTime(4),
                     ShelterID = rdr.IsDBNull(5) ? 0 : rdr.GetInt32(5)
                 });
             }
@@ -59,7 +59,7 @@ namespace api.models
                     UserID = rdr.IsDBNull(1) ? 0 : rdr.GetInt32(1),
                     Message = rdr.IsDBNull(2) ? null : rdr.GetString(2),
                     Email = rdr.IsDBNull(3) ? null : rdr.GetString(3),
-                    Timestamp = rdr.IsDBNull(4) ? null : rdr.GetString(4),
+                    Timestamp = rdr.IsDBNull(4) ? DateTime.MinValue : rdr.GetDateTime(4),
                     ShelterID = rdr.IsDBNull(5) ? 0 : rdr.GetInt32(5)
                 };
         }

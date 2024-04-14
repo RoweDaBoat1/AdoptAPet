@@ -25,11 +25,11 @@ namespace api.Controllers
 
         // GET: api/Message/5
         [EnableCors("OpenPolicy")]
-        [HttpGet("{id}", Name = "GetMessageByID")]
-        public Messages GetMessageByID(int ID)
+        [HttpGet("{MessageID}", Name = "GetMessageByID")]
+        public Messages GetMessageByID(int MessageID)
         {
             IGetMessage readObject = new ReadMessageData();
-            return readObject.GetMessage(ID);
+            return readObject.GetMessage(MessageID);
         }
 
         // POST: api/Message
@@ -43,27 +43,27 @@ namespace api.Controllers
 
         // PUT: api/Message/5
         [EnableCors("OpenPolicy")]
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Messages updatedMessage)
+        [HttpPut("{MessageID}")]
+        public IActionResult Put(int MessageID, [FromBody] Messages updatedMessage)
         {
-            if (id != updatedMessage.MessageID)
+            if (MessageID != updatedMessage.MessageID)
             {
                 return BadRequest();
             }
 
             IUpdateMessage updateObject = new UpdateMessages();
-            updateObject.UpdateMessage(id, updatedMessage);
+            updateObject.UpdateMessage(MessageID, updatedMessage);
 
             return NoContent();
         }
 
         // DELETE: api/Message/5
         [EnableCors("OpenPolicy")]
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        [HttpDelete("{MessageID}")]
+        public IActionResult Delete(int MessageID)
         {
             IDeleteMessage deleteObject = new DeleteMessages();
-            deleteObject.DeleteMessage(id);
+            deleteObject.DeleteMessage(MessageID);
 
             return NoContent();
         }

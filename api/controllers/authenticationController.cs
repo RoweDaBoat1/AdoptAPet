@@ -31,12 +31,12 @@ namespace api.Controllers
             IAuthService authObject = new AuthenticationManager();
 
             // Call authentication manager to validate credentials
-            bool isAuthenticated = authObject.AuthenticateUser(model.Email, model.Password, model.Role);
+            (bool isAuthenticated, string userId) = authObject.AuthenticateUser(model.Email, model.Password, model.Role);
 
             if (isAuthenticated)
             {
                 // Generate JWT token using JwtService
-                var token = _jwtService.GenerateToken(model.Email, model.Role);
+                var token = _jwtService.GenerateToken(userId, model.Role);
                 return Ok(new { token }); // Return the token
             }
 

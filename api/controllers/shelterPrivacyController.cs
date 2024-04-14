@@ -25,11 +25,11 @@ namespace api.Controllers
 
         // GET: api/ShelterPrivacys/5
         [EnableCors("OpenPolicy")]
-        [HttpGet("{id}", Name = "GetShelterPrivacyByID")]
-        public ShelterPrivacy GetShelterPrivacyByID(int ID)
+        [HttpGet("{ShelterID}", Name = "GetShelterPrivacyByID")]
+        public ShelterPrivacy GetShelterPrivacyByID(int ShelterID)
         {
             IGetShelterPrivacy readObject = new ReadShelterPrivacyData();
-            return readObject.GetShelterPrivacy(ID);
+            return readObject.GetShelterPrivacy(ShelterID);
         }
 
         // POST: api/ShelterPrivacys
@@ -43,27 +43,27 @@ namespace api.Controllers
 
         // PUT: api/ShelterPrivacys/5
         [EnableCors("OpenPolicy")]
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] ShelterPrivacy updatedShelterPrivacy)
+        [HttpPut("{ShelterID}")]
+        public IActionResult Put(int ShelterID, [FromBody] ShelterPrivacy updatedShelterPrivacy)
         {
-            if (id != updatedShelterPrivacy.ShelterID)
+            if (ShelterID != updatedShelterPrivacy.ShelterID)
             {
                 return BadRequest();
             }
 
             IUpdateShelterPrivacy updateObject = new UpdateShelterPrivacyData();
-            updateObject.UpdateShelterPrivacy(id, updatedShelterPrivacy);
+            updateObject.UpdateShelterPrivacy(ShelterID, updatedShelterPrivacy);
 
             return NoContent();
         }
 
         // DELETE: api/ShelterPrivacys/5
         [EnableCors("OpenPolicy")]
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        [HttpDelete("{ShelterID}")]
+        public IActionResult Delete(int ShelterID)
         {
             IDeleteShelterPrivacy deleteObject = new DeleteShelterPrivacyData();
-            deleteObject.DeleteShelterPrivacy(id);
+            deleteObject.DeleteShelterPrivacy(ShelterID);
 
             return NoContent();
         }

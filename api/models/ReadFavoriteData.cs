@@ -25,8 +25,8 @@ namespace api.models
             {
                 allFavorites.Add(new Favorites()
                 {
-                    PetID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
-                    UserID = rdr.IsDBNull(1) ? 0 : rdr.GetInt32(1),
+                    UserID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
+                    PetID = rdr.IsDBNull(1) ? 0 : rdr.GetInt32(1),
                     FavoriteDate = rdr.IsDBNull(2) ? DateTime.MinValue : rdr.GetDateTime(2)
                 });
             }
@@ -42,17 +42,18 @@ namespace api.models
             using var con = new MySqlConnection(cs);
             con.Open();
 
-            string stm = "SELECT * FROM Favorites WHERE PetID = @ID";
+            string stm = "SELECT * FROM Favorites WHERE UserID = @ID";
             using var cmd = new MySqlCommand(stm, con);
             cmd.Parameters.AddWithValue("@ID", ID);
             cmd.Prepare();
+            
             using MySqlDataReader rdr = cmd.ExecuteReader();
 
             rdr.Read();
             return new Favorites()
                 {
-                    PetID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
-                    UserID = rdr.IsDBNull(1) ? 0 : rdr.GetInt32(1),
+                    UserID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
+                    PetID = rdr.IsDBNull(1) ? 0 : rdr.GetInt32(1),
                     FavoriteDate = rdr.IsDBNull(2) ? DateTime.MinValue : rdr.GetDateTime(2)
                 };
         }

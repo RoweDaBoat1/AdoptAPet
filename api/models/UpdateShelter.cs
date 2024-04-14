@@ -18,19 +18,17 @@ namespace api.models
             cmd.Connection = con;
 
             cmd.CommandText = @"UPDATE Shelter 
-                                SET Username = @Username, 
-                                    PasswordHash = @PasswordHash, 
+                                SET PasswordHash = @PasswordHash, 
                                     Salt = @Salt,
-                                    Pets_Uploaded = @Pets_Uploaded, 
                                     AddressLine = @AddressLine, 
                                     City = @City, 
                                     State = @State, 
                                     ZipCode = @ZipCode, 
-                                    PhoneNumber = @PhoneNumber, 
+                                    Phone_Number = @Phone_Number, 
                                     Email = @Email, 
                                     Shelter_Name = @Shelter_Name, 
-                                    Message_From_User = @Message_From_User, 
-                                    Approval_Status = @Approval_Status,
+                                    Role = @Role, 
+                                    Approval_Status = @Approval_Status
                                 WHERE ShelterId = @ShelterId";
             cmd.Parameters.AddWithValue("@ShelterId", id);
             cmd.Parameters.AddWithValue("@PasswordHash", updatedShelter.PasswordHash);
@@ -39,7 +37,7 @@ namespace api.models
             cmd.Parameters.AddWithValue("@City", updatedShelter.City);
             cmd.Parameters.AddWithValue("@State", updatedShelter.State);
             cmd.Parameters.AddWithValue("@ZipCode", updatedShelter.ZipCode);
-            cmd.Parameters.AddWithValue("@PhoneNumber", updatedShelter.Phone_Number);
+            cmd.Parameters.AddWithValue("@Phone_Number", updatedShelter.Phone_Number);
             cmd.Parameters.AddWithValue("@Email", updatedShelter.Email);
             cmd.Parameters.AddWithValue("@Shelter_Name", updatedShelter.Shelter_Name);
             cmd.Parameters.AddWithValue("@Role", updatedShelter.Role);

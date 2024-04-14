@@ -19,20 +19,20 @@ namespace api.models
 
             cmd.CommandText = @"UPDATE ShelterPrivacy 
                                 SET IntakeDatePrivate  = @IntakeDatePrivate, 
-                                    WeightPrivatePrivate = @WeightPrivate, 
+                                    WeightPrivate = @WeightPrivate, 
                                     AttitudePrivate = @AttitudePrivate, 
                                     AboutMePrivate = @AboutMePrivate, 
                                     HeightPrivate = @HeightPrivate, 
                                     HouseTrainedPrivate = @HouseTrainedPrivate,
-                                    DistancePref = @DistancePref,
+                                    DistancePref = @DistancePref
                                 WHERE ShelterID = @ShelterID";
             cmd.Parameters.AddWithValue("@ShelterID", id);
-            cmd.Parameters.AddWithValue("@IntakeDate", updatedShelterPrivacy.IntakeDatePrivate);
-            cmd.Parameters.AddWithValue("@Weight", updatedShelterPrivacy.WeightPrivate);
-            cmd.Parameters.AddWithValue("@Attitude", updatedShelterPrivacy.AttitudePrivate);
-            cmd.Parameters.AddWithValue("@AboutMe", updatedShelterPrivacy.AboutMePrivate);
-            cmd.Parameters.AddWithValue("@Height", updatedShelterPrivacy.HeightPrivate);
-            cmd.Parameters.AddWithValue("@HouseTrained", updatedShelterPrivacy.HouseTrainedPrivate);
+            cmd.Parameters.AddWithValue("@IntakeDatePrivate", updatedShelterPrivacy.IntakeDatePrivate);
+            cmd.Parameters.AddWithValue("@WeightPrivate", updatedShelterPrivacy.WeightPrivate);
+            cmd.Parameters.AddWithValue("@AttitudePrivate", updatedShelterPrivacy.AttitudePrivate);
+            cmd.Parameters.AddWithValue("@AboutMePrivate", updatedShelterPrivacy.AboutMePrivate);
+            cmd.Parameters.AddWithValue("@HeightPrivate", updatedShelterPrivacy.HeightPrivate);
+            cmd.Parameters.AddWithValue("@HouseTrainedPrivate", updatedShelterPrivacy.HouseTrainedPrivate);
             cmd.Parameters.AddWithValue("@DistancePref", updatedShelterPrivacy.DistancePref);
             
             cmd.ExecuteNonQuery();

@@ -21,11 +21,11 @@ namespace api.Controllers
 
         // GET: api/User/5
         [EnableCors("OpenPolicy")]
-        [HttpGet("{id}", Name = "GetUserByID")]
-        public User GetUserByID(int id)  // Change parameter name to 'id'
+        [HttpGet("{UserID}", Name = "GetUserByID")]
+        public User GetUserByID(int UserID)  // Change parameter name to 'id'
         {
             IGetUser readObject = new ReadUserData();
-            return readObject.GetUser(id);  // Use the 'id' parameter to get the user
+            return readObject.GetUser(UserID);  // Use the 'id' parameter to get the user
         }
 
 
@@ -40,27 +40,27 @@ namespace api.Controllers
 
         // PUT: api/User/5
         [EnableCors("OpenPolicy")]
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] User updatedUser)
+        [HttpPut("{UserID}")]
+        public IActionResult Put(int UserID, [FromBody] User updatedUser)
         {
-            if (id != updatedUser.UserID)
+            if (UserID != updatedUser.UserID)
             {
                 return BadRequest();
             }
 
             IUpdateUser updateObject = new UpdateUserData();
-            updateObject.UpdateUser(id, updatedUser);
+            updateObject.UpdateUser(UserID, updatedUser);
 
             return NoContent();
         }
 
         // DELETE: api/User/5
         [EnableCors("OpenPolicy")]
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int ID)
+        [HttpDelete("{UserID}")]
+        public IActionResult Delete(int UserID)
         {
             IDeleteUser deleteObject = new DeleteUserData();
-            deleteObject.DeleteUser(ID);
+            deleteObject.DeleteUser(UserID);
 
             return NoContent();
         }

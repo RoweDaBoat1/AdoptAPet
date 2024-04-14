@@ -20,7 +20,7 @@ namespace api.models
             cmd.CommandText = @"UPDATE User 
                                 SET Email = @Email, 
                                     PasswordHash = @PasswordHash, 
-                                    Salt = @Salt
+                                    Salt = @Salt,
                                     FirstName = @FirstName, 
                                     LastName = @LastName, 
                                     ZipCode = @ZipCode, 
@@ -29,7 +29,6 @@ namespace api.models
                                 WHERE UserId = @UserId";
             cmd.Parameters.AddWithValue("@UserId", id);
             cmd.Parameters.AddWithValue("@Email", updatedUser.Email);
-            cmd.Parameters.AddWithValue("@Username", updatedUser.Username);
             cmd.Parameters.AddWithValue("@PasswordHash", updatedUser.PasswordHash);
             cmd.Parameters.AddWithValue("@Salt", updatedUser.Salt);
             cmd.Parameters.AddWithValue("@FirstName", updatedUser.FirstName);
