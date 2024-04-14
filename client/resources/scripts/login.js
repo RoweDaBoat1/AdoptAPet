@@ -1,4 +1,4 @@
-const authenticationUrl = "http://localhost:5016/api/authentication/login";
+const authenticationUrl = "http://localhost:5016/api/Authentication/login";
 
 document.getElementById('loginForm').addEventListener('submit', async function(event) {
     event.preventDefault(); // Prevent default form submission
@@ -7,6 +7,11 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     const role = document.querySelector('input[name="role"]:checked').value; // Assuming radio buttons for user type
+
+
+    //---------------- You had this portion below turning the users response 
+    //---------------- into a JSON object but the authenticationManager was still coded to
+    //---------------- take in a set of three strings. 
 
     // Send login request to backend API
     const response = await fetch(authenticationUrl, {
@@ -22,6 +27,11 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     if (response.ok) {
         // Redirect user to appropriate dashboard or perform other actions based on user type
         const responseData = await response.json();
+        const token = responseData.token;
+
+        // save token to local storage
+        localStorage.setItem('jwt', token)
+
         console.log('Login successful. JWT token:', responseData.token);
         // Redirect logic based on user type
         switch (role) {

@@ -12,7 +12,7 @@ namespace api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MessageController : ControllerBase
+    public class messageController : ControllerBase
     {
         // GET: api/Message
         [EnableCors("OpenPolicy")]

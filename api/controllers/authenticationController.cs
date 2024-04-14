@@ -21,22 +21,28 @@ namespace api.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login(string email, string password, string role)
+        public IActionResult Login([FromBody] LoginRequestModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState); // Return bad request if model validation fails
+            }
+
             IAuthService authObject = new AuthenticationManager();
 
             // Call authentication manager to validate credentials
-            bool isAuthenticated = authObject.AuthenticateUser(email, password, role);
+            bool isAuthenticated = authObject.AuthenticateUser(model.Email, model.Password, model.Role);
 
             if (isAuthenticated)
             {
                 // Generate JWT token using JwtService
-                var token = _jwtService.GenerateToken(email, role);
+                var token = _jwtService.GenerateToken(model.Email, model.Role);
                 return Ok(new { token }); // Return the token
             }
 
             return Unauthorized("Authentication failed"); // Return unauthorized status if authentication fails
         }
+
 
         // PUT: api/authentication/5
         [HttpPut("{id}")]
