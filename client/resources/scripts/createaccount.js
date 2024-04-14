@@ -115,23 +115,24 @@ async function populateShelterTable(){
 
 async function handleAddShelter(){
     let shelter = {
-        shelterID: crypto.randomUUID(),
-        password : document.getElementById('shelterPassword').value,
+        // shelterID: crypto.randomUUID(),
+        passwordHash : document.getElementById('shelterPassword').value,
+        salt: '',
         addressLine: document.getElementById('shelterAddressLine').value,
         city: document.getElementById('shelterCity').value,
         state: document.getElementById('shelterState').value,
         zipCode: document.getElementById('shelterZip').value,
-        phoneNumber: document.getElementById('shelterPhone').value,
+        phone_Number: document.getElementById('shelterPhone').value,
         email: document.getElementById('shelterEmail').value,
-        shelterName: document.getElementById('shelterName').value,
+        shelter_Name: document.getElementById('shelterName').value,
         role: "Shelter",
         // petsForAdoption: 0,
         // petsAdopted: 0,
-        approvalStatus: "pending"
+        approval_Status: "Pending"
     }
 
     shelterPrivacy = {
-        shelterID: shelter.shelterID,
+        // shelterID: shelter.shelterID,
         intakeDatePrivate: false,
         weightPrivate: false,
         attitudePrivate: false,
@@ -142,7 +143,6 @@ async function handleAddShelter(){
     }
     await saveShelter(shelter)
     await saveShelterPrivacy(shelterPrivacy)
-    populateShelterTable()
 }
 
 async function saveShelter(shelter){

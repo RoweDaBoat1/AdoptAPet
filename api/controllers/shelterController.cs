@@ -32,6 +32,15 @@ namespace api.Controllers
             return readObject.GetShelter(ShelterID);
         }
 
+        // // GET: api/Shelter/TuscaloosaMetro
+        // [EnableCors("OpenPolicy")]
+        // [HttpGet("{Shelter_Name}", Name = "GetShelterByName")]
+        // public Shelter GetShelterByName(string Shelter_Name)
+        // {
+        //     IGetShelter readObject = new ReadShelterData();
+        //     return readObject.GetShelterByName(Shelter_Name);
+        // }
+
         // POST: api/Shelter
         [EnableCors("OpenPolicy")]
         [HttpPost]
