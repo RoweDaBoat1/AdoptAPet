@@ -23,7 +23,7 @@ namespace api.models
                                     ShelterName = @ShelterName, 
                                     Email = @Email, 
                                     FirstName = @FirstName, 
-                                    LastName = @LastName,
+                                    LastName = @LastName
                                 WHERE DonationID = @DonationID";
             cmd.Parameters.AddWithValue("@DonationID", updatedDonation.DonationID);
             cmd.Parameters.AddWithValue("@Amount", updatedDonation.Amount);

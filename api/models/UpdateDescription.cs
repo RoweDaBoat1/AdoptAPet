@@ -16,11 +16,11 @@ namespace api.models
             using var cmd = new MySqlCommand();
             cmd.Connection = con;
 
-            cmd.CommandText = @"UPDATE Description
+            cmd.CommandText = @"UPDATE Descriptions
                                 SET DescriptionID = @DescriptionID, 
                                     LocationID = @LocationID, 
                                     Description = @Description, 
-                                    Location = @Location,
+                                    Location = @Location
                                 WHERE DescriptionID = @DescriptionID";
             cmd.Parameters.AddWithValue("@DescriptionID", updatedDescription.DescriptionID);
             cmd.Parameters.AddWithValue("@LocationID", updatedDescription.LocationID);

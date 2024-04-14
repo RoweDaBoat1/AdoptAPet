@@ -9,6 +9,6 @@ namespace api.models
     {
         public int UserID {get; set;}
         public int PetID {get; set;}
-        public string FavoriteDate {get; set;}
+        public DateTime FavoriteDate {get; set;}
     }
 }

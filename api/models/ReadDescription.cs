@@ -14,7 +14,7 @@ namespace api.models
             using var con = new MySqlConnection(cs);
             con.Open();
 
-            string stm = "SELECT * FROM Description";
+            string stm = "SELECT * FROM Descriptions";
             using var cmd = new MySqlCommand(stm, con);
 
 
@@ -43,7 +43,7 @@ namespace api.models
             using var con = new MySqlConnection(cs);
             con.Open();
 
-            string stm = "SELECT * FROM Description WHERE DescriptionID = @ID";
+            string stm = "SELECT * FROM Descriptions WHERE DescriptionID = @ID";
             using var cmd = new MySqlCommand(stm, con);
             cmd.Parameters.AddWithValue("@ID", ID);
             cmd.Prepare();

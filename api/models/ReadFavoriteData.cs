@@ -27,7 +27,7 @@ namespace api.models
                 {
                     PetID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
                     UserID = rdr.IsDBNull(1) ? 0 : rdr.GetInt32(1),
-                    FavoriteDate = rdr.IsDBNull(2) ? null : rdr.GetString(2)
+                    FavoriteDate = rdr.IsDBNull(2) ? DateTime.MinValue : rdr.GetDateTime(2)
                 });
             }
 
@@ -53,7 +53,7 @@ namespace api.models
                 {
                     PetID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
                     UserID = rdr.IsDBNull(1) ? 0 : rdr.GetInt32(1),
-                    FavoriteDate = rdr.IsDBNull(2) ? null : rdr.GetString(2)
+                    FavoriteDate = rdr.IsDBNull(2) ? DateTime.MinValue : rdr.GetDateTime(2)
                 };
         }
     }

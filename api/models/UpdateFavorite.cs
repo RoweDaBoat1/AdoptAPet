@@ -16,11 +16,11 @@ namespace api.models
             using var cmd = new MySqlCommand();
             cmd.Connection = con;
 
-            cmd.CommandText = @"UPDATE Favorite
+            cmd.CommandText = @"UPDATE Favorites
                                 SET PetID = @PetID, 
                                     UserID = @UserID, 
-                                    FavoriteDate = @FavoriteDate, 
-                                WHERE PetID = @PetID";
+                                    FavoriteDate = @FavoriteDate 
+                                WHERE UserID = @UserID";
             cmd.Parameters.AddWithValue("@UserID", updatedFavorites.UserID);
             cmd.Parameters.AddWithValue("@PetID", updatedFavorites.PetID);
             cmd.Parameters.AddWithValue("@FavoriteDate", updatedFavorites.FavoriteDate);

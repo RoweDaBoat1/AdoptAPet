@@ -7,7 +7,7 @@ namespace api.models
 {
     public class DeleteFavoriteData : IDeleteFavorite
     {
-        public void DeleteFavorite(int id)
+        public void DeleteFavorite(int UserID, int PetID)
         {
             ConnectionString myConnection = new ConnectionString();
             string cs = myConnection.cs;
@@ -17,8 +17,9 @@ namespace api.models
             using var cmd = new MySqlCommand();
             cmd.Connection = con;
 
-            cmd.CommandText = "DELETE FROM Favorites WHERE PetID = @PetID";
-            cmd.Parameters.AddWithValue("@PetID", id);
+            cmd.CommandText = "DELETE FROM Favorites WHERE UserID = @UserID AND PetID = @PetID";
+            cmd.Parameters.AddWithValue("@UserID", UserID);
+            cmd.Parameters.AddWithValue("@PetID", PetID);
             
             cmd.ExecuteNonQuery();
         }

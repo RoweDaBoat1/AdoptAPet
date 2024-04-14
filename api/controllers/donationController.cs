@@ -25,11 +25,11 @@ namespace api.controllers
 
         // GET: api/Donation/5
         [EnableCors("OpenPolicy")]
-        [HttpGet("{id}", Name = "GetDonationByID")]
-        public Donations GetDonationByID(int ID)
+        [HttpGet("{DonationID}", Name = "GetDonationByID")]
+        public Donations GetDonationByID(int DonationID)
         {
             IGetDonation readObject = new ReadDonationData();
-            return readObject.GetDonation(ID);
+            return readObject.GetDonation(DonationID);
         }
 
         // POST: api/Donation
@@ -43,27 +43,27 @@ namespace api.controllers
 
         // PUT: api/Donation/5
         [EnableCors("OpenPolicy")]
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Donations updatedDonation)
+        [HttpPut("{DonationID}")]
+        public IActionResult Put(int DonationID, [FromBody] Donations updatedDonation)
         {
-            if (id != updatedDonation.DonationID)
+            if (DonationID != updatedDonation.DonationID)
             {
                 return BadRequest();
             }
 
             IUpdateDonation updateObject = new UpdateDonationData();
-            updateObject.UpdateDonations(id, updatedDonation);
+            updateObject.UpdateDonations(DonationID, updatedDonation);
 
             return NoContent();
         }
 
         // DELETE: api/Donation/5
         [EnableCors("OpenPolicy")]
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        [HttpDelete("{DonationID}")]
+        public IActionResult Delete(int DonationID)
         {
             IDeleteDonation deleteObject = new DeleteDonationData();
-            deleteObject.DeleteDonation(id);
+            deleteObject.DeleteDonation(DonationID);
 
             return NoContent();
         }

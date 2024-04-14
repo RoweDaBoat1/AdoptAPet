@@ -25,11 +25,11 @@ namespace api.controllers
 
         // GET: api/Favorite/5
         [EnableCors("OpenPolicy")]
-        [HttpGet("{id}", Name = "GetFavoriteByID")]
-        public Favorites GetFavoriteByID(int ID)
+        [HttpGet("{UserID}", Name = "GetFavoriteByID")]
+        public Favorites GetFavoriteByID(int UserID)
         {
             IGetFavorite readObject = new ReadFavoriteData();
-            return readObject.GetFavorite(ID);
+            return readObject.GetFavorite(UserID);
         }
 
         // POST: api/Favorite
@@ -43,29 +43,30 @@ namespace api.controllers
 
         // PUT: api/Favorite/5
         [EnableCors("OpenPolicy")]
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Favorites updatedFavorite)
+        [HttpPut("{UserID}")]
+        public IActionResult Put(int UserID, [FromBody] Favorites updatedFavorite)
         {
-            if (id != updatedFavorite.PetID)
+            if (UserID != updatedFavorite.UserID)
             {
                 return BadRequest();
             }
 
             IUpdateFavorite updateObject = new UpdateFavoriteData();
-            updateObject.UpdateFavorites(id, updatedFavorite);
+            updateObject.UpdateFavorites(UserID, updatedFavorite);
 
             return NoContent();
         }
 
         // DELETE: api/Favorite/5
         [EnableCors("OpenPolicy")]
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        [HttpDelete("{UserID}/{PetID}")] // Add PetID to the route
+        public IActionResult Delete(int UserID, int PetID) // Modify the method signature
         {
             IDeleteFavorite deleteObject = new DeleteFavoriteData();
-            deleteObject.DeleteFavorite(id);
+            deleteObject.DeleteFavorite(UserID, PetID); // Pass both UserID and PetID
 
             return NoContent();
         }
+
     }
 }

@@ -12,9 +12,9 @@ namespace api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class descriptionController : ControllerBase
+    public class descriptionsController : ControllerBase
     {
-        // GET: api/Description
+        // GET: api/Descriptions
         [EnableCors("OpenPolicy")]
         [HttpGet]
         public List<Descriptions> GetAllDescription()
@@ -23,16 +23,16 @@ namespace api.Controllers
             return readObject.GetAllDescriptions();
         }
 
-        // GET: api/Description/5
+        // GET: api/Descriptions/5
         [EnableCors("OpenPolicy")]
-        [HttpGet("{id}", Name = "GetDescriptionByID")]
-        public Descriptions GetDescriptionByID(int ID)
+        [HttpGet("{DescriptionID}", Name = "GetDescriptionByID")]
+        public Descriptions GetDescriptionByID(int DescriptionID)
         {
             IGetDescription readObject = new ReadDescriptionData();
-            return readObject.GetDescription(ID);
+            return readObject.GetDescription(DescriptionID);
         }
 
-        // POST: api/Description
+        // POST: api/Descriptions
         [EnableCors("OpenPolicy")]
         [HttpPost]
         public void Post([FromBody] Descriptions value)
@@ -41,29 +41,29 @@ namespace api.Controllers
             insertObject.InsertDescription(value);
         }
 
-        // PUT: api/Description/5
+        // PUT: api/Descriptions/5
         [EnableCors("OpenPolicy")]
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Descriptions updatedDescription)
+        [HttpPut("{DescriptionID}")]
+        public IActionResult Put(int DescriptionID, [FromBody] Descriptions updatedDescription)
         {
-            if (id != updatedDescription.DescriptionID)
+            if (DescriptionID != updatedDescription.DescriptionID)
             {
                 return BadRequest();
             }
 
             IUpdateDescription updateObject = new UpdateDescriptionData();
-            updateObject.UpdateDescription(id, updatedDescription);
+            updateObject.UpdateDescription(DescriptionID, updatedDescription);
 
             return NoContent();
         }
 
-        // DELETE: api/Description/5
+        // DELETE: api/Descriptions/5
         [EnableCors("OpenPolicy")]
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        [HttpDelete("{DescriptionID}")]
+        public IActionResult Delete(int DescriptionID)
         {
             IDeleteDescription deleteObject = new DeleteDescriptionData();
-            deleteObject.DeleteDescription(id);
+            deleteObject.DeleteDescription(DescriptionID);
 
             return NoContent();
         }
