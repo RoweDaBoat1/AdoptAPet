@@ -65,6 +65,7 @@
 /* Filters */
 .filters {
     margin: 20px 0;
+    padding: 10px;
 }
 
 .filters label {
@@ -74,6 +75,7 @@
 .filters select {
     padding: 5px;
     margin-right: 20px;
+    width: 150px;
 }
 
 /* Title */
@@ -84,12 +86,11 @@
 /* Pets container */
 .pets {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
     gap: 20px;
     padding: 20px;
 }
 
-/* Pet card */
 .pet-card {
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -103,6 +104,11 @@
     transform: translateY(-5px);
 }
 
+.pet-info {
+    display: flex;
+    align-items: center;
+}
+
 .pet-card img {
     width: 100%;
     height: auto;
@@ -110,29 +116,28 @@
     margin-bottom: 10px;
 }
 
-.pet-info {
-    display: flex;
-    align-items: center;
-}
-
 .pet-name {
     font-weight: bold;
     margin-right: 5px;
 }
 
-.gender-symbol {
-    font-size: 20px;
+.pet-breed,
+.pet-age,
+.pet-gender {
+    margin: 5px 0; 
 }
 
-.favorite {
+.favorite-button {
     font-size: 20px;
-    color: gray; /* Default color for unfavorite */
+    color: gray; 
     position: absolute;
     top: 10px;
     right: 10px;
+    background: none;
+    border: none;
     cursor: pointer;
 }
 
-.favorite.favorited {
-    color: gold; /* Gold color for favorited */
+.favorite-button.favorited i {
+    color: gold;
 }
