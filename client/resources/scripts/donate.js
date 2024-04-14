@@ -59,10 +59,10 @@ function handleOnLoad(){
             
         // Iterate through the approved shelters and add them as options to the dropdown
         shelters.forEach(function(shelter) {
-            if (shelter.approvalStatus == "approved") { // Check if the shelter is approved
+            if (shelter.approval_Status == "Approved") { // Check if the shelter is approved
                 let option = document.createElement('option'); // Create a new option element
-                option.value = shelter.shelterName; // Set the value attribute to shelter name
-                option.textContent = shelter.shelterName; // Set the text content to shelter name
+                option.value = shelter.shelter_Name; // Set the value attribute to shelter name
+                option.textContent = shelter.shelter_Name; // Set the text content to shelter name
                 dropdown.appendChild(option); // Append the option to the dropdown
             }
         });
@@ -152,11 +152,10 @@ async function handleAddDonation(){
         lastName = "null"
         email = "null"
     }
-    var donationDate = new Date()
+    // var donationDate = new Date()
     let donation = {
-        donationId: crypto.randomUUID(),
         amount: customAmount,
-        donationDate: donationDate.toISOString(),
+        // donationDate: donationDate.toISOString(),
         shelterName: document.getElementById('shelterName').value, 
         email: email,
         firstName: firstName,
