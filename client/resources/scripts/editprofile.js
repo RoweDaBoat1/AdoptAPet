@@ -1,4 +1,4 @@
- const baseUrl = "http://localhost:5016/api"
+const baseUrl = "http://localhost:5016/api"
 
 function handleOnLoad() {
     const token = localStorage.getItem('jwt');
@@ -107,7 +107,7 @@ function getUserHtml(user) {
                  <tr>
                      <td colspan="2">
                          <button class="btn btn-primary" onclick="toggleEdit()">Edit</button>
-                         <button class="btn btn-primary" onclick="saveUserChanges('${user.userID}')">Save</button>
+                         <button class="btn btn-primary" onclick="saveChanges('${user.userID}')">Save</button>
                      </td>
                   </tr>
              </table>`;
@@ -156,7 +156,7 @@ function getShelterHtml(user) {
     <tr>
         <td colspan="2">
             <button class="btn btn-primary" onclick="toggleEdit('${user.role}')">Edit</button>
-            <button class="btn btn-primary" onclick="saveShelterChanges('${user.shelterID}')">Save</button>
+            <button class="btn btn-primary" onclick="saveChanges('${user.shelterID}')">Save</button>
         </td>
      </tr>
 </table>`;
@@ -189,7 +189,7 @@ function getAdminHtml(user) {
     <tr>
         <td colspan="2">
             <button class="btn btn-primary" onclick="toggleEdit('${user.role}')">Edit</button>
-            <button class="btn btn-primary" onclick="saveAdminChanges('${user.iD}')">Save</button>
+            <button class="btn btn-primary" onclick="saveChanges('${user.iD}')">Save</button>
         </td>
      </tr>
 </table>`;
@@ -221,12 +221,26 @@ function decodeJWT(token) {
     return JSON.parse(jsonPayload);
 }
 
+// function toggleEdit(role) {
+//     console.log('hello')
+//     const tableId = getTableIdByRole(role);
+//     console.log(tableId)
+//     const cells = document.querySelectorAll(`#${tableId} span`);
+//     console.log(cells)
+//     cells.forEach(function(cell) {
+//         const input = document.createElement('input');
+//         input.value = cell.innerText;
+//         cell.innerHTML = '';
+//         cell.appendChild(input);
+//     });
+// }
+
 function toggleEdit(role) {
-    console.log('hello')
+    console.log('Role:', role); // Log the role
     const tableId = getTableIdByRole(role);
-    console.log(tableId)
+    console.log('Table ID:', tableId); // Log the tableId
     const cells = document.querySelectorAll(`#${tableId} span`);
-    console.log(cells)
+    console.log('Cells:', cells); // Log the cells
     cells.forEach(function(cell) {
         const input = document.createElement('input');
         input.value = cell.innerText;
@@ -234,6 +248,22 @@ function toggleEdit(role) {
         cell.appendChild(input);
     });
 }
+
+
+// function toggleEdit(role) {
+//     console.log('hello');
+//     const tableId = getTableIdByRole(role);
+//     console.log(tableId);
+//     const cells = document.querySelectorAll(`#${tableId} span`);
+//     console.log(cells);
+//     cells.forEach(function(cell) {
+//         const input = document.createElement('input');
+//         input.value = cell.innerText;
+//         cell.innerHTML = '';
+//         cell.appendChild(input);
+//     });
+// }
+
 
 function getTableIdByRole(role) {
     switch (role) {
