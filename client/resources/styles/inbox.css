@@ -63,36 +63,40 @@
     padding: 10px;
 }
 
+/* Inbox */
 .container {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
 }
 
-.pet-details {
-    margin-top: 20px;
+h1 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 
-.pet-details p {
+.shelter-notifications {
+    margin-bottom: 30px;
+}
+
+.shelter-notifications h2 {
+    font-size: 24px;
     margin-bottom: 10px;
 }
 
-.pet-details strong {
-    margin-right: 5px;
+.shelter-notifications ul {
+    list-style-type: none;
+    padding: 0;
 }
 
-.adoption-form-container {
-    position: absolute;
-    top: 50px; 
-    right: 50px; 
+.shelter-notifications ul li {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    margin-bottom: 5px;
 }
 
-.adoption-form-container a {
-    color: white; 
-    text-decoration: none;
-    font-size: 24px; 
-}
-
-.adoption-form-container a:hover {
-    color: rgb(25, 105, 255); 
+.shelter-notifications ul li:last-child {
+    margin-bottom: 0;
 }
