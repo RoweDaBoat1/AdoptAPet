@@ -57,7 +57,7 @@ async function handleOnLoad() {
             <input type="text" id="distancePref" name="distancePref" placeholder="miles">
         </div>
     </div>
-        <button class="btn btn-primary" onclick="handleSavePrivacy('${shelterPrivacy.shelterID}')" style="float: center;">Save Preferences</button>
+        <button type="button" class="btn btn-primary" onclick="handleSavePrivacy('${shelterPrivacy.shelterID}')" style="float: center;">Save Preferences</button>
     </form>
     `
     document.getElementById('app').innerHTML = html
@@ -91,12 +91,12 @@ function decodeJWT(token) {
 async function handleSavePrivacy(shelterID){
     let shelterPrivacy = {
         shelterID: shelterID, 
-        intakeDatePrivate :document.getElementById('intakeDate').value,
-        weightPrivate: document.getElementById('weight').value,
-        attitudePrivate: attitudes,
-        aboutMePrivate :document.getElementById('aboutMe').value,
-        heightPrivate :document.getElementById('height').value,
-        houseTrainedPrivate :document.getElementById('houseTrained').value,
+        intakeDatePrivate: document.getElementById('intakeDatePrivate').value,
+        weightPrivate: document.getElementById('weightPrivate').value,
+        attitudePrivate: document.getElementById('attitudePrivate').value,
+        aboutMePrivate: document.getElementById('aboutMePrivate').value,
+        heightPrivate: document.getElementById('heightPrivate').value,
+        houseTrainedPrivate: document.getElementById('houseTrainedPrivate').value,
         distancePref: document.getElementById('distancePref').value,
     }
     await fetch(shelterPrivacyUrl + '/' + shelterID,{
@@ -106,7 +106,7 @@ async function handleSavePrivacy(shelterID){
             "Content-type" : "application/json; charset=UTF-8"
         }
     })
-    handleOnLoad()
+    // handleOnLoad()
 }
 
 // //function to see who is logged in and retrieve their data
