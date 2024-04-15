@@ -65,18 +65,20 @@
 
 /* Banner */
 .banner {
-    background-image: url('./images/banner.jpg'); 
+    background-image: url('./images/pets-banner-595x180.jpeg'); 
     background-size: cover;
     height: 500px; 
-    color: #fff;
+    color: black;
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
+    text-shadow: 2px 2px 4px rgb(255, 255, 255);
+    font-weight: bold;
 }
 
 .banner h1 {
-    font-size: 36px;
+    font-size: 50px;
     margin-bottom: 20px;
 }
 
