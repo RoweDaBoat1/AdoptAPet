@@ -21,6 +21,22 @@ let pets = []
 //     }
 // })
 
+document.getElementById('imageUpload').addEventListener('change', function() {
+    const file = this.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            const img = document.createElement('img');
+            img.src = reader.result;
+            img.style.width = '200px'; // Set image width for preview
+            const imagePreview = document.getElementById('imagePreview');
+            imagePreview.innerHTML = ''; // Clear previous preview
+            imagePreview.appendChild(img);
+        }
+        reader.readAsDataURL(file);
+    }
+});
+
 
 function handleOnLoad(){
     let html = `
@@ -178,8 +194,8 @@ async function handleAddPet(){
         attitude.push(checkbox.value)
     })
 
-    //let imageFile = document.getElementById('imageUpload').files[0];
-    //let imageUrl = await uploadImage(imageFile);
+    let imageFile = document.getElementById('imageUpload').files[0];
+    let imageData = await convertImageToBase64(imageFile);
 
     let pet = {
         petId: crypto.randomUUID(), 
@@ -196,8 +212,8 @@ async function handleAddPet(){
         houseTrained :document.getElementById('houseTrained').value,
         petType: document.getElementById('petType').value,
         adoptionStatus: "open",
-        shelterID: 1
-        //imageUrl: imageUrl
+        shelterID: 1,
+        imageData: imageData // Include image data in the pet object
         //shelter id
     }
     await savePet(pet)
@@ -368,4 +384,13 @@ async function handleUpdatePet(petID){
         }
     })
     handleOnLoad()
+}
+
+function convertImageToBase64(imageFile) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+        reader.readAsDataURL(imageFile);
+    });
 }

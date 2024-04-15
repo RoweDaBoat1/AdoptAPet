@@ -21,6 +21,7 @@ async function populatePetProfile() {
         document.getElementById('height').textContent = pet.height;
         document.getElementById('houseTrained').textContent = pet.houseTrained;
         document.getElementById('petType').textContent = pet.petType;
+        document.getElementById('petImage').src = `data:image/png;base64, ${pet.imageData}`;
 
         
         const adoptionFormUrl = `adoptionform.html?petId=${petId}`;
