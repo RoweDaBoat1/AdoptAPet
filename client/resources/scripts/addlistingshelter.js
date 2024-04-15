@@ -214,7 +214,7 @@ async function populateTable() {
 
     // Add rows for each pet belonging to the shelter
     shelterPets.forEach(function (pet) {
-        if (pet.adoptionStatus !== "Adopted") {
+        if (pet.adoptionStatus != "Adopted") {
             html += `
                 <tr>
                     <td>${pet.petID}</td>
