@@ -4,6 +4,19 @@ const featuredPets = [
     { name: 'Featured Pet 3', age: '1 year', gender: 'Male', breed: 'German Shepherd', image: 'path_to_image' }
 ];
 
+const postUrl = "http://localhost:5016/api/ShelterPost"
+
+//const petUrl = apiUrls.petUrl
+
+let posts = []
+
+
+async function getAllPets(){
+    let response = await fetch(postUrl)
+    posts = await response.json()
+    console.log(posts)
+}
+
 function populateFeaturedPets() {
     const container = document.getElementById('featured-pets-container');
     container.innerHTML = '';
@@ -28,7 +41,7 @@ function populateFeaturedPets() {
 
 populateFeaturedPets();
 
-function populateFeaturedPets(shelterPosts) {
+function populatePosts(shelterPosts) {
     const container = document.getElementById('featured-pets-container');
     container.innerHTML = '';
 

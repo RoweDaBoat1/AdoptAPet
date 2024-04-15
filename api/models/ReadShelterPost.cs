@@ -26,10 +26,10 @@ namespace api.models
             {
                 allShelterPost.Add(new ShelterPost()
                 {
-                    ShelterPostID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
-                    ShelterID = rdr.IsDBNull(1) ? 0 : rdr.GetInt32(1),
-                    Title = rdr.IsDBNull(2) ? null : rdr.GetString(2),
-                    Message = rdr.IsDBNull(3) ? null : rdr.GetString(3)
+                    ShelterID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
+                    Title = rdr.IsDBNull(1) ? null : rdr.GetString(1),
+                    Message = rdr.IsDBNull(2) ? null : rdr.GetString(2),
+                    ShelterPostID = rdr.IsDBNull(3) ? 0 : rdr.GetInt32(3)
                 });
             }
 
@@ -53,10 +53,10 @@ namespace api.models
             rdr.Read();
             return new ShelterPost()
             {
-                ShelterPostID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
-                ShelterID = rdr.IsDBNull(1) ? 0 : rdr.GetInt32(1),
-                Title = rdr.IsDBNull(2) ? null : rdr.GetString(2),
-                Message = rdr.IsDBNull(3) ? null : rdr.GetString(3)
+                ShelterID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
+                Title = rdr.IsDBNull(1) ? null : rdr.GetString(1),
+                Message = rdr.IsDBNull(2) ? null : rdr.GetString(2),
+                ShelterPostID = rdr.IsDBNull(3) ? 0 : rdr.GetInt32(3)
             };
         }
     }
