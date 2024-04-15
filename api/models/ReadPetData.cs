@@ -24,6 +24,7 @@ namespace api.models
         {
             allPets.Add(new Pet()
             {
+
                 PetID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
                 Name = rdr.IsDBNull(1) ? null : rdr.GetString(1),
                 Breed = rdr.IsDBNull(2) ? null : rdr.GetString(2),
@@ -41,10 +42,11 @@ namespace api.models
                 ShelterID = rdr.IsDBNull(14) ? 0 : rdr.GetInt32(14),
                 ImagePath = rdr.IsDBNull(15) ? null : rdr.GetString(15) // Retrieve ImagePath from database
             });
-        }
+            }
 
-        return allPets;
-    }
+            return allPets;
+        }
+    
 
     public Pet GetPet(int ID)
     {

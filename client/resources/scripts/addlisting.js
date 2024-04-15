@@ -74,8 +74,8 @@ function handleOnLoad(){
                 <option value="male">M</option>
                 <option value="female">F</option>
             </select><br>
-            <label for = "intakeDate">Intake Date:</label><br>
-            <input type="text" id="intakeDate" placeholder="mm/dd/yyyy" style="margin-bottom: 10px;"><br>
+            <label for="intakeDate">Intake Date:</label><br>
+            <input type="datetime-local" id="intakeDate" style="margin-bottom: 10px;"><br>
             <input type="text" id="weight" placeholder="Weight" style="margin-bottom: 10px;"><br>
             <input type="text" id="height" placeholder="Height" style="margin-bottom: 10px;"><br>
             <label>Attitude:</label><br>
@@ -148,7 +148,7 @@ async function populateTable(){
         </tr>`
     pets.forEach(function(pet){
         //add more logic into the if statement (shelterid) so that shelters only see their own animals
-        if(pet.adoptionStatus != "adopted"){
+        if(pet.adoptionStatus != "Adopted"){
             html+= `
             <tr>
                 <td>${pet.petID}</td>
@@ -179,7 +179,26 @@ async function populateTable(){
 }
 
 async function handleAddPet(){
-    var postDate = new Date()
+    // Get the current date and time
+    var postDate = new Date();
+
+    // Extract individual components of the date and time
+    var postDate = new Date();
+
+    // Convert intakeDateStart to ISO 8601 format with timezone offset
+    var formattedPostDate = postDate.toISOString();
+
+    // // Get the individual components of the date and time
+    // var year = currentDate.getFullYear();
+    // var month = ('0' + (currentDate.getMonth() + 1)).slice(-2); // Months are zero-based, so we add 1
+    // var day = ('0' + currentDate.getDate()).slice(-2);
+    // var hours = ('0' + currentDate.getHours()).slice(-2);
+    // var minutes = ('0' + currentDate.getMinutes()).slice(-2);
+    // var seconds = ('0' + currentDate.getSeconds()).slice(-2);
+
+    // // Construct the formatted date string
+    // var postDate = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+
 
     var breedValue = document.getElementById("breed").value
     var otherInput = ""
@@ -189,22 +208,49 @@ async function handleAddPet(){
         otherInput = breedValue
     }
 
-    let attitude = []
-    document.querySelectorAll('input[name="attitude"]:checked').forEach(function(checkbox) {
-        attitude.push(checkbox.value)
-    })
+    let attitude = "";
+    document.querySelectorAll('input[name="attitude"]:checked').forEach(function(checkbox, index) {
+        // If this is not the first checkbox, add a ";" before adding the value
+        if (index > 0) {
+            attitude += ";";
+        }
+        attitude += checkbox.value;
+    });
+    
+
+    var intakeDateElement = document.getElementById('intakeDate');
+    var intakeDateValue = intakeDateElement.value;
+    
+    // Extract individual components of the date and time
+    var intakeDateStart = new Date(intakeDateValue);
+    
+    // Convert intakeDateStart to ISO 8601 format with timezone offset
+    var formattedIntakeDate = intakeDateStart.toISOString();
+    
+    // var intakeYear = intakeDateStart.getFullYear();
+    // var intakeMonth = ('0' + (intakeDateStart.getMonth() + 1)).slice(-2); // Months are zero-based, so we add 1
+    // var intakeDay = ('0' + intakeDateStart.getDate()).slice(-2);
+    // var intakeHours = ('0' + intakeDateStart.getHours()).slice(-2);
+    // var intakeMinutes = ('0' + intakeDateStart.getMinutes()).slice(-2);
+    // var intakeSeconds = ('0' + intakeDateStart.getSeconds()).slice(-2);
+
+    // // Construct the formatted intake date string
+    // var formattedIntakeDate = intakeYear + '-' + intakeMonth + '-' + intakeDay + ' ' + intakeHours + ':' + intakeMinutes + ':' + intakeSeconds;
+
+    // console.log(formattedIntakeDate); // Check the formatted intake date
+
 
     let imageFile = document.getElementById('imageUpload').files[0];
     let imageData = await convertImageToBase64(imageFile);
 
     let pet = {
-        petId: crypto.randomUUID(), 
+        // petId: crypto.randomUUID(), 
         name: document.getElementById('name').value, 
         breed: otherInput, 
-        age :document.getElementById('age').value,
+        age: parseInt(document.getElementById('age').value),
         gender :document.getElementById('gender').value,
-        intakeDate :document.getElementById('intakeDate').value,
-        postDate: postDate,
+        intakeDate : formattedIntakeDate,
+        postDate: formattedPostDate,
         weight: document.getElementById('weight').value,
         attitude: attitude,
         aboutMe :document.getElementById('aboutMe').value,
@@ -214,8 +260,14 @@ async function handleAddPet(){
         adoptionStatus: "open",
         shelterID: 1,
         imageData: imageData // Include image data in the pet object
+
+        //imageUrl: imageUrl
+
         //shelter id
     }
+
+    console.log(postDate)
+    console.log(intakeDateStart)
     await savePet(pet)
     populateTable()
 }
@@ -259,23 +311,43 @@ async function savePet(pet){
 //     populateTable()
 // }
 
-async function handlePetAdoption(petID){
-    //1
-    const pet = pets.find(pet => pet.petID === petID);
-    if (pet) {
-        pet.adoptionStatus = "adopted";
-        console.log(pet.adoptionStatus)
-    }
-    //2
-    await fetch(petUrl + '/' +petID,{
-        method: "PUT",
-        body: JSON.stringify(pet),
-        headers: {
-            "Content-type" : "application/json; charset=UTF-8"
+
+async function handlePetAdoption(petID) {
+    try {
+        console.log('Attempting to adopt pet with ID:', petID);
+
+        // Find the pet with the specified ID
+        const pet = pets.find(pet => pet.petID == petID);
+        if (!pet) {
+            throw new Error('Pet not found');
         }
-    })
-    populateTable()
+
+        // Update the adoption status
+        pet.adoptionStatus = "Adopted";
+        console.log('Adoption status updated:', pet.adoptionStatus);
+
+        // Send the updated pet data to the backend
+        const response = await fetch(petUrl + '/' + petID, {
+            method: "PUT",
+            body: JSON.stringify(pet),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to update pet adoption status');
+        }
+
+        // Refresh the table
+        populateTable();
+    } catch (error) {
+        console.error('Error:', error);
+        // Handle the error (e.g., display an error message to the user)
+    }
 }
+
+
 
 function handlePetEdit(pet){
     let html = `
