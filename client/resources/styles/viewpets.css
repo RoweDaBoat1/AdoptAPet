@@ -126,18 +126,3 @@
 .pet-gender {
     margin: 5px 0; 
 }
-
-.favorite-button {
-    font-size: 20px;
-    color: gray; 
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
-.favorite-button.favorited i {
-    color: gold;
-}

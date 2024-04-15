@@ -22,6 +22,11 @@ async function populatePetProfile() {
         document.getElementById('houseTrained').textContent = pet.houseTrained;
         document.getElementById('petType').textContent = pet.petType;
 
+        if (pet.adoptionStatus === 'pending') {
+            const pendingMessage = document.createElement('p');
+            pendingMessage.textContent = 'Pending';
+            document.getElementById('petProfileContainer').appendChild(pendingMessage);
+        }
         
         const adoptionFormUrl = `adoptionform.html?petId=${petId}`;
         
@@ -30,10 +35,11 @@ async function populatePetProfile() {
         adoptionFormLink.textContent = 'Click here to fill out the adoption form';
         
         const linkContainer = document.getElementById('adoptionFormLinkContainer');
-        linkContainer.appendChild(adoptionFormLink);
-    } else {
-        
-        console.error('Pet not found');
+        if (linkContainer) {
+            linkContainer.appendChild(adoptionFormLink);
+        } else {
+            console.error('Adoption form link container not found');
+        }
     }
 }
 
