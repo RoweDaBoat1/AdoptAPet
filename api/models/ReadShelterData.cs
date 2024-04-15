@@ -3,8 +3,6 @@ using api.models.interfaces;
 using System.Data;
 using MySql.Data.MySqlClient;
 
-
-
 namespace api.models
 {
     class ReadShelterData : IGetAllShelters, IGetShelter

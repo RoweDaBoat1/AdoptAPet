@@ -26,21 +26,21 @@ namespace api.models
             {
 
                 PetID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
-            Name = rdr.IsDBNull(1) ? null : rdr.GetString(1),
-            Breed = rdr.IsDBNull(2) ? null : rdr.GetString(2),
-            Age = rdr.IsDBNull(3) ? 0 : rdr.GetInt32(3),
-            Gender = rdr.IsDBNull(4) ? null : rdr.GetString(4),
-            IntakeDate = rdr.IsDBNull(5) ? DateTime.MinValue : rdr.GetDateTime(5),
-            PostDate = rdr.IsDBNull(6) ? DateTime.MinValue : rdr.GetDateTime(6),
-            Weight = rdr.IsDBNull(7) ? null : rdr.GetString(7),
-            Attitude = rdr.IsDBNull(8) ? null : rdr.GetString(8),
-            AboutMe = rdr.IsDBNull(9) ? null : rdr.GetString(9),
-            Height = rdr.IsDBNull(10) ? null : rdr.GetString(10),
-            HouseTrained = rdr.IsDBNull(11) ? null : rdr.GetString(11),
-            PetType = rdr.IsDBNull(12) ? null : rdr.GetString(12),
-            AdoptionStatus = rdr.IsDBNull(13) ? null : rdr.GetString(13),
-            ShelterID = rdr.IsDBNull(14) ? 0 : rdr.GetInt32(14),
-            ImagePath = rdr.IsDBNull(15) ? null : rdr.GetString(15) // Retrieve ImagePath from database
+                Name = rdr.IsDBNull(1) ? null : rdr.GetString(1),
+                Breed = rdr.IsDBNull(2) ? null : rdr.GetString(2),
+                Age = rdr.IsDBNull(3) ? 0 : rdr.GetInt32(3),
+                Gender = rdr.IsDBNull(4) ? null : rdr.GetString(4),
+                IntakeDate = rdr.IsDBNull(5) ? DateTime.MinValue : rdr.GetDateTime(5),
+                PostDate = rdr.IsDBNull(6) ? DateTime.MinValue : rdr.GetDateTime(6),
+                Weight = rdr.IsDBNull(7) ? null : rdr.GetString(7),
+                Attitude = rdr.IsDBNull(8) ? null : rdr.GetString(8),
+                AboutMe = rdr.IsDBNull(9) ? null : rdr.GetString(9),
+                Height = rdr.IsDBNull(10) ? null : rdr.GetString(10),
+                HouseTrained = rdr.IsDBNull(11) ? null : rdr.GetString(11),
+                PetType = rdr.IsDBNull(12) ? null : rdr.GetString(12),
+                AdoptionStatus = rdr.IsDBNull(13) ? null : rdr.GetString(13),
+                ShelterID = rdr.IsDBNull(14) ? 0 : rdr.GetInt32(14),
+                ImagePath = rdr.IsDBNull(15) ? null : rdr.GetString(15) // Retrieve ImagePath from database
             });
             }
 
