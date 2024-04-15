@@ -1,68 +1,200 @@
-//const userUrl = "http://localhost:5016/api/user"
-
-//just for testing
-// const users = [
-//     { firstName: 'John', lastName: 'Doe', userEmail: 'john@example.com', phoneNumber: '1234567890', userZip: '12345', userPassword: 'password' }
-// ]
+ const baseUrl = "http://localhost:5016/api"
 
 function handleOnLoad() {
-    const token = localStorage.getItem('jwtToken');
+    const token = localStorage.getItem('jwt');
     if (token) {
         const decodedToken = decodeJWT(token);
-        const roleId = decodedToken.userID;
-        getUserInfo(userID);
+        let userID, shelterID, iD, role;
+        // Check the role type and set the appropriate variable name for the ID
+        if (decodedToken.role === 'User') {
+            userID = decodedToken.nameid;
+            role = 'User';
+        } else if (decodedToken.role === 'Shelter') {
+            shelterID = decodedToken.nameid; // Adjust here to use 'nameid' for 'shelter'
+            role = 'Shelter';
+        } else if (decodedToken.role === 'Admin') {
+            iD = decodedToken.nameid;
+            role = 'Admin';
+        }
+
+        console.log(shelterID);
+        getUserInfo(userID, shelterID, iD, role); // Pass the IDs and role separately
     } else {
         // No token found, display blank info column
         displayBlankInfoColumn();
     }
 }
 
-async function getUserInfo(userID) {
-    const response = await fetch(userUrl + '?userID=' + userID);
+async function getUserInfo(userID, shelterID, iD, role) {
+    let response;
+    switch (role) {
+        case 'User':
+            response = await fetch(baseUrl + '/user/' + userID);
+            break;
+        case 'Shelter':
+            response = await fetch(baseUrl + '/shelters/' + shelterID);
+            break;
+        case 'Admin':
+            response = await fetch(baseUrl + '/admin/' + iD);
+            break;
+        default:
+            // Handle unknown role
+            displayBlankInfoColumn();
+            return;
+    }
     const user = await response.json();
+    console.log(user);
     if (user) {
-        displayUserInfo(user);
+        displayUserInfo(user, role);
     } else {
         // No user found with the given role ID
         displayBlankInfoColumn();
     }
 }
 
-function displayUserInfo(user) {
-    let html = `
-        <table id="userTable">
-            <tr>
-                <th>Account Info</th>
-                <th></th>
-            </tr>
-            <tr>
-                <td>First Name:</td>
-                <td><span id="firstName">${user.firstName}</span></td>
-            </tr>
-            <tr>
-                <td>Last Name:</td>
-                <td><span id="lastName">${user.lastName}</span></td>
-            </tr>
-            <tr>
-                <td>Email:</td>
-                <td><span id="email">${user.email}</span></td>
-            </tr>
-            <tr>
-                <td>Phone:</td>
-                <td><span id="phone">${user.phoneNumber}</span></td>
-            </tr>
-            <tr>
-                <td>Zip/Postal Code:</td>
-                <td><span id="zip">${user.zipCode}</span></td>
-            </tr>
-            <tr>
-                <td>Password:</td>
-                <td><span id="password">${user.password}</span></td>
-            </tr>
-        </table>`;
+function displayUserInfo(user, role) {
+    let html;
+    switch (role) {
+        case 'User':
+            html = getUserHtml(user);
+            break;
+        case 'Shelter':
+            html = getShelterHtml(user);
+            break;
+        case 'Admin':
+            html = getAdminHtml(user);
+            break;
+        default:
+            html = '';
+            break;
+    }
 
     document.getElementById('userTableContainer').innerHTML = html;
 }
+
+function getUserHtml(user) {
+    // Generate HTML for user role
+    return `
+    <table id="userTable">
+                 <tr>
+                     <th>Account Info</th>
+                     <th></th>
+                 </tr>
+                 <tr>
+                     <td>First Name:</td>
+                     <td><span id="firstName">${user.firstName}</span></td>
+                 </tr>
+                 <tr>
+                     <td>Last Name:</td>
+                     <td><span id="lastName">${user.lastName}</span></td>
+                 </tr>
+                 <tr>
+                     <td>Email:</td>
+                     <td><span id="email">${user.email}</span></td>
+                 </tr>
+                 <tr>
+                     <td>Phone:</td>
+                     <td><span id="phoneNumber">${user.phoneNumber}</span></td>
+                 </tr>
+                 <tr>
+                     <td>Zip/Postal Code:</td>
+                     <td><span id="zipCode">${user.zipCode}</span></td>
+                 </tr>
+                 <tr>
+                     <td>Password:</td>
+                     <td><span id="password">${user.password}</span></td>
+                 </tr>
+                 <tr>
+                     <td colspan="2">
+                         <button class="btn btn-primary" onclick="toggleEdit()">Edit</button>
+                         <button class="btn btn-primary" onclick="saveUserChanges('${user.userID}')">Save</button>
+                     </td>
+                  </tr>
+             </table>`;
+}
+
+function getShelterHtml(user) {
+    // Generate HTML for shelter role
+    return `
+    <table id="shelterTable">
+    <tr>
+        <th>Account Info</th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>Shelter Name:</td>
+        <td><span id="shelterName">${user.shelter_Name}</span></td>
+    </tr>
+    <tr>
+        <td>Email:</td>
+        <td><span id="email">${user.email}</span></td>
+    </tr>
+    <tr>
+        <td>Phone:</td>
+        <td><span id="phoneNumber">${user.phone_Number}</span></td>
+    </tr>
+    <tr>
+        <td>Address Line:</td>
+        <td><span id="addressLine">${user.addressLine}</span></td>
+    </tr>
+    <tr>
+        <td>City:</td>
+        <td><span id="city">${user.city}</span></td>
+    </tr>
+    <tr>
+        <td>State:</td>
+        <td><span id="state">${user.state}</span></td>
+    </tr>
+    <tr>
+        <td>Zip/Postal Code:</td>
+        <td><span id="zipCode">${user.zipCode}</span></td>
+    </tr>
+    <tr>
+        <td>Password:</td>
+        <td><span id="password">${user.password}</span></td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <button class="btn btn-primary" onclick="toggleEdit('${user.role}')">Edit</button>
+            <button class="btn btn-primary" onclick="saveShelterChanges('${user.shelterID}')">Save</button>
+        </td>
+     </tr>
+</table>`;
+}
+
+function getAdminHtml(user) {
+    // Generate HTML for admin role
+    return `
+    <table id="adminTable">
+    <tr>
+        <th>Account Info</th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>First Name:</td>
+        <td><span id="firstName">${user.firstName}</span></td>
+    </tr>
+    <tr>
+        <td>Last Name:</td>
+        <td><span id="lastName">${user.lastName}</span></td>
+    </tr>
+    <tr>
+        <td>Email:</td>
+        <td><span id="email">${user.email}</span></td>
+    </tr>
+    <tr>
+        <td>Password:</td>
+        <td><span id="password">${user.password}</span></td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <button class="btn btn-primary" onclick="toggleEdit('${user.role}')">Edit</button>
+            <button class="btn btn-primary" onclick="saveAdminChanges('${user.iD}')">Save</button>
+        </td>
+     </tr>
+</table>`;
+}
+
 
 function displayBlankInfoColumn() {
     const html = `
@@ -80,74 +212,21 @@ function displayBlankInfoColumn() {
 }
 
 function decodeJWT(token) {
-    // You need to implement your JWT decoding logic here
-    // This is just a placeholder function
-    // Example:
-    // const decodedToken = jwt_decode(token);
-    // return decodedToken;
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    
+    return JSON.parse(jsonPayload);
 }
 
-// Other functions remain unchanged
-
-
-// function handleOnLoad(){
-//     populateTable()
-// }
-
-// // //function to see who is logged in and retrieve their data
-
-
-// async function populateTable() {
-//     await getAllUsers()
-//     let html = `
-//         <table id="userTable">
-//             <tr>
-//                 <th>Account Info</th>
-//                 <th></th>
-//             </tr>`;
-
-//     users.forEach(function(user) {
-//         html += `
-//             <tr>
-//                 <td>First Name:</td>
-//                 <td><span id="firstName">${user.firstName}</span></td>
-//             </tr>
-//             <tr>
-//                 <td>Last Name:</td>
-//                 <td><span id="lastName">${user.lastName}</span></td>
-//             </tr>
-//             <tr>
-//                 <td>Email:</td>
-//                 <td><span id="email">${user.email}</span></td>
-//             </tr>
-//             <tr>
-//                 <td>Phone:</td>
-//                 <td><span id="phone">${user.phoneNumber}</span></td>
-//             </tr>
-//             <tr>
-//                 <td>Zip/Postal Code:</td>
-//                 <td><span id="zip">${user.zipCode}</span></td>
-//             </tr>
-//             <tr>
-//                 <td>Password:</td>
-//                 <td><span id="password">${user.password}</span></td>
-//             </tr>
-//             <tr>
-//                 <td colspan="2">
-//                     <button class="btn btn-primary" onclick="toggleEdit()">Edit</button>
-//                     <button class="btn btn-primary" onclick="saveChanges('${user.userId}')">Save</button>
-//                 </td>
-//             </tr>`;
-//     });
-
-//     html += `
-//         </table>`;
-
-//     document.getElementById('userTableContainer').innerHTML = html;
-// }
-
-function toggleEdit() {
-    const cells = document.querySelectorAll('#userTable span');
+function toggleEdit(role) {
+    console.log('hello')
+    const tableId = getTableIdByRole(role);
+    console.log(tableId)
+    const cells = document.querySelectorAll(`#${tableId} span`);
+    console.log(cells)
     cells.forEach(function(cell) {
         const input = document.createElement('input');
         input.value = cell.innerText;
@@ -156,87 +235,103 @@ function toggleEdit() {
     });
 }
 
-async function saveChanges(userId) {
+function getTableIdByRole(role) {
+    switch (role) {
+        case 'User':
+            return 'userTable';
+        case 'Shelter':
+            return 'shelterTable';
+        case 'Admin':
+            return 'adminTable';
+        default:
+            return '';
+    }
+}
+
+async function saveUserChanges(userID) {
     const cells = document.querySelectorAll('#userTable span');
-    cells.forEach(function(cell) {
-        const input = cell.querySelector('input');
-        if (input) {
-            cell.innerText = input.value;
-        } else {
-            console.error('No input element found in cell:', cell);
-        }
-    });
-    // const cells = document.querySelectorAll('#userTable span');
-    // cells.forEach(function(cell) {
-    //     const input = cell.querySelector('input');
-    //     if (input) {
-    //         cell.innerText = input.value;
-    //     }
-    // });
-    let user = {
-        userId: userId,
+    const user = getUserDataFromCells(cells);
+    await updateUser(user, userID);
+}
+
+async function saveShelterChanges(shelterID) {
+    const cells = document.querySelectorAll('#shelterTable span');
+    const shelter = getShelterDataFromCells(cells);
+    await updateShelter(shelter, shelterID);
+}
+
+async function saveAdminChanges(iD) {
+    const cells = document.querySelectorAll('#adminTable span');
+    const admin = getAdminDataFromCells(cells);
+    await updateAdmin(admin, iD);
+}
+
+function getUserDataFromCells() {
+    // Extract data from cells for user table
+    // Example:
+    return {
         email: document.getElementById('email').value,
-        passwordHash: document.getElementById('password'),
+        password: document.getElementById('password').value,
         firstName: document.getElementById('firstName').value,
         lastName: document.getElementById('lastName').value,
         zipCode: document.getElementById('zipCode').value,
-        phoneNumber: document.getElementById('phoneNumber').value,
-        favoritePets: favoritePets,
-        role: role
-    }
+        phoneNumber: document.getElementById('phoneNumber').value
+    };
+}
 
-    await fetch(userUrl + '/' + user.userId,{
+function getShelterDataFromCells() {
+    // Extract data from cells for shelter table
+    // Example:
+    return {
+        // Different fields for shelter
+        password: document.getElementById('password').value,
+        addressLine: document.getElementById('addressLine').value,
+        city: document.getElementById('city').value,
+        state: document.getElementById('state').value,
+        zipCode: document.getElementById('zipCode').value,
+        phoneNumber: document.getElementById('phoneNumber').value,
+        email: document.getElementById('email').value,
+        shelterName: document.getElementById('shelterName').value
+    };
+}
+
+function getAdminDataFromCells() {
+    // Extract data from cells for admin table
+    // Example:
+    return {
+        // Different fields for admin
+        email: document.getElementById('email').value,
+        firstName: document.getElementById('firstName').value,
+        lastName: document.getElementById('lastName').value,
+        password: document.getElementById('password').value,
+    };
+}
+
+async function updateUser(user, userID) {
+    await fetch(baseUrl + '/user/' + userID, {
         method: "PUT",
         body: JSON.stringify(user),
         headers: {
-            "Content-type" : "application/json; charset=UTF-8"
+            "Content-type": "application/json; charset=UTF-8"
         }
-    })
-    // Send the updated data to the server for saving
-    // You can implement the fetch call to update the database here
-    // Example:
-    // fetch('/updateUser', {
-    //     method: 'POST',
-    //     body: JSON.stringify(userData),
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     }
-    // }).then(response => {
-    //     // Handle response
-    // }).catch(error => {
-    //     // Handle error
-    // });
+    });
 }
 
-// async function getAllUsers() {
-//     // Perform asynchronous data retrieval (e.g., fetch API call)
-//     // Assign the fetched data to the users variable
-//     // Example:
-//     const response = await fetch(userUrl);
-//     users = await response.json();
-//     // For demonstration purposes, a mock array of users is used
-//     // users = [
-//     //     { firstName: 'John', lastName: 'Doe', email: 'john@example.com' },
-//     //     { firstName: 'Jane', lastName: 'Doe', email: 'jane@example.com' }
-//     // ];
-// }
-
-// async function handleUpdateUser(id){
-//     let user = {
-//         id: id,
-//         fullName: document.getElementById('fullName').value,
-//         email: document.getElementById('userEmail').value,
-//         phone: document.getElementById('userPhone').value,
-//         zip: document.getElementById('userZip').value,
-//         password: document.getElementById('userPassword').value
-
-//     }
-//     await fetch(userUrl + '/' + user.id,{
-//         method: "PUT",
-//         body: JSON.stringify(user),
-//         headers: {
-//             "Content-type" : "application/json; charset=UTF-8"
-//         }
-//     })
-//     handleOnLoad()
-// }
+async function updateShelter(shelter, shelterID) {
+    await fetch(baseUrl + '/shelters/' + shelterID, {
+        method: "PUT",
+        body: JSON.stringify(shelter),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    });
+}
+async function updateAdmin(admin, iD) {
+    await fetch(baseUrl + '/admin/' + iD, {
+        method: "PUT",
+        body: JSON.stringify(admin),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    });
+}

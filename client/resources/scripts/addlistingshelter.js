@@ -3,7 +3,6 @@ const petUrl = "http://localhost:5016/api/pets"
 //const petUrl = apiUrls.petUrl
 
 let pets = []
-let approvedShelters = [];
 
 // const imageUpload = document.getElementById('imageUpload')
 // const imagePreview = document.getElementById('imagePreview')
@@ -40,15 +39,10 @@ let approvedShelters = [];
 
 
 function handleOnLoad(){
-    populateShelterDropdown()
     let html = `
         <div id = "petTable"></div>
         <form onsubmit = "return false" enctype="multipart/form-data">
             <h3>Add Pet Listing</h3>
-            <label for = "shelterDropdown">Select Shelter:</label><br>
-            <select name="shelterDropdown" id="shelterDropdown" style="margin-bottom: 10px;">
-            <option value="null">-</option>
-            </select><br>
             <input type="text" id="name" placeholder="Name" required style="margin-bottom: 10px;"><br>
             <label for ="petType">Pet Type:</label><br>
             <select name="petType" id="petType" required style="margin-bottom: 10px;">
@@ -114,38 +108,6 @@ function handleOnLoad(){
     populateTable()
 }
 
-
-// Function to fetch approved shelters
-async function getApprovedShelters() {
-    let response = await fetch('http://localhost:5016/api/shelters?approvalStatus==Approved');
-    approvedShelters = await response.json();
-}
-
-// Function to populate the shelter dropdown
-function populateShelterDropdown() {
-    const shelterDropdown = document.getElementById('shelterDropdown');
-    approvedShelters.forEach(function(shelter) {
-        const option = document.createElement('option');
-        option.value = shelter.shelterID;
-        option.textContent = shelter.shelter_Name;
-        shelterDropdown.appendChild(option);
-    });
-}
-
-// Call getApprovedShelters to fetch and store approved shelters
-getApprovedShelters().then(() => {
-    // Populate the shelter dropdown once the approved shelters are fetched
-    populateShelterDropdown();
-});
-
-
-// Add an event listener to the shelter dropdown
-document.addEventListener('DOMContentLoaded', () => {
-    const selectedShelterID = document.getElementById('shelterDropdown')
-    shelterID = selectedShelterID
-  })
-
-
 async function getAllPets(){
     let response = await fetch(petUrl)
     pets = await response.json()
@@ -161,69 +123,133 @@ function handleChange(breed) {
     }
 }
 
-async function populateTable(){
-    await getAllPets()
-    //sortTable()
-    let html = `
-    <table class = "table table-striped">
-        <tr>
-            <th>ID</th>
-            <th>Shelter ID</th>
-            <th>Name</th>
-            <th>Breed</th>
-            <th>Age</th>
-            <th>Gender</th>
-            <th>Intake Date</th>
-            <th>Post Date</th>
-            <th>Weight</th>
-            <th>Attitude</th>
-            <th>About</th>
-            <th>Height</th>
-            <th>House Trained</th>
-            <th>Type</th>
-            <th>Adoption Status</th>
-            <th>Edit</th>
-            <th>Delete</th>
-        </tr>`
-    pets.forEach(function(pet){
-        //add more logic into the if statement (shelterid) so that shelters only see their own animals
-        if(pet.adoptionStatus != "Adopted"){
-            html+= `
-            <tr>
-                <td>${pet.petID}</td>
-                <td>${pet.shelterID}</td>
-                <td>${pet.name}</td>
-                <td>${pet.breed}</td>
-                <td>${pet.age}</td>
-                <td>${pet.gender}</td>
-                <td>${pet.intakeDate}</td>
-                <td>${pet.postDate}</td>
-                <td>${pet.weight}</td>
-                <td>${pet.attitude}</td>
-                <td>${pet.aboutMe}</td>
-                <td>${pet.height}</td>
-                <td>${pet.houseTrained}</td>
-                <td>${pet.petType}</td>
-                <td>${pet.adoptionStatus}</td>
-                <td><button class = "btn btn-warning" onclick= "handlePetEdit('${pet.petID}')">Edit</button></td>
-                <td><button class = "btn btn-danger" onclick= "handlePetAdoption('${pet.petID}')">Delete</button></td>
-            </tr>
-            `
-        }
-    })
+// async function populateTable(){
+//     await getAllPets()
+//     //sortTable()
+//     let html = `
+//     <table class = "table table-striped">
+//         <tr>
+//             <th>ID</th>
+//             <th>Name</th>
+//             <th>Breed</th>
+//             <th>Age</th>
+//             <th>Gender</th>
+//             <th>Intake Date</th>
+//             <th>Post Date</th>
+//             <th>Weight</th>
+//             <th>Attitude</th>
+//             <th>About</th>
+//             <th>Height</th>
+//             <th>House Trained</th>
+//             <th>Type</th>
+//             <th>Adoption Status</th>
+//             <th>Edit</th>
+//             <th>Delete</th>
+//         </tr>`
+//     pets.forEach(function(pet){
+//         //add more logic into the if statement (shelterid) so that shelters only see their own animals
+//         if(pet.adoptionStatus != "Adopted"){
+//             html+= `
+//             <tr>
+//                 <td>${pet.petID}</td>
+//                 <td>${pet.name}</td>
+//                 <td>${pet.breed}</td>
+//                 <td>${pet.age}</td>
+//                 <td>${pet.gender}</td>
+//                 <td>${pet.intakeDate}</td>
+//                 <td>${pet.postDate}</td>
+//                 <td>${pet.weight}</td>
+//                 <td>${pet.attitude}</td>
+//                 <td>${pet.aboutMe}</td>
+//                 <td>${pet.height}</td>
+//                 <td>${pet.houseTrained}</td>
+//                 <td>${pet.petType}</td>
+//                 <td>${pet.adoptionStatus}</td>
+//                 <td><button class = "btn btn-warning" onclick= "handlePetEdit('${pet.petID}')">Edit</button></td>
+//                 <td><button class = "btn btn-danger" onclick= "handlePetAdoption('${pet.petID}')">Delete</button></td>
+//             </tr>
+//             `
+//         }
+//     })
     
-    html += `
-    </table>
-    `
-    document.getElementById('petTable').innerHTML = html
+//     html += `
+//     </table>
+//     `
+//     document.getElementById('petTable').innerHTML = html
+// }
+
+async function populateTable() {
+    // Fetch all pets
+    await getAllPets();
+
+    // Parse JWT token to extract shelterID
+    const jwtToken = localStorage.getItem('jwtToken');
+    const decodedToken = parseJWTToken(jwtToken);
+    const shelterID = decodedToken.nameid;
+
+    // Filter pets array based on shelterID
+    const shelterPets = pets.filter(pet => pet.shelterID === shelterID);
+
+    // Generate HTML for the table
+    let html = `
+        <table class="table table-striped">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Breed</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Intake Date</th>
+                <th>Post Date</th>
+                <th>Weight</th>
+                <th>Attitude</th>
+                <th>About</th>
+                <th>Height</th>
+                <th>House Trained</th>
+                <th>Type</th>
+                <th>Adoption Status</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>`;
+
+    // Add rows for each pet belonging to the shelter
+    shelterPets.forEach(function (pet) {
+        if (pet.adoptionStatus !== "Adopted") {
+            html += `
+                <tr>
+                    <td>${pet.petID}</td>
+                    <td>${pet.name}</td>
+                    <td>${pet.breed}</td>
+                    <td>${pet.age}</td>
+                    <td>${pet.gender}</td>
+                    <td>${pet.intakeDate}</td>
+                    <td>${pet.postDate}</td>
+                    <td>${pet.weight}</td>
+                    <td>${pet.attitude}</td>
+                    <td>${pet.aboutMe}</td>
+                    <td>${pet.height}</td>
+                    <td>${pet.houseTrained}</td>
+                    <td>${pet.petType}</td>
+                    <td>${pet.adoptionStatus}</td>
+                    <td><button class="btn btn-warning" onclick="handlePetEdit('${pet.petID}')">Edit</button></td>
+                    <td><button class="btn btn-danger" onclick="handlePetAdoption('${pet.petID}')">Delete</button></td>
+                </tr>`;
+        }
+    });
+
+    html += `</table>`;
+
+    // Update the pet table with the generated HTML
+    document.getElementById('petTable').innerHTML = html;
 }
 
 
 async function handleAddPet(){
-    // Get the current date and time
-    var postDate = new Date();
+    const token = localStorage.getItem('jwt');
+    const decodedToken = decodeJWT(token);
+    const shelterID = decodedToken.nameid;
 
-    // Extract individual components of the date and time
+    // Get the current date and time
     var postDate = new Date();
 
     // Convert intakeDateStart to ISO 8601 format with timezone offset
@@ -285,7 +311,7 @@ async function handleAddPet(){
     // let imageData = await convertImageToBase64(imageFile);
 
     let pet = {
-        //petID: petID, 
+        // petId: crypto.randomUUID(), 
         name: document.getElementById('name').value, 
         breed: otherInput, 
         age: parseInt(document.getElementById('age').value),
@@ -300,7 +326,7 @@ async function handleAddPet(){
         petType: document.getElementById('petType').value,
         adoptionStatus: "open",
         shelterID: shelterID,
-        //imageData: imageData // Include image data in the pet object
+        imageData: imageData // Include image data in the pet object
 
         //imageUrl: imageUrl
 
@@ -311,6 +337,16 @@ async function handleAddPet(){
     console.log(intakeDateStart)
     await savePet(pet)
     populateTable()
+}
+
+function decodeJWT(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    
+    return JSON.parse(jsonPayload);
 }
 
 async function savePet(pet){
