@@ -32,6 +32,15 @@ namespace api.Controllers
             return readObject.GetShelter(ShelterID);
         }
 
+        // // GET: api/Shelter/TuscaloosaMetro
+        // [EnableCors("OpenPolicy")]
+        // [HttpGet("{Shelter_Name}", Name = "GetShelterByName")]
+        // public Shelter GetShelterByName(string Shelter_Name)
+        // {
+        //     IGetShelter readObject = new ReadShelterData();
+        //     return readObject.GetShelterByName(Shelter_Name);
+        // }
+
         // POST: api/Shelter
         [EnableCors("OpenPolicy")]
         [HttpPost]
@@ -41,7 +50,7 @@ namespace api.Controllers
             insertObject.InsertShelter(value);
         }
 
-        // PUT: api/Shelter/5
+        // PUT: api/Shelters/5
         [EnableCors("OpenPolicy")]
         [HttpPut("{ShelterID}")]
         public IActionResult Put(int ShelterID, [FromBody] Shelter updatedShelter)

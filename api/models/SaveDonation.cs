@@ -16,14 +16,14 @@ namespace api.models
             using var cmd = new MySqlCommand(cs);
 
             cmd.Connection = con;
-            cmd.CommandText = @"INSERT INTO Donations(DonationId, Amount, DonationDate, ShelterName, Email, LastName, FirstName) VALUES(@DonationId, @Amount, @DonationDate, @ShelterName, @Email, @LastName, @FirstName)";
-            cmd.Parameters.AddWithValue("@DonationId", value.DonationID);
+            cmd.CommandText = @"INSERT INTO Donations(Amount, ShelterName, Email, LastName, FirstName) VALUES(@Amount, @ShelterName, @Email, @LastName, @FirstName)";
+            // cmd.Parameters.AddWithValue("@DonationId", value.DonationID);
             cmd.Parameters.AddWithValue("@Amount", value.Amount);
-            cmd.Parameters.AddWithValue("@DonationDate", value.DonationDate);
+            // cmd.Parameters.AddWithValue("@DonationDate", value.DonationDate);
             cmd.Parameters.AddWithValue("@ShelterName", value.ShelterName);
             cmd.Parameters.AddWithValue("@Email", value.Email);
-            cmd.Parameters.AddWithValue("@LastName", value.FirstName);
-            cmd.Parameters.AddWithValue("@FirstName", value.LastName);
+            cmd.Parameters.AddWithValue("@LastName", value.LastName);
+            cmd.Parameters.AddWithValue("@FirstName", value.FirstName);
             cmd.Prepare();
             cmd.ExecuteNonQuery();
         }

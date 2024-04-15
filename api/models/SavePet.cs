@@ -10,17 +10,17 @@ namespace api.models
 {
     public class SavePet : IInsertPet
     {
-        public void InsertPet(Pet value){
+        public void InsertPet(Pet value)
+        {
             ConnectionString myConnection = new ConnectionString();
             string cs = myConnection.cs;
             using var con = new MySqlConnection(cs);
             con.Open();
 
-            using var cmd = new MySqlCommand(cs);
-
+            using var cmd = new MySqlCommand();
             cmd.Connection = con;
-            cmd.CommandText = @"INSERT INTO Pets(PetId, Name, Breed, Age, Gender, IntakeDate, PostDate, Weight, Attitude, AboutMe, Height, HouseTrained, PetType, ShelterID, AdoptionStatus) VALUES(@PetID, @Name, @Breed, @Age, @Gender, @IntakeDate, @PostDate, @Weight, @Attitude, @AboutMe, @Height, @HouseTrained, @PetType, @ShelterID, @AdoptionStatus)";
-            cmd.Parameters.AddWithValue("@PetId", value.PetID);
+            cmd.CommandText = @"INSERT INTO Pets(PetID, Name, Breed, Age, Gender, IntakeDate, PostDate, Weight, Attitude, AboutMe, Height, HouseTrained, PetType, ShelterID, AdoptionStatus) VALUES(@PetID, @Name, @Breed, @Age, @Gender, @IntakeDate, @PostDate, @Weight, @Attitude, @AboutMe, @Height, @HouseTrained, @PetType, @ShelterID, @AdoptionStatus)";
+            cmd.Parameters.AddWithValue("@PetID", value.PetID);
             cmd.Parameters.AddWithValue("@Name", value.Name);
             cmd.Parameters.AddWithValue("@Breed", value.Breed);
             cmd.Parameters.AddWithValue("@Age", value.Age);
@@ -35,6 +35,8 @@ namespace api.models
             cmd.Parameters.AddWithValue("@PetType", value.PetType);
             cmd.Parameters.AddWithValue("@AdoptionStatus", value.AdoptionStatus);
             cmd.Parameters.AddWithValue("@ShelterID", value.ShelterID);
+            //cmd.Parameters.AddWithValue("@ImagePath", value.ImagePath);
+            //add back into insert statement when ready
             cmd.Prepare();
             cmd.ExecuteNonQuery();
         }

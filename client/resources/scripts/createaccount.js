@@ -28,15 +28,15 @@ async function handleOnLoad(){
 async function handleAddUser(){
     let user = {
         //username, passwordHash, fname, lname, address, role, and favorite pets are temporary
-        userId: crypto.randomUUID(),
+        // userId: crypto.randomUUID(),
         email: document.getElementById('email').value,
         passwordHash : document.getElementById('password').value,
         salt: '',
-        firstName: document.getElementById('firstName'),
-        lastName: document.getElementById('lastName'),
+        firstName: document.getElementById('firstName').value,
+        lastName: document.getElementById('lastName').value,
         zipCode: document.getElementById('zipCode').value,
         phoneNumber: document.getElementById('phoneNumber').value,
-        favoritePets: 0,
+        favoritePets: "0",
         role: "User"
     }
     await saveUser(user)
@@ -89,18 +89,18 @@ async function populateShelterTable(){
         </tr>`
     shelters.forEach(function(shelter){
         //change approval button to use approvalStatus
-        if(shelter.approvalStatus != "approved"){
+        if(shelter.approval_Status != "Approved"){
             html+= `
             <tr>
                 <td>${shelter.shelterID}</td>
-                <td>${shelter.name}</td>
+                <td>${shelter.shelter_Name}</td>
                 <td>${shelter.email}</td>
-                <td>${shelter.phone}</td>
+                <td>${shelter.phone_Number}</td>
                 <td>${shelter.addressLine}</td>
                 <td>${shelter.city}</td>
                 <td>${shelter.state}</td>
-                <td>${shelter.zip}</td>
-                <td>${shelter.approvalStatus}</td>
+                <td>${shelter.zipCode}</td>
+                <td>${shelter.approval_Status}</td>
                 <td><button class="btn btn-primary" onclick="handleShelterApproval('${shelter.shelterID}')">Approve</button></td>
             </tr>
             `
@@ -115,23 +115,24 @@ async function populateShelterTable(){
 
 async function handleAddShelter(){
     let shelter = {
-        shelterID: crypto.randomUUID(),
-        password : document.getElementById('shelterPassword').value,
+        // shelterID: crypto.randomUUID(),
+        passwordHash : document.getElementById('shelterPassword').value,
+        salt: '',
         addressLine: document.getElementById('shelterAddressLine').value,
         city: document.getElementById('shelterCity').value,
         state: document.getElementById('shelterState').value,
         zipCode: document.getElementById('shelterZip').value,
-        phoneNumber: document.getElementById('shelterPhone').value,
+        phone_Number: document.getElementById('shelterPhone').value,
         email: document.getElementById('shelterEmail').value,
-        shelterName: document.getElementById('shelterName').value,
+        shelter_Name: document.getElementById('shelterName').value,
         role: "Shelter",
         // petsForAdoption: 0,
         // petsAdopted: 0,
-        approvalStatus: "pending"
+        approval_Status: "Pending"
     }
 
     shelterPrivacy = {
-        shelterID: shelter.shelterID,
+        // shelterID: shelter.shelterID,
         intakeDatePrivate: false,
         weightPrivate: false,
         attitudePrivate: false,
@@ -142,7 +143,6 @@ async function handleAddShelter(){
     }
     await saveShelter(shelter)
     await saveShelterPrivacy(shelterPrivacy)
-    populateShelterTable()
 }
 
 async function saveShelter(shelter){
@@ -165,24 +165,35 @@ async function saveShelterPrivacy(shelterPrivacy){
     })
 }
 
-async function handleShelterApproval(shelterID){
-    //1
-    const shelter = shelters.find(shelter => shelter.shelterID === shelterID)
-    if (shelter) {
-        shelter.approvalStatus = "approved"
-        console.log(shelter.approvalStatus)
-    }
-    //2 have put api method in backend that changes approved to opposite
-    await fetch(shelterUrl + '/' +shelterID,{
-        method: "PUT",
-        body: JSON.stringify(shelter),
-        headers: {
-            "Content-type" : "application/json; charset=UTF-8"
+async function handleShelterApproval(shelterID) {
+    try {
+        // Fetch the shelter data from the backend
+        const response = await fetch(shelterUrl + '/' + shelterID);
+        if (!response.ok) {
+            throw new Error('Failed to fetch shelter data');
         }
-    })
+        const shelter = await response.json();
 
-    populateShelterTable()
+        // Update the approval status to "approved"
+        shelter.approval_Status = "Approved";
+
+        // Send the updated shelter data to the backend
+        await fetch(shelterUrl + '/' + shelterID, {
+            method: "PUT",
+            body: JSON.stringify(shelter),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        });
+
+        // Refresh the shelter table
+        populateShelterTable();
+    } catch (error) {
+        console.error('Error:', error);
+        // Handle the error (e.g., display an error message to the user)
+    }
 }
+
 
 // Example function for signup
 //function signup(role) {

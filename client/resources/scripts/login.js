@@ -48,7 +48,17 @@ document.addEventListener('DOMContentLoaded', function() {
                             // Handle unrecognized user type
                 }
             } else {
-                console.error('Login failed. Please check your credentials.');
+                // Display error message in popup modal
+                const errorModal = document.getElementById('errorModal');
+                const errorMessage = document.getElementById('errorMessage');
+                errorMessage.textContent = 'Login failed. Please check your credentials.';
+                errorModal.style.display = 'block';
+
+                // Close the modal when the user clicks on the close button
+                const closeButton = document.querySelector('.close');
+                closeButton.addEventListener('click', function() {
+                    errorModal.style.display = 'none';
+                });
             }
         });
     }

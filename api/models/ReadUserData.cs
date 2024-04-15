@@ -43,7 +43,7 @@ namespace api.models
         }
 
 
-        public User GetUser(int ID)
+        public User GetUser(int UserID)
         {
             ConnectionString myConnection = new ConnectionString();
             string cs = myConnection.cs;
@@ -55,7 +55,7 @@ namespace api.models
                 string stm = "SELECT * FROM User WHERE UserID = @ID";
                 using (var cmd = new MySqlCommand(stm, con))
                 {
-                    cmd.Parameters.AddWithValue("@ID", ID);
+                    cmd.Parameters.AddWithValue("@ID", UserID);
                     using (MySqlDataReader rdr = cmd.ExecuteReader())
                     {
                         if (rdr.Read())

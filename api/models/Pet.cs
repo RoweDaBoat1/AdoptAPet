@@ -7,8 +7,8 @@ namespace api.models
         public string Breed {get; set;}
         public int Age {get; set;}
         public string Gender {get; set;}
-        public string IntakeDate {get; set;}
-        public string PostDate {get; set;}
+        public DateTime IntakeDate {get; set;}
+        public DateTime PostDate {get; set;}
         public string Weight {get; set;}
         public string Attitude {get; set;}
         public string AboutMe {get; set;}
@@ -17,5 +17,6 @@ namespace api.models
         public string PetType {get; set;}
         public string AdoptionStatus {get; set;}
         public int ShelterID {get; set;}
+        public string ImagePath { get; set; }
     }
 }

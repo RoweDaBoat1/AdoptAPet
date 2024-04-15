@@ -114,3 +114,40 @@
 .button-container button {
     margin: 0 10px;
   }
+
+
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 35%; /* Adjust the distance from the left */
+    top: 20%; /* Adjust the distance from the top */
+    width: 30%; /* Set the width of the modal */
+    height: 60%; /* Set the height of the modal */
+    overflow: auto; /* Enable scroll if needed */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Set width of the modal content */
+    height: auto; /* Allow content to adjust height */
+    overflow-y: auto; /* Enable scroll for content if needed */
+}
+
+/* Close button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
