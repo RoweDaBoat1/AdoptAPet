@@ -1,7 +1,7 @@
 const petUrl = "http://localhost:5016/api/pets"
 
 //const petUrl = apiUrls.petUrl
-
+let shelterID
 let pets = []
 let approvedShelters = [];
 
@@ -39,8 +39,8 @@ let approvedShelters = [];
 // });
 
 
-function handleOnLoad(){
-    populateShelterDropdown()
+async function handleOnLoad(){
+    //await getApprovedShelters()
     let html = `
         <div id = "petTable"></div>
         <form onsubmit = "return false" enctype="multipart/form-data">
@@ -82,19 +82,32 @@ function handleOnLoad(){
             </select><br>
             <label for="intakeDate">Intake Date:</label><br>
             <input type="datetime-local" id="intakeDate" style="margin-bottom: 10px;"><br>
-            <input type="text" id="weight" placeholder="Weight" style="margin-bottom: 10px;"><br>
-            <input type="text" id="height" placeholder="Height" style="margin-bottom: 10px;"><br>
+            <label for = "weight">Weight:</label><br>
+            <select name="weight" id="weight" style="margin-bottom: 10px;">
+                <option value="null">-</option>
+                <option value="SMALL (2-22 lbs.)">Small (2-22 lbs.)</option>
+                <option value="MEDIUM (24-57 lbs.)">Medium (24-57 lbs.)</option>
+                <option value="LARGE (59-99 lbs.)">Large (59-99 lbs.)</option>
+                <option value="X-LARGE (100+ lbs.)">X-Large (100+ lbs.)</option>
+            </select><br>
+            <label for = "height">Height:</label><br>
+            <select name="height" id="height" style="margin-bottom: 10px;">
+                <option value="null">-</option>
+                <option value="SMALL: 12" or Less">Small: 12" or Less</option>
+                <option value="MEDIUM: 13" to 16" inches">Medium: 13" to 16" inches</option>
+                <option value="LARGE: 17" to 20" inches">Large: 17" to 20" inches</option>
+            </select><br>
             <label>Attitude:</label><br>
                 <input type="checkbox" id="attitudeAggressive" name="attitude" value="aggressive">
-                <label for="attitudeAggressive">Aggressive</label><br>
+                <label for="attitudeAggressive">Aggressive</label>
                 <input type="checkbox" id="attitudeFriendly" name="attitude" value="friendly">
-                <label for="attitudeFriendly">Friendly</label><br>
+                <label for="attitudeFriendly">Friendly</label>
                 <input type="checkbox" id="attitudeAnxious" name="attitude" value="anxious">
-                <label for="attitudeAnxious">Anxious</label><br>
+                <label for="attitudeAnxious">Anxious</label>
                 <input type="checkbox" id="attitudeCalm" name="attitude" value="calm">
-                <label for="attitudeCalm">Calm</label><br>
+                <label for="attitudeCalm">Calm</label>
                 <input type="checkbox" id="attitudeIndependent" name="attitude" value="independent">
-                <label for="attitudeIndependent">Independent</label><br>
+                <label for="attitudeIndependent">Independent</label>
                 <input type="checkbox" id="attitudePlayful" name="attitude" value="playful">
                 <label for="attitudePlayful">Playful</label><br>
             <label for = "houseTrained">Housetrained:</label><br>
@@ -111,6 +124,7 @@ function handleOnLoad(){
         </form>
     `
     document.getElementById('app').innerHTML = html
+    await populateShelterDropdown()
     populateTable()
 }
 
@@ -122,7 +136,10 @@ async function getApprovedShelters() {
 }
 
 // Function to populate the shelter dropdown
-function populateShelterDropdown() {
+async function populateShelterDropdown() {
+    
+    await getApprovedShelters()
+    console.log(approvedShelters)
     const shelterDropdown = document.getElementById('shelterDropdown');
     approvedShelters.forEach(function(shelter) {
         const option = document.createElement('option');
@@ -130,20 +147,24 @@ function populateShelterDropdown() {
         option.textContent = shelter.shelter_Name;
         shelterDropdown.appendChild(option);
     });
+    shelterDropdown.onchange = function() {
+        shelterID = shelterDropdown.value
+    }
 }
 
 // Call getApprovedShelters to fetch and store approved shelters
-getApprovedShelters().then(() => {
-    // Populate the shelter dropdown once the approved shelters are fetched
-    populateShelterDropdown();
-});
+// getApprovedShelters().then(() => {
+//     // Populate the shelter dropdown once the approved shelters are fetched
+//     populateShelterDropdown();
+// });
 
 
 // Add an event listener to the shelter dropdown
-document.addEventListener('DOMContentLoaded', () => {
-    const selectedShelterID = document.getElementById('shelterDropdown')
-    shelterID = selectedShelterID
-  })
+// document.getElementById('shelterDropdown').addEventListener('DOMContentLoaded', () => {
+//     console.log("made it to the event listener")
+//     const selectedShelterID = document.getElementById('shelterDropdown')
+//     shelterID = selectedShelterID
+// })
 
 
 async function getAllPets(){
@@ -183,7 +204,7 @@ async function populateTable(){
             <th>Type</th>
             <th>Adoption Status</th>
             <th>Edit</th>
-            <th>Delete</th>
+            <th>Delete/Adopt</th>
         </tr>`
     pets.forEach(function(pet){
         //add more logic into the if statement (shelterid) so that shelters only see their own animals
@@ -300,6 +321,7 @@ async function handleAddPet(){
         petType: document.getElementById('petType').value,
         adoptionStatus: "open",
         shelterID: shelterID,
+        imagePath: "image"
         //imageData: imageData // Include image data in the pet object
 
         //imageUrl: imageUrl
@@ -411,19 +433,32 @@ function handlePetEdit(pet){
     </select><br>
     <label for = "intakeDate">Intake Date:</label><br>
     <input type="date" id="intakeDate" placeholder="Intake Date" style="margin-bottom: 10px;"><br>
-    <input type="text" id="weight" placeholder="Weight" style="margin-bottom: 10px;"><br>
-    <input type="text" id="height" placeholder="Height" style="margin-bottom: 10px;"><br>
+    <label for = "weight">Weight:</label><br>
+            <select name="weight" id="weight" style="margin-bottom: 10px;">
+                <option value="null">-</option>
+                <option value="SMALL (2-22 lbs.)">Small (2-22 lbs.)</option>
+                <option value="MEDIUM (24-57 lbs.)">Medium (24-57 lbs.)</option>
+                <option value="LARGE (59-99 lbs.)">Large (59-99 lbs.)</option>
+                <option value="X-LARGE (100+ lbs.)">X-Large (100+ lbs.)</option>
+            </select><br>
+            <label for = "height">Height:</label><br>
+            <select name="height" id="height" style="margin-bottom: 10px;">
+                <option value="null">-</option>
+                <option value="SMALL: 12" or Less">Small: 12" or Less</option>
+                <option value="MEDIUM: 13" to 16" inches">Medium: 13" to 16" inches</option>
+                <option value="LARGE: 17" to 20" inches">Large: 17" to 20" inches</option>
+            </select><br>
     <label>Attitude:</label><br>
         <input type="checkbox" id="attitudeAggressive" name="attitude" value="aggressive">
-        <label for="attitudeAggressive">Aggressive</label><br>
+        <label for="attitudeAggressive">Aggressive</label>
         <input type="checkbox" id="attitudeFriendly" name="attitude" value="friendly">
-        <label for="attitudeFriendly">Friendly</label><br>
+        <label for="attitudeFriendly">Friendly</label>
         <input type="checkbox" id="attitudeAnxious" name="attitude" value="anxious">
-        <label for="attitudeAnxious">Anxious</label><br>
+        <label for="attitudeAnxious">Anxious</label>
         <input type="checkbox" id="attitudeCalm" name="attitude" value="calm">
-        <label for="attitudeCalm">Calm</label><br>
+        <label for="attitudeCalm">Calm</label>
         <input type="checkbox" id="attitudeIndependent" name="attitude" value="independent">
-        <label for="attitudeIndependent">Independent</label><br>
+        <label for="attitudeIndependent">Independent</label>
         <input type="checkbox" id="attitudePlayful" name="attitude" value="playful">
         <label for="attitudePlayful">Playful</label><br>
     <label for = "houseTrained">Housetrained:</label><br>
@@ -435,9 +470,8 @@ function handlePetEdit(pet){
     <textarea id="aboutMe" placeholder="About" style="width:400px; height:100px"></textarea><br>
     <label for = "adoptionStatus">Adoption Status:</label><br>
     <select name="adoptionStatus" id="adoptionStatus" style="margin-bottom: 10px;><br>
-        <option value="open">open</option>
+        <option value="available">open</option>
         <option value="pending">pending</option>
-        <option value="adopted">adopted</option>
     </select><br>
     <label for="imageUpload" style="margin-top: 10px;">Upload Image:</label>
     <input type="file" id="imageUpload" accept="image/*" style="margin-top: 10px;">
@@ -473,7 +507,7 @@ async function handleUpdatePet(petID){
         attitude.push(checkbox.value)
     })
     let pet = {
-        petID: petID, 
+        //petID: petID, 
         name: document.getElementById('name').value, 
         breed: document.getElementById('breed').value, 
         age :document.getElementById('age').value,
@@ -488,6 +522,7 @@ async function handleUpdatePet(petID){
         height :document.getElementById('height').value,
         houseTrained :document.getElementById('houseTrained').value,
         petType: document.getElementById('petType').value,
+        imagePath: "image"
     }
     await fetch(petUrl + '/' + pet.petID,{
         method: "PUT",
