@@ -160,12 +160,12 @@ async function handleSavePrivacy(shelterID, event){
     event.preventDefault()
     let shelterPrivacy = {
         shelterID: shelterID, 
-        intakeDatePrivate :document.getElementById('intakeDate').value,
-        weightPrivate: document.getElementById('weight').value,
-        attitudePrivate: attitudes,
-        aboutMePrivate :document.getElementById('aboutMe').value,
-        heightPrivate :document.getElementById('height').value,
-        houseTrainedPrivate :document.getElementById('houseTrained').value,
+        intakeDatePrivate: document.getElementById('intakeDatePrivate').value,
+        weightPrivate: document.getElementById('weightPrivate').value,
+        attitudePrivate: document.getElementById('attitudePrivate').value,
+        aboutMePrivate: document.getElementById('aboutMePrivate').value,
+        heightPrivate: document.getElementById('heightPrivate').value,
+        houseTrainedPrivate: document.getElementById('houseTrainedPrivate').value,
         distancePref: document.getElementById('distancePref').value,
     }
     await fetch(shelterPrivacyUrl + '/' + shelterID,{
@@ -175,7 +175,7 @@ async function handleSavePrivacy(shelterID, event){
             "Content-type" : "application/json; charset=UTF-8"
         }
     })
-    //handleOnLoad()
+    handleOnLoad()
 }
 // Add an event listener to the form submission
 document.addEventListener('DOMContentLoaded', () => {
