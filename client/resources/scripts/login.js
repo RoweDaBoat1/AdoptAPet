@@ -37,12 +37,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 switch (role) {
                     case 'Admin':
                         // Redirect to admin dashboard
+                        window.location.href = 'adminhome.html'
                         break;
                     case 'Shelter':
                         // Redirect to shelter dashboard
+                        window.location.href = 'shelterhome.html'
                         break;
                     case 'User':
                         // Redirect to user dashboard
+                        window.location.href = 'homepage.html'
                         break;
                         default:
                             // Handle unrecognized user type

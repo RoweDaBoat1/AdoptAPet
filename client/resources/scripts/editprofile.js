@@ -4,6 +4,7 @@ function handleOnLoad() {
     const token = localStorage.getItem('jwt');
     if (token) {
         const decodedToken = decodeJWT(token);
+        console.log(decodedToken)
         let userID, shelterID, iD, role;
         // Check the role type and set the appropriate variable name for the ID
         if (decodedToken.role === 'User') {
@@ -101,13 +102,9 @@ function getUserHtml(user) {
                      <td><span id="zipCode">${user.zipCode}</span></td>
                  </tr>
                  <tr>
-                     <td>Password:</td>
-                     <td><span id="password">${user.password}</span></td>
-                 </tr>
-                 <tr>
                      <td colspan="2">
-                         <button class="btn btn-primary" onclick="toggleEdit()">Edit</button>
-                         <button class="btn btn-primary" onclick="saveChanges('${user.userID}')">Save</button>
+                         <button class="btn btn-primary" onclick="toggleEdit('${user.role}')">Edit</button>
+                         <button class="btn btn-primary" onclick="saveUserChanges('${user.userID}')">Save</button>
                      </td>
                   </tr>
              </table>`;
@@ -150,13 +147,9 @@ function getShelterHtml(user) {
         <td><span id="zipCode">${user.zipCode}</span></td>
     </tr>
     <tr>
-        <td>Password:</td>
-        <td><span id="password">${user.password}</span></td>
-    </tr>
-    <tr>
         <td colspan="2">
             <button class="btn btn-primary" onclick="toggleEdit('${user.role}')">Edit</button>
-            <button class="btn btn-primary" onclick="saveChanges('${user.shelterID}')">Save</button>
+            <button class="btn btn-primary" onclick="saveShelterChanges('${user.shelterID}')">Save</button>
         </td>
      </tr>
 </table>`;
@@ -183,13 +176,9 @@ function getAdminHtml(user) {
         <td><span id="email">${user.email}</span></td>
     </tr>
     <tr>
-        <td>Password:</td>
-        <td><span id="password">${user.password}</span></td>
-    </tr>
-    <tr>
         <td colspan="2">
             <button class="btn btn-primary" onclick="toggleEdit('${user.role}')">Edit</button>
-            <button class="btn btn-primary" onclick="saveChanges('${user.iD}')">Save</button>
+            <button class="btn btn-primary" onclick="saveAdminChanges('${user.iD}')">Save</button>
         </td>
      </tr>
 </table>`;
@@ -251,18 +240,7 @@ function toggleEdit(role) {
 
 
 // function toggleEdit(role) {
-//     console.log('hello');
-//     const tableId = getTableIdByRole(role);
-//     console.log(tableId);
-//     const cells = document.querySelectorAll(`#${tableId} span`);
-//     console.log(cells);
-//     cells.forEach(function(cell) {
-//         const input = document.createElement('input');
-//         input.value = cell.innerText;
-//         cell.innerHTML = '';
-//         cell.appendChild(input);
-//     });
-// }
+//     c
 
 
 function getTableIdByRole(role) {
@@ -301,7 +279,6 @@ function getUserDataFromCells() {
     // Example:
     return {
         email: document.getElementById('email').value,
-        password: document.getElementById('password').value,
         firstName: document.getElementById('firstName').value,
         lastName: document.getElementById('lastName').value,
         zipCode: document.getElementById('zipCode').value,
@@ -313,8 +290,6 @@ function getShelterDataFromCells() {
     // Extract data from cells for shelter table
     // Example:
     return {
-        // Different fields for shelter
-        password: document.getElementById('password').value,
         addressLine: document.getElementById('addressLine').value,
         city: document.getElementById('city').value,
         state: document.getElementById('state').value,
@@ -327,13 +302,10 @@ function getShelterDataFromCells() {
 
 function getAdminDataFromCells() {
     // Extract data from cells for admin table
-    // Example:
     return {
-        // Different fields for admin
         email: document.getElementById('email').value,
         firstName: document.getElementById('firstName').value,
         lastName: document.getElementById('lastName').value,
-        password: document.getElementById('password').value,
     };
 }
 
