@@ -193,7 +193,7 @@ function displayBlankInfoColumn() {
                 <th></th>
             </tr>
             <tr>
-                <td colspan="2">No user information available.</td>
+                <td colspan="2">No user information available. Please Login or Create an Account</td>
             </tr>
         </table>`;
     

@@ -12,12 +12,12 @@ let shelterPrivacy
 async function handleUButtonClick(){
     console.log('hello')
     await handleAddUser()
-    //window.location.href = "login.html"
+    window.location.href = "login.html"
 }
 
 async function handleSButtonClick(){
     await handleAddShelter()
-    //window.location.href = "login.html"
+    window.location.href = "login.html"
 }
 
 async function handleOnLoad(){
