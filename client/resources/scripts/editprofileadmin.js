@@ -3,7 +3,7 @@ const baseUrl = "http://localhost:5016/api"
 function handleOnLoad() {
     const token = localStorage.getItem('jwt');
     const decodedToken = decodeJWT(token);
-    let adminID = decodedToken.nameid
+    let adminID = parseInt(decodedToken.nameid)
     console.log(adminID);
     getUserInfo(adminID)
 }
@@ -13,14 +13,14 @@ async function getUserInfo(adminID) {
     const user = await response.json();
     console.log(user);
     if (user) {
-        displayUserInfo(user);
+        displayAdminInfo(user);
     } else {
         // No user found with the given role ID
         displayBlankInfoColumn();
     }
 }
 
-function displayUserInfo(user) {
+function displayAdminInfo(user) {
     let html = getadminHtml(user)
     document.getElementById('userTableContainer').innerHTML = html;
 }

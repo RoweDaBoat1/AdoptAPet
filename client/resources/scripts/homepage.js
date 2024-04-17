@@ -65,7 +65,7 @@ function populatePosts(shelterPosts) {
 
 document.addEventListener("DOMContentLoaded", function() {
     function populateShelterPosts(shelterPosts) {
-        const container = document.getElementById('shelter-posts-container');
+        const container = document.getElementById('postContainer');
         container.innerHTML = '';
 
         shelterPosts.forEach(post => {
