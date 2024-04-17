@@ -1,4 +1,4 @@
-const sendEmailToShelter = require('./sendEmailToShelter');
+import { sendEmailToShelter } from './sendEmailToShelter.js';
 
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('adoptionForm');
