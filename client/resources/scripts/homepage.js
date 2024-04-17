@@ -65,7 +65,7 @@ function populatePosts(shelterPosts) {
 
 document.addEventListener("DOMContentLoaded", function() {
     function populateShelterPosts(shelterPosts) {
-        const container = document.getElementById('shelter-posts-container');
+        const container = document.getElementById('postContainer');
         container.innerHTML = '';
 
         shelterPosts.forEach(post => {
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function() {
             postElement.classList.add('shelter-post');
             postElement.innerHTML = `
                 <h3>${post.title}</h3>
-                <p>${post.description}</p>
+                <p>${post.message}</p>
             `;
             container.appendChild(postElement);
         });
