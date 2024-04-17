@@ -16,7 +16,8 @@ async function fetchShelterData(shelterID){
 async function populatePetProfile() {
     const urlParams = new URLSearchParams(window.location.search);
     const petId = urlParams.get('petId');
-    const pet = await fetchPetData(petId);
+    try {
+        const pet = await fetchPetData(petId);
     if (pet) {
         document.getElementById('petName').textContent = pet.name;
         document.getElementById('petBreed').textContent = pet.breed;
@@ -43,21 +44,30 @@ async function populatePetProfile() {
             const pendingMessage = document.createElement('p');
             pendingMessage.textContent = 'Pending';
             document.getElementById('petProfileContainer').appendChild(pendingMessage);
-        }
-        
-        const adoptionFormUrl = `adoptionform.html?petId=${petId}`;
-        
-        const adoptionFormLink = document.createElement('a');
-        adoptionFormLink.href = adoptionFormUrl;
-        adoptionFormLink.textContent = 'Click here to fill out the adoption form';
-        
-        const linkContainer = document.getElementById('adoptionFormLinkContainer');
-        if (linkContainer) {
-            linkContainer.appendChild(adoptionFormLink);
+
+            const pendingIcon = document.createElement('i');
+            pendingIcon.classList.add('fas', 'fa-hourglass-half');
+            document.getElementById('petProfileContainer').appendChild(pendingIcon);
+
+            const adoptionFormLink = document.getElementById('adoptionFormLinkContainer');
+            adoptionFormLink.style.display = 'none';
         } else {
-            console.error('Adoption form link container not found');
+            const adoptionFormUrl = `adoptionform.html?petId=${petId}`;
+            const adoptionFormLink = document.createElement('a');
+            adoptionFormLink.href = adoptionFormUrl;
+            adoptionFormLink.textContent = 'Click here to fill out the adoption form';
+            
+            const linkContainer = document.getElementById('adoptionFormLinkContainer');
+            if (linkContainer) {
+                linkContainer.appendChild(adoptionFormLink);
+            } else {
+                console.error('Adoption form link container not found');
+            }
         }
     }
+} catch (error) {
+    console.error('Error fetching data:', error);
+}
 }
 
 document.addEventListener('DOMContentLoaded', populatePetProfile);
