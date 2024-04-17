@@ -4,9 +4,9 @@ const favoriteUrl = 'http://localhost:5016/api/Favorite';
 function handleOnLoad(){
   const token = localStorage.getItem('jwt');
   const decodedToken = decodeJWT(token);
-  const shelterID = decodedtoken.nameid;
+  const shelterID = decodedToken.nameid;
+  const userID = decodedToken.userID;
 
-  fetchNotifications(shelterID);
 }
 
 function decodeJWT(token){
@@ -61,8 +61,11 @@ async function populateCards() {
   }
 }
 
-async function favoritePet(userID, petID, favoriteDate) {
+async function favoritePet(petID, favoriteDate) {
   const token = localStorage.getItem('jwt'); 
+  const decodedToken = decodeJWT(token);
+  const userID = decodedToken.userId;
+
   const response = await fetch('http://localhost:5016/api/Favorite', {
     method: 'POST',
     headers: {
@@ -116,7 +119,7 @@ async function createPetCard(pet, userID) { // Accept userID as a parameter
     const petID = event.target.getAttribute('data-pet-id');
     const favoriteDate = new Date().toISOString(); 
 
-    favoritePet(userID, petID, favoriteDate)
+    favoritePet(petID, favoriteDate)
     .then(() => {
       console.log('Pet favorited successfully');
     })
@@ -261,4 +264,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     await populateFilteredCards();
   });
 });
+
+
 
