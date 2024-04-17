@@ -24,6 +24,7 @@ async function getShelterID() {
 
         const shelterID = shelters[0].shelterID; 
 
+        console.log(shelterID)
         return shelterID;
     } catch (error) {
         console.error('Error fetching shelter ID:', error);
