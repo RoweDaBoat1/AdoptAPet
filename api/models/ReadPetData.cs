@@ -14,7 +14,7 @@ namespace api.models
         using var con = new MySqlConnection(cs);
         con.Open();
 
-        string stm = "SELECT PetID, Name, Breed, Age, Gender, IntakeDate, PostDate, Weight, Attitude, AboutMe, Height, HouseTrained, PetType, AdoptionStatus, ShelterID, ImagePath FROM Pets";
+        string stm = "SELECT PetID, Name, Breed, Age, Gender, IntakeDate, PostDate, Weight, Attitude, AboutMe, Height, HouseTrained, PetType, AdoptionStatus, ShelterID FROM Pets";
         using var cmd = new MySqlCommand(stm, con);
 
         using MySqlDataReader rdr = cmd.ExecuteReader();
@@ -40,7 +40,7 @@ namespace api.models
             PetType = rdr.IsDBNull(12) ? null : rdr.GetString(12),
             AdoptionStatus = rdr.IsDBNull(13) ? null : rdr.GetString(13),
             ShelterID = rdr.IsDBNull(14) ? 0 : rdr.GetInt32(14),
-            ImagePath = rdr.IsDBNull(15) ? null : rdr.GetString(15) // Retrieve ImagePath from database
+            // ImagePath = rdr.IsDBNull(15) ? null : rdr.GetString(15) // Retrieve ImagePath from database
             });
             }
 
@@ -56,7 +56,7 @@ namespace api.models
         using var con = new MySqlConnection(cs);
         con.Open();
 
-        string stm = "SELECT PetID, Name, Breed, Age, Gender, IntakeDate, PostDate, Weight, Attitude, AboutMe, Height, HouseTrained, PetType, AdoptionStatus, ShelterID, ImagePath FROM Pets WHERE PetID = @ID";
+        string stm = "SELECT PetID, Name, Breed, Age, Gender, IntakeDate, PostDate, Weight, Attitude, AboutMe, Height, HouseTrained, PetType, AdoptionStatus, ShelterID FROM Pets WHERE PetID = @ID";
         using var cmd = new MySqlCommand(stm, con);
         cmd.Parameters.AddWithValue("@ID", ID);
         cmd.Prepare();
@@ -80,7 +80,7 @@ namespace api.models
             PetType = rdr.IsDBNull(12) ? null : rdr.GetString(12),
             AdoptionStatus = rdr.IsDBNull(13) ? null : rdr.GetString(13),
             ShelterID = rdr.IsDBNull(14) ? 0 : rdr.GetInt32(14),
-            ImagePath = rdr.IsDBNull(15) ? null : rdr.GetString(15) // Retrieve ImagePath from database
+            // ImagePath = rdr.IsDBNull(15) ? null : rdr.GetString(15) // Retrieve ImagePath from database
         };
     }
 }

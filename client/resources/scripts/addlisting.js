@@ -292,18 +292,6 @@ async function handleAddPet() {
     // Convert intakeDateStart to ISO 8601 format with timezone offset
     var formattedIntakeDate = intakeDateStart.toISOString();
 
-    // var intakeYear = intakeDateStart.getFullYear();
-    // var intakeMonth = ('0' + (intakeDateStart.getMonth() + 1)).slice(-2); // Months are zero-based, so we add 1
-    // var intakeDay = ('0' + intakeDateStart.getDate()).slice(-2);
-    // var intakeHours = ('0' + intakeDateStart.getHours()).slice(-2);
-    // var intakeMinutes = ('0' + intakeDateStart.getMinutes()).slice(-2);
-    // var intakeSeconds = ('0' + intakeDateStart.getSeconds()).slice(-2);
-
-    // // Construct the formatted intake date string
-    // var formattedIntakeDate = intakeYear + '-' + intakeMonth + '-' + intakeDay + ' ' + intakeHours + ':' + intakeMinutes + ':' + intakeSeconds;
-
-    // console.log(formattedIntakeDate); // Check the formatted intake date
-
 
     // let imageFile = document.getElementById('imageUpload').files[0];
     // let imageData = await convertImageToBase64(imageFile);

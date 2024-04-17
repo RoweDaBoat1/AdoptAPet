@@ -17,6 +17,6 @@ namespace api.models
         public string PetType {get; set;}
         public string AdoptionStatus {get; set;}
         public int ShelterID {get; set;}
-        public string ImagePath { get; set; }
+        // public string ImagePath { get; set; }
     }
 }

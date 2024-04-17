@@ -1,6 +1,24 @@
 const apiUrl = 'http://localhost:5016/api/pets';
 const favoriteUrl = 'http://localhost:5016/api/Favorite';
 
+function handleOnLoad(){
+  const token = localStorage.getItem('jwt');
+  const decodedToken = decodeJWT(token);
+  const shelterID = decodedToken.nameid;
+  const userID = decodedToken.userID;
+
+}
+
+function decodeJWT(token){
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  }).join(''));
+
+  return JSON.parse(jsonPayload);
+}
+
 async function fetchData() {
   try {
     const response = await fetch(apiUrl);
@@ -25,8 +43,9 @@ async function populateCards() {
 
   try {
       const pets = await fetchData();
+      const decodedToken = decodeJWT(localStorage.getItem('jwt')); // Get decoded token here
       pets.forEach(async pet => {
-          const petCard = await createPetCard(pet);
+          const petCard = await createPetCard(pet, decodedToken.userID); // Pass userID to createPetCard
           petCard.addEventListener('click', () => redirectToPetPage(pet.petID));
           
           if (pet.adoptionStatus === 'pending') {
@@ -42,15 +61,18 @@ async function populateCards() {
   }
 }
 
-async function favoritePet(petID) {
+async function favoritePet(petID, favoriteDate) {
   const token = localStorage.getItem('jwt'); 
+  const decodedToken = decodeJWT(token);
+  const userID = decodedToken.userId;
+
   const response = await fetch('http://localhost:5016/api/Favorite', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}` 
     },
-    body: JSON.stringify({ petID }) 
+    body: JSON.stringify({ userID, petID, favoriteDate }) 
   });
 
   if (response.ok) {
@@ -61,7 +83,7 @@ async function favoritePet(petID) {
   }
 }
 
-async function createPetCard(pet) {
+async function createPetCard(pet, userID) { // Accept userID as a parameter
   const petCard = document.createElement('div');
   petCard.classList.add('pet-card');
 
@@ -95,7 +117,9 @@ async function createPetCard(pet) {
     favoriteIcon.classList.toggle('favorited');
 
     const petID = event.target.getAttribute('data-pet-id');
-    favoritePet(petID)
+    const favoriteDate = new Date().toISOString(); 
+
+    favoritePet(petID, favoriteDate)
     .then(() => {
       console.log('Pet favorited successfully');
     })
@@ -111,7 +135,6 @@ async function createPetCard(pet) {
   petInfo.appendChild(petAge);
   petInfo.appendChild(petGender);
   petInfo.appendChild(favoriteContainer);
-
 
   petCard.appendChild(petInfo);
 
@@ -241,4 +264,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     await populateFilteredCards();
   });
 });
+
+
 
