@@ -40,7 +40,7 @@ let pets = []
 
 function handleOnLoad(){
     let html = `
-        <div id = "petTable"></div>
+        <div id = "petSTable"></div>
         <form onsubmit = "return false" enctype="multipart/form-data">
             <h3>Add Pet Listing</h3>
             <input type="text" id="name" placeholder="Name" required style="margin-bottom: 10px;"><br>
@@ -76,19 +76,32 @@ function handleOnLoad(){
             </select><br>
             <label for="intakeDate">Intake Date:</label><br>
             <input type="datetime-local" id="intakeDate" style="margin-bottom: 10px;"><br>
-            <input type="text" id="weight" placeholder="Weight" style="margin-bottom: 10px;"><br>
-            <input type="text" id="height" placeholder="Height" style="margin-bottom: 10px;"><br>
+            <label for = "weight">Weight:</label><br>
+            <select name="weight" id="weight" style="margin-bottom: 10px;">
+                <option value="null">-</option>
+                <option value="SMALL (2-22 lbs.)">Small (2-22 lbs.)</option>
+                <option value="MEDIUM (24-57 lbs.)">Medium (24-57 lbs.)</option>
+                <option value="LARGE (59-99 lbs.)">Large (59-99 lbs.)</option>
+                <option value="X-LARGE (100+ lbs.)">X-Large (100+ lbs.)</option>
+            </select><br>
+            <label for = "height">Height:</label><br>
+            <select name="height" id="height" style="margin-bottom: 10px;">
+                <option value="null">-</option>
+                <option value="SMALL: 12" or Less">Small: 12" or Less</option>
+                <option value="MEDIUM: 13" to 16" inches">Medium: 13" to 16" inches</option>
+                <option value="LARGE: 17" to 20" inches">Large: 17" to 20" inches</option>
+            </select><br>
             <label>Attitude:</label><br>
                 <input type="checkbox" id="attitudeAggressive" name="attitude" value="aggressive">
-                <label for="attitudeAggressive">Aggressive</label><br>
+                <label for="attitudeAggressive">Aggressive</label>
                 <input type="checkbox" id="attitudeFriendly" name="attitude" value="friendly">
-                <label for="attitudeFriendly">Friendly</label><br>
+                <label for="attitudeFriendly">Friendly</label>
                 <input type="checkbox" id="attitudeAnxious" name="attitude" value="anxious">
-                <label for="attitudeAnxious">Anxious</label><br>
+                <label for="attitudeAnxious">Anxious</label>
                 <input type="checkbox" id="attitudeCalm" name="attitude" value="calm">
-                <label for="attitudeCalm">Calm</label><br>
+                <label for="attitudeCalm">Calm</label>
                 <input type="checkbox" id="attitudeIndependent" name="attitude" value="independent">
-                <label for="attitudeIndependent">Independent</label><br>
+                <label for="attitudeIndependent">Independent</label>
                 <input type="checkbox" id="attitudePlayful" name="attitude" value="playful">
                 <label for="attitudePlayful">Playful</label><br>
             <label for = "houseTrained">Housetrained:</label><br>
@@ -123,73 +136,23 @@ function handleChange(breed) {
     }
 }
 
-// async function populateTable(){
-//     await getAllPets()
-//     //sortTable()
-//     let html = `
-//     <table class = "table table-striped">
-//         <tr>
-//             <th>ID</th>
-//             <th>Name</th>
-//             <th>Breed</th>
-//             <th>Age</th>
-//             <th>Gender</th>
-//             <th>Intake Date</th>
-//             <th>Post Date</th>
-//             <th>Weight</th>
-//             <th>Attitude</th>
-//             <th>About</th>
-//             <th>Height</th>
-//             <th>House Trained</th>
-//             <th>Type</th>
-//             <th>Adoption Status</th>
-//             <th>Edit</th>
-//             <th>Delete</th>
-//         </tr>`
-//     pets.forEach(function(pet){
-//         //add more logic into the if statement (shelterid) so that shelters only see their own animals
-//         if(pet.adoptionStatus != "Adopted"){
-//             html+= `
-//             <tr>
-//                 <td>${pet.petID}</td>
-//                 <td>${pet.name}</td>
-//                 <td>${pet.breed}</td>
-//                 <td>${pet.age}</td>
-//                 <td>${pet.gender}</td>
-//                 <td>${pet.intakeDate}</td>
-//                 <td>${pet.postDate}</td>
-//                 <td>${pet.weight}</td>
-//                 <td>${pet.attitude}</td>
-//                 <td>${pet.aboutMe}</td>
-//                 <td>${pet.height}</td>
-//                 <td>${pet.houseTrained}</td>
-//                 <td>${pet.petType}</td>
-//                 <td>${pet.adoptionStatus}</td>
-//                 <td><button class = "btn btn-warning" onclick= "handlePetEdit('${pet.petID}')">Edit</button></td>
-//                 <td><button class = "btn btn-danger" onclick= "handlePetAdoption('${pet.petID}')">Delete</button></td>
-//             </tr>
-//             `
-//         }
-//     })
-    
-//     html += `
-//     </table>
-//     `
-//     document.getElementById('petTable').innerHTML = html
-// }
-
 async function populateTable() {
     // Fetch all pets
     await getAllPets();
-
+    console.log(pets)
     // Parse JWT token to extract shelterID
-    const jwtToken = localStorage.getItem('jwtToken');
-    const decodedToken = parseJWTToken(jwtToken);
-    const shelterID = decodedToken.nameid;
+    const token = localStorage.getItem('jwt');
+    const decodedToken = decodeJWT(token);
+    const shelterID = parseInt(decodedToken.nameid);
+
+    pets.forEach(function (pet) {
+        console.log('Pet ID:', pet.petID, 'Shelter ID:', pet.shelterID);
+    });
 
     // Filter pets array based on shelterID
     const shelterPets = pets.filter(pet => pet.shelterID === shelterID);
-
+    console.log(shelterID)
+    console.log(shelterPets)
     // Generate HTML for the table
     let html = `
         <table class="table table-striped">
@@ -209,12 +172,13 @@ async function populateTable() {
                 <th>Type</th>
                 <th>Adoption Status</th>
                 <th>Edit</th>
-                <th>Delete</th>
+                <th>Delete/Adopt</th>
             </tr>`;
 
     // Add rows for each pet belonging to the shelter
     shelterPets.forEach(function (pet) {
-        if (pet.adoptionStatus !== "Adopted") {
+        //console.log('Pet ID:', pet.petID, 'Shelter ID:', pet.shelterID);
+        if (pet.adoptionStatus != "Adopted") {
             html += `
                 <tr>
                     <td>${pet.petID}</td>
@@ -240,7 +204,7 @@ async function populateTable() {
     html += `</table>`;
 
     // Update the pet table with the generated HTML
-    document.getElementById('petTable').innerHTML = html;
+    document.getElementById('petSTable').innerHTML = html;
 }
 
 
@@ -311,7 +275,7 @@ async function handleAddPet(){
     // let imageData = await convertImageToBase64(imageFile);
 
     let pet = {
-        // petId: crypto.randomUUID(), 
+        //petID: crypto.randomUUID(), 
         name: document.getElementById('name').value, 
         breed: otherInput, 
         age: parseInt(document.getElementById('age').value),
@@ -326,7 +290,8 @@ async function handleAddPet(){
         petType: document.getElementById('petType').value,
         adoptionStatus: "open",
         shelterID: shelterID,
-        imageData: imageData // Include image data in the pet object
+        imagePath: "image"
+        //imageData: imageData // Include image data in the pet object
 
         //imageUrl: imageUrl
 
@@ -447,19 +412,32 @@ function handlePetEdit(pet){
     </select><br>
     <label for = "intakeDate">Intake Date:</label><br>
     <input type="date" id="intakeDate" placeholder="Intake Date" style="margin-bottom: 10px;"><br>
-    <input type="text" id="weight" placeholder="Weight" style="margin-bottom: 10px;"><br>
-    <input type="text" id="height" placeholder="Height" style="margin-bottom: 10px;"><br>
+    <label for = "weight">Weight:</label><br>
+            <select name="weight" id="weight" style="margin-bottom: 10px;">
+                <option value="null">-</option>
+                <option value="SMALL (2-22 lbs.)">Small (2-22 lbs.)</option>
+                <option value="MEDIUM (24-57 lbs.)">Medium (24-57 lbs.)</option>
+                <option value="LARGE (59-99 lbs.)">Large (59-99 lbs.)</option>
+                <option value="X-LARGE (100+ lbs.)">X-Large (100+ lbs.)</option>
+            </select><br>
+            <label for = "height">Height:</label><br>
+            <select name="height" id="height" style="margin-bottom: 10px;">
+                <option value="null">-</option>
+                <option value="SMALL: 12" or Less">Small: 12" or Less</option>
+                <option value="MEDIUM: 13" to 16" inches">Medium: 13" to 16" inches</option>
+                <option value="LARGE: 17" to 20" inches">Large: 17" to 20" inches</option>
+            </select><br>
     <label>Attitude:</label><br>
         <input type="checkbox" id="attitudeAggressive" name="attitude" value="aggressive">
-        <label for="attitudeAggressive">Aggressive</label><br>
+        <label for="attitudeAggressive">Aggressive</label>
         <input type="checkbox" id="attitudeFriendly" name="attitude" value="friendly">
-        <label for="attitudeFriendly">Friendly</label><br>
+        <label for="attitudeFriendly">Friendly</label>
         <input type="checkbox" id="attitudeAnxious" name="attitude" value="anxious">
-        <label for="attitudeAnxious">Anxious</label><br>
+        <label for="attitudeAnxious">Anxious</label>
         <input type="checkbox" id="attitudeCalm" name="attitude" value="calm">
-        <label for="attitudeCalm">Calm</label><br>
+        <label for="attitudeCalm">Calm</label>
         <input type="checkbox" id="attitudeIndependent" name="attitude" value="independent">
-        <label for="attitudeIndependent">Independent</label><br>
+        <label for="attitudeIndependent">Independent</label>
         <input type="checkbox" id="attitudePlayful" name="attitude" value="playful">
         <label for="attitudePlayful">Playful</label><br>
     <label for = "houseTrained">Housetrained:</label><br>
@@ -471,9 +449,8 @@ function handlePetEdit(pet){
     <textarea id="aboutMe" placeholder="About" style="width:400px; height:100px"></textarea><br>
     <label for = "adoptionStatus">Adoption Status:</label><br>
     <select name="adoptionStatus" id="adoptionStatus" style="margin-bottom: 10px;><br>
-        <option value="open">open</option>
+        <option value="available">available</option>
         <option value="pending">pending</option>
-        <option value="adopted">adopted</option>
     </select><br>
     <label for="imageUpload" style="margin-top: 10px;">Upload Image:</label>
     <input type="file" id="imageUpload" accept="image/*" style="margin-top: 10px;">

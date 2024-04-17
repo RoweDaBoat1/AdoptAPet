@@ -11,18 +11,19 @@
 </head>
 <body onload="handleOnLoad()">
   <div class="menu_bar">
-    <h1 class="logo"> <a href="homepage.html"><img src="./resources/styles/images/AAP logo.png" alt="Logo"></a></h1>
+    <h1 class="logo"> <a href="adminhome.html"><img src="./resources/styles/images/AAP logo.png" alt="Logo"></a></h1>
 
     <ul>
-        <li><a href="homepage.html">Home</a></li>
+        <li><a href="adminhome.html">Home</a></li>
         <li>
             <a href="#">More <i class="fas fa-caret-down"></i></a>
         
             <div class="dropdown_menu">
-                <ul>            
-                    <li><a href="aboutus.html">About Us</a></li>
-                    <li><a href="viewpets.html">View Pets</a></li>
-                    <li><a href="donation.html">Donate</a></li>
+                <ul>
+                  <li><a href="adminapproval.html">Pending Shelters</a></li>
+                  <li><a href="addlisting.html">Pet Listing Hub</a></li>
+                  <li><a href="analytics.html">Analytics</a></li>
+                  <li><a href="editprofileadmin.html">View Profile</a></li>            
                 </ul>
             </div>
         </li>
@@ -30,45 +31,20 @@
     </ul>
   </div>
   
-  <div class="row">
-    <div class="col-3">
+  <div class="container">
+    <div class="row">
+        <div id="petTable"></div>
     </div>
-    <div class="col-6"> 
-      <h1 style="text-align: center;">Pet Listing Hub</h1>
-    </div>
-    <div class="col-3">
+    <div class="row">
+      <div class="col">
+      </div>
+      <div class="col-6">
+        <div id="app" class="card"></div>
+      </div>
+      <div class="col">
+      </div>
     </div>
   </div>
-  <div id="petTable"></div>
-    <div class="container">
-        <!-- <div class="row">
-          <div class="col-3">
-          </div>
-          <div class="col-6"> 
-            <h1 style="text-align: center;">Pet Listing Hub</h1>
-          </div>
-          <div class="col-3">
-          </div>
-        </div>-->
-        <div class="row">
-          <div class="col-3">
-          </div>
-          <div class="col-6" class="card">
-            <div id="app">
-            </div>
-          </div>
-          <div class="col-3">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-3">
-          </div>
-          <div class="col-6">
-          </div>
-          <div class="col-3">
-          </div>
-        </div>
-    </div>
 
     <script>
         const apiUrls = {

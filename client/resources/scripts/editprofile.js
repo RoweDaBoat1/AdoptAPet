@@ -1,9 +1,10 @@
- const baseUrl = "http://localhost:5016/api"
+const baseUrl = "http://localhost:5016/api"
 
 function handleOnLoad() {
     const token = localStorage.getItem('jwt');
     if (token) {
         const decodedToken = decodeJWT(token);
+        console.log(decodedToken)
         let userID, shelterID, iD, role;
         // Check the role type and set the appropriate variable name for the ID
         if (decodedToken.role === 'User') {
@@ -101,12 +102,8 @@ function getUserHtml(user) {
                      <td><span id="zipCode">${user.zipCode}</span></td>
                  </tr>
                  <tr>
-                     <td>Password:</td>
-                     <td><span id="password">${user.password}</span></td>
-                 </tr>
-                 <tr>
                      <td colspan="2">
-                         <button class="btn btn-primary" onclick="toggleEdit()">Edit</button>
+                         <button class="btn btn-primary" onclick="toggleEdit('${user.role}')">Edit</button>
                          <button class="btn btn-primary" onclick="saveUserChanges('${user.userID}')">Save</button>
                      </td>
                   </tr>
@@ -150,10 +147,6 @@ function getShelterHtml(user) {
         <td><span id="zipCode">${user.zipCode}</span></td>
     </tr>
     <tr>
-        <td>Password:</td>
-        <td><span id="password">${user.password}</span></td>
-    </tr>
-    <tr>
         <td colspan="2">
             <button class="btn btn-primary" onclick="toggleEdit('${user.role}')">Edit</button>
             <button class="btn btn-primary" onclick="saveShelterChanges('${user.shelterID}')">Save</button>
@@ -183,10 +176,6 @@ function getAdminHtml(user) {
         <td><span id="email">${user.email}</span></td>
     </tr>
     <tr>
-        <td>Password:</td>
-        <td><span id="password">${user.password}</span></td>
-    </tr>
-    <tr>
         <td colspan="2">
             <button class="btn btn-primary" onclick="toggleEdit('${user.role}')">Edit</button>
             <button class="btn btn-primary" onclick="saveAdminChanges('${user.iD}')">Save</button>
@@ -204,7 +193,7 @@ function displayBlankInfoColumn() {
                 <th></th>
             </tr>
             <tr>
-                <td colspan="2">No user information available.</td>
+                <td colspan="2">No user information available. Please Login or Create an Account</td>
             </tr>
         </table>`;
     
@@ -221,12 +210,26 @@ function decodeJWT(token) {
     return JSON.parse(jsonPayload);
 }
 
+// function toggleEdit(role) {
+//     console.log('hello')
+//     const tableId = getTableIdByRole(role);
+//     console.log(tableId)
+//     const cells = document.querySelectorAll(`#${tableId} span`);
+//     console.log(cells)
+//     cells.forEach(function(cell) {
+//         const input = document.createElement('input');
+//         input.value = cell.innerText;
+//         cell.innerHTML = '';
+//         cell.appendChild(input);
+//     });
+// }
+
 function toggleEdit(role) {
-    console.log('hello')
+    console.log('Role:', role); // Log the role
     const tableId = getTableIdByRole(role);
-    console.log(tableId)
+    console.log('Table ID:', tableId); // Log the tableId
     const cells = document.querySelectorAll(`#${tableId} span`);
-    console.log(cells)
+    console.log('Cells:', cells); // Log the cells
     cells.forEach(function(cell) {
         const input = document.createElement('input');
         input.value = cell.innerText;
@@ -234,6 +237,11 @@ function toggleEdit(role) {
         cell.appendChild(input);
     });
 }
+
+
+// function toggleEdit(role) {
+//     c
+
 
 function getTableIdByRole(role) {
     switch (role) {
@@ -271,7 +279,6 @@ function getUserDataFromCells() {
     // Example:
     return {
         email: document.getElementById('email').value,
-        password: document.getElementById('password').value,
         firstName: document.getElementById('firstName').value,
         lastName: document.getElementById('lastName').value,
         zipCode: document.getElementById('zipCode').value,
@@ -283,8 +290,6 @@ function getShelterDataFromCells() {
     // Extract data from cells for shelter table
     // Example:
     return {
-        // Different fields for shelter
-        password: document.getElementById('password').value,
         addressLine: document.getElementById('addressLine').value,
         city: document.getElementById('city').value,
         state: document.getElementById('state').value,
@@ -297,13 +302,10 @@ function getShelterDataFromCells() {
 
 function getAdminDataFromCells() {
     // Extract data from cells for admin table
-    // Example:
     return {
-        // Different fields for admin
         email: document.getElementById('email').value,
         firstName: document.getElementById('firstName').value,
         lastName: document.getElementById('lastName').value,
-        password: document.getElementById('password').value,
     };
 }
 
