@@ -4,11 +4,11 @@ const apiShelterUrl = 'http://localhost:5016/api/shelters';
 async function getShelterID() {
     try {
         
-        const token = localStorage.getItem('jwtToken');
+        const token = localStorage.getItem('jwt');
 
         
         if (!token) {
-            throw new Error('JWT token not found in localStorage');
+            throw new Error('JWT not found in localStorage');
         }
 
         
