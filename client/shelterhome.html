@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./resources/styles/homepage.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Adopt A Pet</title>
+</head>
+<body>
+    <div id="navbar-container"
+    <!-- <div class="menu_bar">
+        <h1 class="logo"> <a href="shelterhome.html"><img src="./resources/styles/images/AAP logo.png" alt="Logo"></a></h1>
+    
+        <ul>
+            <li><a href="shelterhome.html">Home</a></li>
+            <li>
+                <a href="#">More <i class="fas fa-caret-down"></i></a>
+            
+                <div class="dropdown_menu">
+                    <ul>            
+                        <li><a href="addlistingshelter.html">Pet Listing Hub</a></li>
+                        <li><a href="editprofileshelter.html">View Profile</a></li>
+                        <li><a href="formprivacy.html">Privacy Settings</a></li>
+                        <li><a href="shelterPost.html">Post Events</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li><a id="loginLogoutLink"href="login.html">Login</a></li>
+        </ul>
+      </div> -->
+    
+    <div class="banner">
+        <h1>Welcome to Adopt A Pet!</h1>
+        <p></p>
+    </div>
+    
+    <div class="container" style="margin-top: 60px;">
+        <div class="row">
+            <div class="col-md-6">
+                <!-- Pet of the Week -->
+                <div class="pet-of-the-week">
+                    <h2>Pet of the Week</h2>
+                    <div class="pet-info">
+                        <img src="" alt="Pet of the Week"> <!--INSERT IMAGE HERE-->
+                        <h3>Name: Bella</h3>
+                        <p>Age: 2 years</p>
+                        <p>Gender: Female</p>
+                        <p>Breed: Labrador Retriever</p>
+                        <p>About Me: Bella is a friendly and energetic dog. She loves long walks in the park and playing fetch.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <!-- Featured Pets -->
+                <div class="featured-pets">
+                    <h2>Featured Pets</h2>
+                    <div class="row" id="featured-pets-container">
+                        <!-- Featured Pet Cards will be dynamically populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container" style="margin-top: 60px;">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Help Them Find Their Fur-ever Homes</h2>
+                <p>Welcome to Adopt A Pet, your one-stop destination for finding your perfect furry companion! At Adopt A Pet, we believe that every pet deserves a loving home, and every home deserves the unconditional love of a pet. Whether you're searching for a loyal canine companion or a playful feline friend we're here to help you find the perfect match. With thousands of adoptable pets from shelters and rescues across the country, we make it easy to browse and connect with animals in need of a forever home. Start your journey to unconditional love today with Adopt A Pet!</p>
+            </div>
+    </div>
+    
+    <div class="container" style="margin-top: 60px;">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Shelter Posts</h2>
+                <div class="shelter-posts" id="shelter-posts-container">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="./resources/scripts/login.js"></script>
+    <script src="./resources/scripts/homepage.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+    <script>
+        // Inside a script tag at the end of your HTML file
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginLogoutLink = document.getElementById('loginLogoutLink')
+            // Function to update the login/logout link text
+            const updateLoginLogoutLink = () => {
+            const token = localStorage.getItem('jwt');
+                if (token) {
+                // If token is present, display "LOGOUT" link
+                    loginLogoutLink.textContent = 'Logout'
+                } else {
+                // If token is not present, display "LOGIN" link
+                    loginLogoutLink.textContent = 'Login'
+                }
+            }
+            // Call the function to update the link text when the page loads
+            updateLoginLogoutLink()
+            // Add click event listener to handle logout logic
+            loginLogoutLink.addEventListener('click', () => {
+                const token = localStorage.getItem('jwt')
+                if (token) {
+                    // If token is present, remove it from local storage
+                    localStorage.removeItem('jwt')
+    
+                    // Update the login/logout link text
+                    updateLoginLogoutLink()
+    
+                    // Redirect to login page or perform other logout actions
+                    // window.location.href = 'login.html';
+                }
+            })
+        })
+    </script>
+</body>
+</html>
