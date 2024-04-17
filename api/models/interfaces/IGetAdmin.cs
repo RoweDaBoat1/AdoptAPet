@@ -7,6 +7,6 @@ namespace api.models.interfaces
 {
     public interface IGetAdmin
     {
-        Admin GetAdmin(int ID);
+        Admin GetAdmin(int AdminID);
     }
 }

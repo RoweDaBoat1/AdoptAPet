@@ -7,7 +7,7 @@ namespace api.models
 {
     public class Admin
     {
-        public int ID{get;set;}
+        public int AdminID{get;set;}
         public string Email{get;set;}
         public string FirstName{get;set;}
         public string LastName{get;set;}

@@ -7,6 +7,6 @@ namespace api.models.interfaces
 {
     public interface IDeleteAdmin
     {
-        void DeleteAdmin(int ID);
+        void DeleteAdmin(int AdminID);
     }
 }

@@ -1,26 +1,30 @@
 const baseUrl = "http://localhost:5016/api"
 
+let AdminID
+
 function handleOnLoad() {
     const token = localStorage.getItem('jwt');
     const decodedToken = decodeJWT(token);
-    let adminID = parseInt(decodedToken.nameid)
-    console.log(adminID);
-    getUserInfo(adminID)
+    AdminID = decodedToken.nameid
+    console.log(AdminID);
+    getUserInfo(AdminID)
 }
 
-async function getUserInfo(adminID) {
-    let response = await fetch(baseUrl + '/admin/' + adminID);
+async function getUserInfo(AdminID) {
+    let response = await fetch(baseUrl + '/admin/' + AdminID);
     const user = await response.json();
+    console.log(AdminID)
     console.log(user);
     if (user) {
         displayAdminInfo(user);
     } else {
-        // No user found with the given role ID
+        // No user found with the given role AdminID
         displayBlankInfoColumn();
     }
 }
 
 function displayAdminInfo(user) {
+    console.log(AdminID)
     let html = getadminHtml(user)
     document.getElementById('userTableContainer').innerHTML = html;
 }
@@ -34,6 +38,10 @@ function getadminHtml(user) {
         <th></th>
     </tr>
     <tr>
+        <td>Email:</td>
+        <td><span id="email">${user.email}</span></td>
+    </tr>
+    <tr>
         <td>First Name:</td>
         <td><span id="firstName">${user.firstName}</span></td>
     </tr>
@@ -42,13 +50,9 @@ function getadminHtml(user) {
         <td><span id="lastName">${user.lastName}</span></td>
     </tr>
     <tr>
-        <td>Email:</td>
-        <td><span id="email">${user.email}</span></td>
-    </tr>
-    <tr>
         <td colspan="2">
             <button class="btn btn-primary" onclick="toggleEdit()">Edit</button>
-            <button class="btn btn-primary" onclick="saveChanges('${user.adminID}')">Save</button>
+            <button class="btn btn-primary" onclick="saveChanges()">Save</button>
         </td>
      </tr>
 </table>`;
@@ -93,22 +97,39 @@ function toggleEdit() {
     });
 }
 
-function saveChanges(adminID) {
+function saveChanges() {
     const cells = document.querySelectorAll(`#adminTable span`);
-    const updatedData = {};
+    const updatedAdmin = {};
     cells.forEach(function(cell) {
         const fieldName = cell.id; // Assuming cell id matches the field name in the data
-        const value = cell.querySelector('input').value;
-        updatedData[fieldName] = value;
+        const input = cell.querySelector('input');
+        const value = input.value;
+        updatedAdmin[fieldName] = value;
+        // Replace the input field with a span containing the new value
+        const span = document.createElement('span');
+        span.textContent = value;
+        cell.innerHTML = '';
+        cell.appendChild(span);
     });
-    // Send updatedData to the backend to update the profile info
-    updateAdmin(adminID, updatedData);
+    // console.log(AdminID)
+    // const cells = document.querySelectorAll(`#adminTable span`);
+    // const updatedAdmin = {};
+    // cells.forEach(function(cell) {
+    //     const fieldName = cell.id; // Assuming cell id matches the field name in the data
+    //     const value = cell.querySelector('input').value;
+    //     updatedAdmin[fieldName] = value;
+    // });
+    // console.log(updatedAdmin)
+    // console.log(AdminID)
+    // Send updatedAdmin to the backend to update the profile info
+    updateAdmin(AdminID, updatedAdmin);
 }
 
-async function updateAdmin(adminID, updatedData) {
-    await fetch(baseUrl + '/admin/' + adminID, {
+async function updateAdmin(AdminID, updatedAdmin) {
+    console.log(AdminID)
+    await fetch(baseUrl + '/admin/' + AdminID, {
         method: "PUT",
-        body: JSON.stringify(updatedData),
+        body: JSON.stringify(updatedAdmin),
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }

@@ -6,7 +6,7 @@ namespace api.models
 {
     public class UpdateAdminData : IUpdateAdmin
     {
-        public void UpdateAdmin(int id, Admin updatedAdmin)
+        public void UpdateAdmin(int AdminID, Admin updatedAdmin)
         {
             ConnectionString myConnection = new ConnectionString();
             string cs = myConnection.cs;
@@ -20,19 +20,27 @@ namespace api.models
                                 SET Email = @Email, 
                                     FirstName = @FirstName, 
                                     LastName = @LastName,
-                                    PasswordHash = @PasswordHash, 
+                                    PasswordHash = @PasswordHash,
                                     Salt = @Salt,
-                                    Role = @Role,
-                                WHERE ID = @ID";
-            cmd.Parameters.AddWithValue("@AdminId", id);
+                                    Role = @Role
+                                WHERE AdminID = @AdminID";
+            cmd.Parameters.AddWithValue("@AdminID", AdminID);
             cmd.Parameters.AddWithValue("@Email", updatedAdmin.Email);
             cmd.Parameters.AddWithValue("@FirstName", updatedAdmin.FirstName);
             cmd.Parameters.AddWithValue("@LastName", updatedAdmin.LastName);
-            cmd.Parameters.AddWithValue("@PasswordHash", updatedAdmin.PasswordHash);
-            cmd.Parameters.AddWithValue("@Salt", updatedAdmin.Salt);
-            cmd.Parameters.AddWithValue("@Role", updatedAdmin.Role);
+            // cmd.Parameters.AddWithValue("@PasswordHash", updatedAdmin.PasswordHash);
+            // cmd.Parameters.AddWithValue("@Salt", updatedAdmin.Salt);
+            // cmd.Parameters.AddWithValue("@Role", updatedAdmin.Role);
             
             cmd.ExecuteNonQuery();
         }
     }
 }
+// @"UPDATE Admin 
+//                                 SET Email = @Email, 
+//                                     FirstName = @FirstName, 
+//                                     LastName = @LastName,
+//                                     PasswordHash = @PasswordHash, 
+//                                     Salt = @Salt,
+//                                     Role = @Role
+//                                 WHERE AdminID = @AdminID";

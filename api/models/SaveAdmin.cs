@@ -26,8 +26,8 @@ namespace api.models
             using var cmd = new MySqlCommand(cs);
 
             cmd.Connection = con;
-            cmd.CommandText = @"INSERT INTO Admin(ID, Email, PasswordHash, Salt, FirstName, LastName, Role) VALUES(@ID, @Email, @PasswordHash, @Salt, @FirstName, @LastName, @Role)";
-            cmd.Parameters.AddWithValue("@ID", value.ID);
+            cmd.CommandText = @"INSERT INTO Admin(AdminID, Email, PasswordHash, Salt, FirstName, LastName, Role) VALUES(@AdminID, @Email, @PasswordHash, @Salt, @FirstName, @LastName, @Role)";
+            cmd.Parameters.AddWithValue("@AdminID", value.AdminID);
             cmd.Parameters.AddWithValue("@Email", value.Email);
             cmd.Parameters.AddWithValue("@PasswordHash", hashedPassword); 
             cmd.Parameters.AddWithValue("@Salt", salt); 

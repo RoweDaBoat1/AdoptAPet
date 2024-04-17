@@ -3,6 +3,7 @@ const petUrl = "http://localhost:5016/api/pets"
 //const petUrl = apiUrls.petUrl
 let shelterID
 let pets = []
+//let updatedPet=[]
 let approvedShelters = [];
 
 // const imageUpload = document.getElementById('imageUpload')
@@ -75,10 +76,10 @@ async function handleOnLoad(){
             <input type="text" id="other" name="other">
             </div>
             <label for = "gender">Gender:</label><br>
-            <select name="gender" id="gender" style="margin-bottom: 10px;">
+            <select name="gender" id="gender">
                 <option value="null">-</option>
-                <option value="male">M</option>
-                <option value="female">F</option>
+                <option value="Male">M</option>
+                <option value="Female">F</option>
             </select><br>
             <label for="intakeDate">Intake Date:</label><br>
             <input type="datetime-local" id="intakeDate" style="margin-bottom: 10px;"><br>
@@ -156,13 +157,6 @@ async function populateShelterDropdown() {
     }
 }
 
-// Call getApprovedShelters to fetch and store approved shelters
-// getApprovedShelters().then(() => {
-//     // Populate the shelter dropdown once the approved shelters are fetched
-//     populateShelterDropdown();
-// });
-
-
 // Add an event listener to the shelter dropdown
 document.addEventListener('DOMContentLoaded', () => {
     const selectedShelterID = document.getElementById('shelterDropdown')
@@ -176,14 +170,34 @@ async function getAllPets() {
     console.log(pets)
 }
 
+// function handleChange(breed) {
+//     var selectedValue = breed.value
+//     if (selectedValue === "other") {
+//         document.getElementById("otherInput").style.display = "block";
+//     } else {
+//         document.getElementById("otherInput").style.display = "none"
+//     }
+// }
+
 function handleChange(breed) {
-    var selectedValue = breed.value
-    if (selectedValue === "other") {
-        document.getElementById("otherInput").style.display = "block";
-    } else {
-        document.getElementById("otherInput").style.display = "none"
+    var selectedValue = breed.value;
+    var otherInput = document.getElementById("otherInput");
+    if (selectedValue === "other" && otherInput) {
+        otherInput.style.display = "block";
+    } else if (otherInput) {
+        otherInput.style.display = "none";
     }
 }
+
+// function handleChange(breed) {
+//     var selectedValue = breed.value;
+//     var otherInput = document.getElementById("otherInput");
+//     if (selectedValue === "other") {
+//         otherInput.style.display = "block";
+//     } else {
+//         otherInput.style.display = "none";
+//     }
+// }
 
 async function populateTable() {
     await getAllPets()
@@ -252,18 +266,6 @@ async function handleAddPet() {
 
     // Convert intakeDateStart to ISO 8601 format with timezone offset
     var formattedPostDate = postDate.toISOString();
-
-    // // Get the individual components of the date and time
-    // var year = currentDate.getFullYear();
-    // var month = ('0' + (currentDate.getMonth() + 1)).slice(-2); // Months are zero-based, so we add 1
-    // var day = ('0' + currentDate.getDate()).slice(-2);
-    // var hours = ('0' + currentDate.getHours()).slice(-2);
-    // var minutes = ('0' + currentDate.getMinutes()).slice(-2);
-    // var seconds = ('0' + currentDate.getSeconds()).slice(-2);
-
-    // // Construct the formatted date string
-    // var postDate = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
-
 
     var breedValue = document.getElementById("breed").value
     var otherInput = ""
@@ -400,30 +402,32 @@ async function handlePetAdoption(petID) {
         // Handle the error (e.g., display an error message to the user)
     }
 }
-
-
-
 function handlePetEdit(pet) {
     let html = `
     <form onsubmit = "return false">
     <h3>Edit Pet Listing</h3>
     <input type="text" id="name" placeholder="Name" style="margin-bottom: 10px;"><br>
-    <label for = "petType">Pet Type:</label><br>
-    <select name="petType" id="petType" style="margin-bottom: 10px;">
-        <option value="null">-</option>
-        <option value="dog">Dog</option>
-        <option value="cat">Cat</option>
-    </select><br>
-    <input type="text" id="breed" placeholder="Breed" style="margin-bottom: 10px;"><br>
+    <label for = "breed">Breed:</label><br>
+            <select name="breed" id="breed" onchange="handleChange(breed)" style="margin-bottom: 10px;">
+                <option value="null">-</option>
+                <option value="chocolateLab">Chocolate Lab</option>
+                <option value="lab">Labrador</option>
+                <option value="lakelandTerrier">Lakeland Terrier</option>
+                <option value="goldendoodle">Goldendoodle</option>
+                <option value="poodle">Poodle</option>
+                <option value="ragdoll">Ragdoll</option>
+                <option value="siberianHusky">Siberian Husky</option>
+                <option value="whiteRetriever">White Retriever</option>
+                <option value="other">Other</option>
+            </select><br>
     <input type="number" id="age" placeholder="Age" style="margin-bottom: 10px;"><br>
     <label for = "gender">Gender:</label><br>
-    <select name="type" id="type" style="margin-bottom: 10px;">
+    <select name="gender" id="gender" style="margin-bottom: 10px;">
         <option value="null">-</option>
-        <option value="male">M</option>
-        <option value="female">F</option>
+        <option value="Male">M</option>
+        <option value="Female">F</option>
     </select><br>
-    <label for = "intakeDate">Intake Date:</label><br>
-    <input type="date" id="intakeDate" placeholder="Intake Date" style="margin-bottom: 10px;"><br>
+    
     <label for = "weight">Weight:</label><br>
             <select name="weight" id="weight" style="margin-bottom: 10px;">
                 <option value="null">-</option>
@@ -435,9 +439,11 @@ function handlePetEdit(pet) {
             <label for = "height">Height:</label><br>
             <select name="height" id="height" style="margin-bottom: 10px;">
                 <option value="null">-</option>
-                <option value="SMALL: 12" or Less">Small: 12" or Less</option>
-                <option value="MEDIUM: 13" to 16" inches">Medium: 13" to 16" inches</option>
-                <option value="LARGE: 17" to 20" inches">Large: 17" to 20" inches</option>
+                <option value="SMALL: 12&quot; or Less">Small: 12" or Less</option>
+                <option value="MEDIUM: 13&quot; to 16&quot; inches">Medium: 13" to 16" inches</option>
+                <option value="LARGE: 17&quot; to 20&quot; inches">Large: 17" to 20" inches</option>
+                <option value="X-LARGE: 21&quot; to 27&quot; inches">X-Large: 21" to 27" inches</option>
+                <option value="XX-LARGE: 28&quot; or UP">XX-Large: 28" or UP</option>
             </select><br>
     <label>Attitude:</label><br>
         <input type="checkbox" id="attitudeAggressive" name="attitude" value="aggressive">
@@ -461,7 +467,7 @@ function handlePetEdit(pet) {
     <textarea id="aboutMe" placeholder="About" style="width:400px; height:100px"></textarea><br>
     <label for = "adoptionStatus">Adoption Status:</label><br>
     <select name="adoptionStatus" id="adoptionStatus" style="margin-bottom: 10px;><br>
-        <option value="available">open</option>
+        <option value="available">available</option>
         <option value="pending">pending</option>
     </select><br>
     <label for="imageUpload" style="margin-top: 10px;">Upload Image:</label>
@@ -475,49 +481,90 @@ function handlePetEdit(pet) {
     document.getElementById('breed').value = pet.breed
     document.getElementById('age').value = pet.age
     document.getElementById('gender').value = pet.gender
-    document.getElementById('intakeDate').value = pet.intakeDate
     document.getElementById('weight').value = pet.weight
     document.getElementById('aboutMe').value = pet.aboutMe
     document.getElementById('adoptionStatus').value = pet.adoptionStatus
     document.getElementById('height').value = pet.height
     document.getElementById('houseTrained').value = pet.houseTrained
-    document.getElementById('petType').value = pet.petType
 
     const breedSelect = document.getElementById('breed');
     breedSelect.value = pet.breed;
     handleChange(breedSelect);
 
-    pet.attitude.forEach(function (attitude) {
-        document.getElementById('attitude' + attitude.charAt(0).toUpperCase() + attitude.slice(1)).checked = true
-    })
+    
+        // Your existing code...
+    
+        // Check if there are any checkboxes checked
+        const checkedAttitudeCheckboxes = document.querySelectorAll('input[name="attitude"]:checked');
+        if (checkedAttitudeCheckboxes.length > 0) {
+            let attitude = [];
+            checkedAttitudeCheckboxes.forEach(function(checkbox) {
+                attitude.push(checkbox.value);
+            });
+            // Your existing code to populate the updatedPet object...
+        } else {
+            // If no checkboxes are checked, set attitude to an empty array
+            let attitude = [];
+            // Your existing code to populate the updatedPet object...
+        }
+        if (pet.attitude) {
+            pet.attitude.forEach(function(attitude) {
+                document.getElementById('attitude' + attitude.charAt(0).toUpperCase() + attitude.slice(1)).checked = true;
+            });
+        }
+        // Iterate over pet.attitude to pre-select attitude checkboxes
+        // pet.attitude.forEach(function(attitude) {
+        //     document.getElementById('attitude' + attitude.charAt(0).toUpperCase() + attitude.slice(1)).checked = true;
+        // });
+    
+        // Your existing code...
+    
 }
 
 async function handleUpdatePet(petID) {
-    let attitude = []
-    document.querySelectorAll('input[name="attitude"]:checked').forEach(function (checkbox) {
-        attitude.push(checkbox.value)
-    })
-    let pet = {
+    var breedValue = document.getElementById("breed").value
+    var otherInput = ""
+    if (breedValue === "other") {
+        otherInput = document.getElementById("otherInput").value
+    } else {
+        otherInput = breedValue
+    }
+
+    let attitude = "";
+    document.querySelectorAll('input[name="attitude"]:checked').forEach(function (checkbox, index) {
+        // If this is not the first checkbox, add a ";" before adding the value
+        if (index > 0) {
+            attitude += ";";
+        }
+        attitude += checkbox.value;
+    });
+
+    //let attitude = []
+    // document.querySelectorAll('input[name="attitude"]:checked').forEach(function (checkbox) {
+    //     attitude.push(checkbox.value)
+    // })
+    let updatedPet = {
         petID: petID, 
         name: document.getElementById('name').value, 
-        breed: document.getElementById('breed').value, 
+        breed: otherInput, 
         age :document.getElementById('age').value,
         gender :document.getElementById('gender').value,
-        intakeDate :document.getElementById('intakeDate').value,
-        postDate: postDate.toISOString(),
+        //intakeDate :formattedIntakeDate,
+        //postDate: formattedPostDate,
         weight: document.getElementById('weight').value,
         attitude: attitude,
         aboutMe: document.getElementById('aboutMe').value,
-        adopted: adopted,
-        adoptionStatus: document.getElementById('adoptionStatus').value,
         height: document.getElementById('height').value,
         houseTrained: document.getElementById('houseTrained').value,
-        petType: document.getElementById('petType').value,
-        imagePath: "image"
+        //petType: document.getElementById('petType').value,
+        adoptionStatus: document.getElementById('adoptionStatus').value,
+        //shelterID: shelterID,
+        //imagePath: "image"
     }
-    await fetch(petUrl + '/' + pet.petID, {
+    console.log(updatedPet)
+    await fetch(petUrl + '/' + updatedPet.petID, {
         method: "PUT",
-        body: JSON.stringify(pet),
+        body: JSON.stringify(updatedPet),
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
