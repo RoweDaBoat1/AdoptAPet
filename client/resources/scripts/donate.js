@@ -9,7 +9,9 @@ const shelterUrl = "http://localhost:5016/api/shelters"
 let donations = []
 
 
-
+function handleAnLoad(){
+    populateDonationTable()
+}
 
 function handleOnLoad(){
     populateShelterDropdown();
@@ -71,12 +73,12 @@ function handleOnLoad(){
     async function handleButtonClick(){
         await handleAddDonation()
         console.log('hello')
-        //window.location.href = 'https://www.metroanimalshelter.org/donate'
+        window.location.href = 'donationimage.html'
     }
         
     async function getAllDonations(){
-        let response = await fetch(apiUrls.donationUrl)
-        donation = await response.json()
+        let response = await fetch(donationUrl)
+        donations = await response.json()
         console.log(donations)
     }
 
@@ -94,44 +96,42 @@ function handleOnLoad(){
             document.getElementById("customAmountInput").style.display = "none"
         }
     }
-// make this table potentially on the analytics page
-// async function populateTable(){
-//     await getAllDonations()
-//     //sortTable()
-//     let html = `
-//     <table class = "table table-striped">
-//         <tr>
-//             <th>ID</th>
-//             <th>Name</th>
-//             <th>Type</th>
-//             <th>Breed</th>
-//             <th>Age</th>
-//             <th>Gender</th>
-//             <th>Intake Date</th>
-//             <th>Status</th>
-//         </tr>`
-//     donations.forEach(function(donation){
-//         if(donation.adopted == false){
-//             html+= `
-//             <tr>
-//                 <td>${donation.id}</td>
-//                 <td>${donation.name}</td>
-//                 <td>${donation.type}</td>
-//                 <td>${donation.breed}</td>
-//                 <td>${donation.age}</td>
-//                 <td>${donation.gender}</td>
-//                 <td>${donation.intakeDate}</td>
-//                 <td><button class = "btn btn-danger" onclick= "handledonationAdoption('${donation.id}')">Delete</button></td>
-//             </tr>
-//             `
-//         }
-//     })
+async function populateDonationTable(){
+    await getAllDonations()
+    //sortTable()
+    let html = `
+    <table class = "table table-striped">
+        <tr>
+            <th>Donation ID</th>
+            <th>Amount</th>
+            <th>Shelter Name</th>
+            <th>Donation Date</th>
+            <th>Email</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+       
+        </tr>`
+    donations.forEach(function(donation){
+      
+            html+= `
+            <tr>
+                <td>${donation.donationID}</td>
+                <td>${donation.amount}</td>
+                <td>${donation.shelterName}</td>
+                <td>${donation.donationDate}</td>
+                <td>${donation.email}</td>
+                <td>${donation.firstName}</td>
+                <td>${donation.lastName}</td>
+            </tr>
+            `
+        
+    })
     
-//     html += `
-//     </table>
-//     `
-//     document.getElementById('donationTable').innerHTML = html
-// }
+    html += `
+    </table>
+    `
+    document.getElementById('donationTable').innerHTML = html
+}
 
 async function handleAddDonation(){
     var firstName = document.getElementById('firstName').value

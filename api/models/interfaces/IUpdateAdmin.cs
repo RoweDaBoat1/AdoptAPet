@@ -7,6 +7,6 @@ namespace api.models.interfaces
 {
     public interface IUpdateAdmin
     {
-        void UpdateAdmin(int ID, Admin updatedAdmin);
+        void UpdateAdmin(int AdminID, Admin updatedAdmin);
     }
 }

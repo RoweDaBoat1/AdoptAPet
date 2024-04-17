@@ -26,7 +26,7 @@ namespace api.models
             {
                 allAdmins.Add(new Admin()
                 {
-                    ID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
+                    AdminID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
                     Email = rdr.IsDBNull(1) ? null : rdr.GetString(1),
                     FirstName = rdr.IsDBNull(2) ? null : rdr.GetString(2),
                     LastName = rdr.IsDBNull(3) ? null : rdr.GetString(3),
@@ -40,7 +40,7 @@ namespace api.models
         }
 
 
-        public Admin GetAdmin(int ID)
+        public Admin GetAdmin(int AdminID)
         {
             ConnectionString myConnection = new ConnectionString();
             string cs = myConnection.cs;
@@ -49,17 +49,17 @@ namespace api.models
             {
                 con.Open();
 
-                string stm = "SELECT * FROM Admin WHERE ID = @ID";
+                string stm = "SELECT * FROM Admin WHERE AdminID = @AdminID";
                 using (var cmd = new MySqlCommand(stm, con))
                 {
-                    cmd.Parameters.AddWithValue("@ID", ID);
+                    cmd.Parameters.AddWithValue("@AdminID", AdminID);
                     using (MySqlDataReader rdr = cmd.ExecuteReader())
                     {
                         if (rdr.Read())
                         {
                             return new Admin()
                             {
-                                ID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
+                                AdminID = rdr.IsDBNull(0) ? 0 : rdr.GetInt32(0),
                                 Email = rdr.IsDBNull(1) ? null : rdr.GetString(1),
                                 FirstName = rdr.IsDBNull(2) ? null : rdr.GetString(2),
                                 LastName = rdr.IsDBNull(3) ? null : rdr.GetString(3),

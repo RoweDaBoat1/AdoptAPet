@@ -7,7 +7,7 @@ namespace api.models
 {
     public class DeleteAdminData : IDeleteAdmin
     {
-        public void DeleteAdmin(int id)
+        public void DeleteAdmin(int AdminID)
         {
             ConnectionString myConnection = new ConnectionString();
             string cs = myConnection.cs;
@@ -17,8 +17,8 @@ namespace api.models
             using var cmd = new MySqlCommand();
             cmd.Connection = con;
 
-            cmd.CommandText = "DELETE FROM Admin WHERE ID = @ID";
-            cmd.Parameters.AddWithValue("ID", id);
+            cmd.CommandText = "DELETE FROM Admin WHERE AdminID = @AdminID";
+            cmd.Parameters.AddWithValue("AdminID", AdminID);
             
             cmd.ExecuteNonQuery();
         }

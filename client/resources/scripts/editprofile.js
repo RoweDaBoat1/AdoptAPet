@@ -1,5 +1,8 @@
 const baseUrl = "http://localhost:5016/api"
 
+
+let userID
+
 function handleOnLoad() {
     const token = localStorage.getItem('jwt');
     if (token) {
@@ -62,7 +65,7 @@ function getUserHtml(user) {
                  <tr>
                      <td colspan="2">
                          <button class="btn btn-primary" onclick="toggleEdit()">Edit</button>
-                         <button class="btn btn-primary" onclick="saveChanges('${user.userID}')">Save</button>
+                         <button class="btn btn-primary" onclick="saveChanges()">Save</button>
                      </td>
                   </tr>
              </table>`;
@@ -110,32 +113,28 @@ function toggleEdit() {
 
 function saveChanges(userID) {
     const cells = document.querySelectorAll(`#userTable span`);
-    const updatedData = {};
+    const updatedUser = {};
     cells.forEach(function(cell) {
         const fieldName = cell.id; // Assuming cell id matches the field name in the data
-        const value = cell.querySelector('input').value;
-        updatedData[fieldName] = value;
+        const input = cell.querySelector('input');
+        const value = input.value;
+        updatedUser[fieldName] = value;
+        // Replace the input field with a span containing the new value
+        const span = document.createElement('span');
+        span.textContent = value;
+        cell.innerHTML = '';
+        cell.appendChild(span);
     });
-    // Send updatedData to the backend to update the profile info
-    updateUser(userID, updatedData);
+    // Send updatedUser to the backend to update the profile info
+    updateUser(userID, updatedUser);
 }
 
-async function updateUser(userID, updatedData) {
+async function updateUser(userID, updatedUser) {
     await fetch(baseUrl + '/user/' + userID, {
         method: "PUT",
-        body: JSON.stringify(updatedData),
+        body: JSON.stringify(updatedUser),
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
     });
 }
-
-// async function updateUser(user, userID) {
-//     await fetch(baseUrl + '/user/' + userID, {
-//         method: "PUT",
-//         body: JSON.stringify(user),
-//         headers: {
-//             "Content-type": "application/json; charset=UTF-8"
-//         }
-//     });
-// }

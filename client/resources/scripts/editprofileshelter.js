@@ -1,9 +1,11 @@
 const baseUrl = "http://localhost:5016/api"
 
+let shelterID
+
 function handleOnLoad() {
     const token = localStorage.getItem('jwt');
     const decodedToken = decodeJWT(token);
-    let shelterID = decodedToken.nameid
+    shelterID = decodedToken.nameid
     console.log(shelterID);
     getUserInfo(shelterID)
 }
@@ -64,7 +66,7 @@ function getShelterHtml(user) {
     <tr>
         <td colspan="2">
             <button class="btn btn-primary" onclick="toggleEdit()">Edit</button>
-            <button class="btn btn-primary" onclick="saveChanges('${user.shelterID}')">Save</button>
+            <button class="btn btn-primary" onclick="saveChanges()">Save</button>
         </td>
      </tr>
 </table>`;
@@ -109,22 +111,37 @@ function toggleEdit() {
     });
 }
 
-function saveChanges(shelterID) {
+
+
+function saveChanges() {
     const cells = document.querySelectorAll(`#shelterTable span`);
-    const updatedData = {};
+    const updatedShelter = {};
     cells.forEach(function(cell) {
         const fieldName = cell.id; // Assuming cell id matches the field name in the data
-        const value = cell.querySelector('input').value;
-        updatedData[fieldName] = value;
+        const input = cell.querySelector('input');
+        const value = input.value;
+        updatedShelter[fieldName] = value;
+        // Replace the input field with a span containing the new value
+        const span = document.createElement('span');
+        span.textContent = value;
+        cell.innerHTML = '';
+        cell.appendChild(span);
     });
-    // Send updatedData to the backend to update the profile info
-    updateShelter(shelterID, updatedData);
+    // const cells = document.querySelectorAll(`#shelterTable span`);
+    // const updatedShelter = {};
+    // cells.forEach(function(cell) {
+    //     const fieldName = cell.id; // Assuming cell id matches the field name in the data
+    //     const value = cell.querySelector('input').value;
+    //     updatedShelter[fieldName] = value;
+    // });
+    // Send updatedShelter to the backend to update the profile info
+    updateShelter(shelterID, updatedShelter);
 }
 
-async function updateShelter(shelterID, updatedData) {
+async function updateShelter(shelterID, updatedShelter) {
     await fetch(baseUrl + '/shelters/' + shelterID, {
         method: "PUT",
-        body: JSON.stringify(updatedData),
+        body: JSON.stringify(updatedShelter),
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }

@@ -21,11 +21,11 @@ namespace api.Controllers
 
         // GET: api/Admin/5
         [EnableCors("OpenPolicy")]
-        [HttpGet("{id}", Name = "GetAdminByID")]
-        public Admin GetAdminByID(int id)  // Change parameter name to 'id'
+        [HttpGet("{AdminID}", Name = "GetAdminByID")]
+        public Admin GetAdminByID(int AdminID)  // Change parameter name to 'id'
         {
             IGetAdmin readObject = new ReadAdminData();
-            return readObject.GetAdmin(id);  // Use the 'id' parameter to get the Admin
+            return readObject.GetAdmin(AdminID);  // Use the 'id' parameter to get the Admin
         }
 
 
@@ -40,27 +40,27 @@ namespace api.Controllers
 
         // PUT: api/Admin/5
         [EnableCors("OpenPolicy")]
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Admin updatedAdmin)
+        [HttpPut("{AdminID}")]
+        public IActionResult Put(int AdminID, [FromBody] Admin updatedAdmin)
         {
-            if (id != updatedAdmin.ID)
+            if (AdminID != updatedAdmin.AdminID)
             {
                 return BadRequest();
             }
 
             IUpdateAdmin updateObject = new UpdateAdminData();
-            updateObject.UpdateAdmin(id, updatedAdmin);
+            updateObject.UpdateAdmin(AdminID, updatedAdmin);
 
             return NoContent();
         }
 
         // DELETE: api/Admin/5
         [EnableCors("OpenPolicy")]
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        [HttpDelete("{AdminID}")]
+        public IActionResult Delete(int AdminID)
         {
             IDeleteAdmin deleteObject = new DeleteAdminData();
-            deleteObject.DeleteAdmin(id);
+            deleteObject.DeleteAdmin(AdminID);
 
             return NoContent();
         }
