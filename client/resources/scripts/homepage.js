@@ -51,7 +51,7 @@ function populatePosts(shelterPosts) {
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">${post.name}</h5>
-                        <p class="card-text">Description: ${post.description}</p>
+                        <p class="card-text">Description: ${post.message}</p>
                         <p class="card-text">Location: ${post.location}</p>
                         <!-- Add more fields as needed -->
                     </div>
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function() {
             postElement.classList.add('shelter-post');
             postElement.innerHTML = `
                 <h3>${post.title}</h3>
-                <p>${post.description}</p>
+                <p>${post.message}</p>
             `;
             container.appendChild(postElement);
         });
