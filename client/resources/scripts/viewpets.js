@@ -197,4 +197,3 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 });
 
-// SOMETHING IS WRONG SERVER SIDE AND IS NO LONGER ALLOWING THE PETS TO POPULATE

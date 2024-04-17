@@ -1,3 +1,21 @@
+function handleOnLoad(){
+    const token = localStorage.getItem('jwt');
+    const decodedToken = decodeJWT(token);
+    const shelterID = decodedtoken.nameid;
+
+    fetchNotifications(shelterID);
+}
+
+function decodeJWT(token){
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('adoptionform');
 
@@ -40,7 +58,7 @@ function fetchNotifications() {
                     
                     shelters.forEach(function(shelter) {
                         let notifications = pets.filter(function(pet) {
-                            return pet.shelterId === shelter.shelterId;
+                            return pet.shelterID === shelter.shelterID;
                         });
 
                        
