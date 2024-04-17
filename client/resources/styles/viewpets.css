@@ -126,3 +126,7 @@
 .pet-gender {
     margin: 5px 0; 
 }
+
+.favorited {
+    color: gold; 
+  }

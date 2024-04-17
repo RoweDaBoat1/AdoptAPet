@@ -67,10 +67,18 @@
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .pet-details {
-    margin-top: 20px;
+    text-align: start;
+    flex: 1;
+}
+
+.shelter-details {
+    flex-shrink: 0; 
+    margin-left: 20px; 
 }
 
 .pet-details p {

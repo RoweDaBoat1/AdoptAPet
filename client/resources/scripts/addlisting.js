@@ -93,9 +93,11 @@ async function handleOnLoad(){
             <label for = "height">Height:</label><br>
             <select name="height" id="height" style="margin-bottom: 10px;">
                 <option value="null">-</option>
-                <option value="SMALL: 12" or Less">Small: 12" or Less</option>
-                <option value="MEDIUM: 13" to 16" inches">Medium: 13" to 16" inches</option>
-                <option value="LARGE: 17" to 20" inches">Large: 17" to 20" inches</option>
+                <option value="SMALL: 12&quot; or Less">Small: 12" or Less</option>
+                <option value="MEDIUM: 13&quot; to 16&quot; inches">Medium: 13" to 16" inches</option>
+                <option value="LARGE: 17&quot; to 20&quot; inches">Large: 17" to 20" inches</option>
+                <option value="X-LARGE: 21&quot; to 27&quot; inches">X-Large: 21" to 27" inches</option>
+                <option value="XX-LARGE: 28&quot; or UP">XX-Large: 28" or UP</option>
             </select><br>
             <label>Attitude:</label><br>
                 <input type="checkbox" id="attitudeAggressive" name="attitude" value="aggressive">
