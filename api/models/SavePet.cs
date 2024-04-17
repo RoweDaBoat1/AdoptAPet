@@ -19,7 +19,7 @@ namespace api.models
 
             using var cmd = new MySqlCommand();
             cmd.Connection = con;
-            cmd.CommandText = @"INSERT INTO Pets(PetID, Name, Breed, Age, Gender, IntakeDate, PostDate, Weight, Attitude, AboutMe, Height, HouseTrained, PetType, ShelterID, AdoptionStatus, ImagePath) VALUES(@PetID, @Name, @Breed, @Age, @Gender, @IntakeDate, @PostDate, @Weight, @Attitude, @AboutMe, @Height, @HouseTrained, @PetType, @ShelterID, @AdoptionStatus, @ImagePath)";
+            cmd.CommandText = @"INSERT INTO Pets(PetID, Name, Breed, Age, Gender, IntakeDate, PostDate, Weight, Attitude, AboutMe, Height, HouseTrained, PetType, ShelterID, AdoptionStatus) VALUES(@PetID, @Name, @Breed, @Age, @Gender, @IntakeDate, @PostDate, @Weight, @Attitude, @AboutMe, @Height, @HouseTrained, @PetType, @ShelterID, @AdoptionStatus)";
             cmd.Parameters.AddWithValue("@PetID", value.PetID);
             cmd.Parameters.AddWithValue("@Name", value.Name);
             cmd.Parameters.AddWithValue("@Breed", value.Breed);
@@ -35,7 +35,7 @@ namespace api.models
             cmd.Parameters.AddWithValue("@PetType", value.PetType);
             cmd.Parameters.AddWithValue("@AdoptionStatus", value.AdoptionStatus);
             cmd.Parameters.AddWithValue("@ShelterID", value.ShelterID);
-            cmd.Parameters.AddWithValue("@ImagePath", value.ImagePath);
+            // cmd.Parameters.AddWithValue("@ImagePath", value.ImagePath);
             //add back into insert statement when ready
             cmd.Prepare();
             cmd.ExecuteNonQuery();
