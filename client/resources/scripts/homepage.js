@@ -1,9 +1,3 @@
-const featuredPets = [
-    { name: 'Featured Pet 1', age: '2 years', gender: 'Male', breed: 'Mixed Breed', image: 'path_to_image' },
-    { name: 'Featured Pet 2', age: '3 years', gender: 'Female', breed: 'Labrador Retriever', image: 'path_to_image' },
-    { name: 'Featured Pet 3', age: '1 year', gender: 'Male', breed: 'German Shepherd', image: 'path_to_image' }
-];
-
 const postUrl = "http://localhost:5016/api/ShelterPost"
 
 //const petUrl = apiUrls.petUrl

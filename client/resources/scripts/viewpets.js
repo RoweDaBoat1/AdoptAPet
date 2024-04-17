@@ -242,10 +242,35 @@ async function populateFilteredCards() {
     petGender.classList.add('pet-gender');
     petGender.textContent = `Gender: ${pet.gender}`;
 
+    const favoriteContainer = document.createElement('div');
+  favoriteContainer.classList.add('favorite-container');
+
+  const favoriteIcon = document.createElement('i');
+  favoriteIcon.classList.add('fas', 'fa-star');
+  favoriteIcon.setAttribute('data-pet-id', pet.petID); 
+  favoriteIcon.addEventListener('click', (event) => {
+    event.stopPropagation(); 
+    favoriteIcon.classList.toggle('favorited');
+
+    const petID = event.target.getAttribute('data-pet-id');
+    const favoriteDate = new Date().toISOString();
+
+    favoritePet(petID, favoriteDate)
+    .then(() => {
+      console.log('Pet favorited successfully');
+    })
+    .catch((error) => {
+      console.error('Error favoriting pet:', error);
+    });
+  });
+
+  favoriteContainer.appendChild(favoriteIcon);
+
     petInfo.appendChild(petName);
     petInfo.appendChild(petBreed);
     petInfo.appendChild(petAge);
     petInfo.appendChild(petGender);
+    petInfo.appendChild(favoriteContainer);
     
 
     petCard.appendChild(petInfo);
