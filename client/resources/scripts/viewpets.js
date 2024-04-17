@@ -1,4 +1,5 @@
 const apiUrl = 'http://localhost:5016/api/pets';
+const favoriteUrl = 'http://localhost:5016/api/Favorite';
 
 async function fetchData() {
   try {
@@ -41,6 +42,25 @@ async function populateCards() {
   }
 }
 
+async function favoritePet(petID) {
+  const token = localStorage.getItem('jwt'); 
+  const response = await fetch('http://localhost:5016/api/Favorite', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}` 
+    },
+    body: JSON.stringify({ petID }) 
+  });
+
+  if (response.ok) {
+    console.log('Pet favorited successfully');
+    
+  } else {
+    console.error('Failed to favorite pet:', response.statusText);
+  }
+}
+
 async function createPetCard(pet) {
   const petCard = document.createElement('div');
   petCard.classList.add('pet-card');
@@ -64,10 +84,34 @@ async function createPetCard(pet) {
   petGender.classList.add('pet-gender');
   petGender.textContent = `Gender: ${pet.gender}`;
 
+  const favoriteContainer = document.createElement('div');
+  favoriteContainer.classList.add('favorite-container');
+
+  const favoriteIcon = document.createElement('i');
+  favoriteIcon.classList.add('fas', 'fa-star');
+  favoriteIcon.setAttribute('data-pet-id', pet.petID); 
+  favoriteIcon.addEventListener('click', (event) => {
+    event.stopPropagation(); 
+    favoriteIcon.classList.toggle('favorited');
+
+    const petID = event.target.getAttribute('data-pet-id');
+    favoritePet(petID)
+    .then(() => {
+      console.log('Pet favorited successfully');
+    })
+    .catch((error) => {
+      console.error('Error favoriting pet:', error);
+    });
+  });
+
+  favoriteContainer.appendChild(favoriteIcon);
+
   petInfo.appendChild(petName);
   petInfo.appendChild(petBreed);
   petInfo.appendChild(petAge);
   petInfo.appendChild(petGender);
+  petInfo.appendChild(favoriteContainer);
+
 
   petCard.appendChild(petInfo);
 
@@ -181,6 +225,7 @@ async function populateFilteredCards() {
     petInfo.appendChild(petBreed);
     petInfo.appendChild(petAge);
     petInfo.appendChild(petGender);
+    
 
     petCard.appendChild(petInfo);
     petsContainer.appendChild(petCard);

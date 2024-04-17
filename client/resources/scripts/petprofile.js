@@ -1,7 +1,14 @@
 const apiUrl = 'http://localhost:5016/api/pets'; 
+const apiShelterUrl = 'http://localhost:5016/api/shelters';
 
 async function fetchPetData(petId) {
     const response = await fetch(`${apiUrl}/${petId}`);
+    const data = await response.json();
+    return data;
+}
+
+async function fetchShelterData(shelterID){
+    const response = await fetch(`${apiShelterUrl}/${shelterID}`);
     const data = await response.json();
     return data;
 }
@@ -22,6 +29,15 @@ async function populatePetProfile() {
         document.getElementById('houseTrained').textContent = pet.houseTrained;
         document.getElementById('petType').textContent = pet.petType;
         document.getElementById('petImage').src = `data:image/png;base64, ${pet.imageData}`;
+
+        const shelter = await fetchShelterData(pet.shelterID);
+        if (shelter) {
+            document.getElementById('shelter_Name').textContent = shelter.shelter_Name;
+            document.getElementById('phone_Number').textContent = shelter.phone_Number;
+            document.getElementById('email').textContent = shelter.email;
+        } else {
+            console.error('Failed to fetch shelter data for pet');
+        }
 
         if (pet.adoptionStatus === 'pending') {
             const pendingMessage = document.createElement('p');
