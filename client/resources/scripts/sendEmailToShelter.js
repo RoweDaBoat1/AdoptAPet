@@ -1,8 +1,8 @@
 const apiUrl = 'http://localhost:5016/api/pets';
 const shelterUrl = 'http://localhost:5016/api/shelters';
 
-const nodemailer = require('nodemailer');
-const fetch = require('node-fetch'); 
+import nodemailer from 'nodemailer';
+import fetch from 'node-fetch'; 
 
 async function sendEmailToShelter(formData) {
     try {
@@ -42,3 +42,32 @@ async function sendEmailToShelter(formData) {
         console.error('Error sending email to shelter:', error);
     }
 }
+
+async function fetchPetData(petId) {
+    try {
+        const response = await fetch(`${apiUrl}/${petId}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch pet data');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching pet data:', error);
+        throw error;
+    }
+}
+
+async function fetchShelterEmail(shelterId) {
+    try {
+        const response = await fetch(`${shelterUrl}/${shelterId}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch shelter email');
+        }
+        const shelterData = await response.json();
+        return shelterData.email;
+    } catch (error) {
+        console.error('Error fetching shelter email:', error);
+        throw error;
+    }
+}
+
+export { sendEmailToShelter };
