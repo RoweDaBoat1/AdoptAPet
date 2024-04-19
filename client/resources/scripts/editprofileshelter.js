@@ -17,12 +17,12 @@ async function getUserInfo(shelterID) {
     if (user) {
         displayUserInfo(user);
     } else {
-        // No user found with the given role ID
         displayBlankInfoColumn();
     }
 }
 
 function displayUserInfo(user) {
+    console.log(shelterID)
     let html = getShelterHtml(user)
     document.getElementById('userTableContainer').innerHTML = html;
 }
@@ -66,7 +66,7 @@ function getShelterHtml(user) {
     <tr>
         <td colspan="2">
             <button class="btn btn-primary" onclick="toggleEdit()">Edit</button>
-            <button class="btn btn-primary" onclick="saveChanges()">Save</button>
+            <button class="btn btn-primary" onclick="saveChanges('${user.shelterID}')">Save</button>
         </td>
      </tr>
 </table>`;
@@ -113,67 +113,61 @@ function toggleEdit() {
 
 
 
-function saveChanges() {
+function saveChanges(shelterID) {
     const cells = document.querySelectorAll(`#shelterTable span`);
     const updatedShelter = {};
     cells.forEach(function(cell) {
-        const fieldName = cell.id; // Assuming cell id matches the field name in the data
+        const fieldName = cell.id;
         const input = cell.querySelector('input');
         const value = input.value;
         updatedShelter[fieldName] = value;
-        // Replace the input field with a span containing the new value
         const span = document.createElement('span');
         span.textContent = value;
         cell.innerHTML = '';
         cell.appendChild(span);
     });
-    // const cells = document.querySelectorAll(`#shelterTable span`);
-    // const updatedShelter = {};
-    // cells.forEach(function(cell) {
-    //     const fieldName = cell.id; // Assuming cell id matches the field name in the data
-    //     const value = cell.querySelector('input').value;
-    //     updatedShelter[fieldName] = value;
-    // });
-    // Send updatedShelter to the backend to update the profile info
+
     updateShelter(shelterID, updatedShelter);
 }
 
 async function updateShelter(shelterID, updatedShelter) {
+    let response = await fetch('http://localhost:5016/api/shelters/' + shelterID)
+    let originalShelter = await response.json();
+    console.log(originalShelter)
+    // Extract values from the original pet object
+    let passwordHash = originalShelter.passwordHash
+    let salt = originalShelter.salt
+    let approval_Status = originalShelter.approval_Status
+    let role = originalShelter.role
+
+    let addressLine = updatedShelter.addressLine
+    let city = updatedShelter.city
+    let state = updatedShelter.state
+    let zipCode = updatedShelter.zipCode
+    let phone_Number = updatedShelter.phone_Number
+    let email= updatedShelter.email
+    let shelter_Name = updatedShelter.shelter_Name
+
+    let shelter = {
+        shelterID: shelterID,
+        passwordHash: passwordHash,
+        salt: salt,
+        addressLine: addressLine,
+        city: city,
+        state: state,
+        zipCode: zipCode,
+        phone_Number: phone_Number,
+        email: email,
+        shelter_Name: shelter_Name,
+        role: role,
+        approval_Status: approval_Status
+    }
+    console.log(shelter)
     await fetch(baseUrl + '/shelters/' + shelterID, {
         method: "PUT",
-        body: JSON.stringify(updatedShelter),
+        body: JSON.stringify(shelter),
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
     });
 }
-
-
-// async function saveShelterChanges(shelterID) {
-//     const cells = document.querySelectorAll('#shelterTable span');
-//     //getShelterDataFromCells(cells);
-//     await updateShelter(shelterID);
-// }
-
-// function getShelterDataFromCells() {
-//     // Extract data from cells for shelter table
-//     // Example:
-// }
-// async function updateShelter(shelterID) {
-//     let shelter ={
-//         addressLine: document.getElementById('addressLine').value,
-//         city: document.getElementById('city').value,
-//         state: document.getElementById('state').value,
-//         zipCode: document.getElementById('zipCode').value,
-//         phoneNumber: document.getElementById('phoneNumber').value,
-//         email: document.getElementById('email').value,
-//         shelterName: document.getElementById('shelterName').value
-//     };
-//     await fetch(baseUrl + '/shelters/' + shelterID, {
-//         method: "PUT",
-//         body: JSON.stringify(shelter),
-//         headers: {
-//             "Content-type": "application/json; charset=UTF-8"
-//         }
-//     });
-// }

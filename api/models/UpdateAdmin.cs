@@ -6,7 +6,7 @@ namespace api.models
 {
     public class UpdateAdminData : IUpdateAdmin
     {
-        public void UpdateAdmin(int AdminID, Admin updatedAdmin)
+        public void UpdateAdmin(int id, Admin updatedAdmin)
         {
             ConnectionString myConnection = new ConnectionString();
             string cs = myConnection.cs;
@@ -24,13 +24,13 @@ namespace api.models
                                     Salt = @Salt,
                                     Role = @Role
                                 WHERE AdminID = @AdminID";
-            cmd.Parameters.AddWithValue("@AdminID", AdminID);
+            cmd.Parameters.AddWithValue("@AdminID", id);
             cmd.Parameters.AddWithValue("@Email", updatedAdmin.Email);
             cmd.Parameters.AddWithValue("@FirstName", updatedAdmin.FirstName);
             cmd.Parameters.AddWithValue("@LastName", updatedAdmin.LastName);
-            // cmd.Parameters.AddWithValue("@PasswordHash", updatedAdmin.PasswordHash);
-            // cmd.Parameters.AddWithValue("@Salt", updatedAdmin.Salt);
-            // cmd.Parameters.AddWithValue("@Role", updatedAdmin.Role);
+            cmd.Parameters.AddWithValue("@PasswordHash", updatedAdmin.PasswordHash);
+            cmd.Parameters.AddWithValue("@Salt", updatedAdmin.Salt);
+            cmd.Parameters.AddWithValue("@Role", updatedAdmin.Role);
             
             cmd.ExecuteNonQuery();
         }

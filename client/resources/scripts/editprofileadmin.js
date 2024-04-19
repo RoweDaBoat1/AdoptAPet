@@ -1,30 +1,29 @@
 const baseUrl = "http://localhost:5016/api"
 
-let AdminID
+let adminID
 
 function handleOnLoad() {
     const token = localStorage.getItem('jwt');
     const decodedToken = decodeJWT(token);
-    AdminID = decodedToken.nameid
-    console.log(AdminID);
-    getUserInfo(AdminID)
+    adminID = decodedToken.nameid
+    console.log(adminID);
+    getUserInfo(adminID)
 }
 
-async function getUserInfo(AdminID) {
-    let response = await fetch(baseUrl + '/admin/' + AdminID);
+async function getUserInfo(adminID) {
+    let response = await fetch(baseUrl + '/admin/' + adminID);
     const user = await response.json();
-    console.log(AdminID)
+    console.log(adminID)
     console.log(user);
     if (user) {
         displayAdminInfo(user);
     } else {
-        // No user found with the given role AdminID
         displayBlankInfoColumn();
     }
 }
 
 function displayAdminInfo(user) {
-    console.log(AdminID)
+    console.log(adminID)
     let html = getadminHtml(user)
     document.getElementById('userTableContainer').innerHTML = html;
 }
@@ -52,7 +51,7 @@ function getadminHtml(user) {
     <tr>
         <td colspan="2">
             <button class="btn btn-primary" onclick="toggleEdit()">Edit</button>
-            <button class="btn btn-primary" onclick="saveChanges()">Save</button>
+            <button class="btn btn-primary" onclick="saveChanges('${user.adminID}')">Save</button>
         </td>
      </tr>
 </table>`;
@@ -97,39 +96,48 @@ function toggleEdit() {
     });
 }
 
-function saveChanges() {
+function saveChanges(adminID) {
     const cells = document.querySelectorAll(`#adminTable span`);
     const updatedAdmin = {};
     cells.forEach(function(cell) {
-        const fieldName = cell.id; // Assuming cell id matches the field name in the data
+        const fieldName = cell.id;
         const input = cell.querySelector('input');
         const value = input.value;
         updatedAdmin[fieldName] = value;
-        // Replace the input field with a span containing the new value
         const span = document.createElement('span');
         span.textContent = value;
         cell.innerHTML = '';
         cell.appendChild(span);
     });
-    // console.log(AdminID)
-    // const cells = document.querySelectorAll(`#adminTable span`);
-    // const updatedAdmin = {};
-    // cells.forEach(function(cell) {
-    //     const fieldName = cell.id; // Assuming cell id matches the field name in the data
-    //     const value = cell.querySelector('input').value;
-    //     updatedAdmin[fieldName] = value;
-    // });
-    // console.log(updatedAdmin)
-    // console.log(AdminID)
-    // Send updatedAdmin to the backend to update the profile info
-    updateAdmin(AdminID, updatedAdmin);
+    updateAdmin(adminID, updatedAdmin);
 }
 
-async function updateAdmin(AdminID, updatedAdmin) {
-    console.log(AdminID)
-    await fetch(baseUrl + '/admin/' + AdminID, {
+async function updateAdmin(adminID, updatedAdmin) {
+    let response = await fetch('http://localhost:5016/api/admin/' + adminID)
+    let originalAdmin = await response.json();
+
+    let passwordHash = originalAdmin.passwordHash
+    let salt = originalAdmin.salt
+    let role = originalAdmin.role
+
+    let email= updatedAdmin.email
+    let firstName = updatedAdmin.firstName
+    let lastName = updatedAdmin.lastName
+
+    let admin = {
+        adminID: adminID,
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        passwordHash: passwordHash,
+        salt: salt,
+        role: role
+    }
+
+    console.log(adminID)
+    await fetch(baseUrl + '/admin/' + adminID, {
         method: "PUT",
-        body: JSON.stringify(updatedAdmin),
+        body: JSON.stringify(admin),
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
