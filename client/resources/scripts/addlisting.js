@@ -130,17 +130,12 @@ async function handleOnLoad(){
     await populateShelterDropdown()
     populateTable()
 }
-
-
-// Function to fetch approved shelters
 async function getApprovedShelters() {
     let response = await fetch('http://localhost:5016/api/shelters?approvalStatus==Approved');
     approvedShelters = await response.json();
     console.log(approvedShelters)
 }
 
-
-// Function to populate the shelter dropdown
 async function populateShelterDropdown() {
     
     await getApprovedShelters()
@@ -156,28 +151,16 @@ async function populateShelterDropdown() {
         shelterID = shelterDropdown.value
     }
 }
-
-// Add an event listener to the shelter dropdown
 document.addEventListener('DOMContentLoaded', () => {
     const selectedShelterID = document.getElementById('shelterDropdown')
     shelterID = selectedShelterID
-  })
-
+})
 
 async function getAllPets() {
     let response = await fetch(petUrl)
     pets = await response.json()
     console.log(pets)
 }
-
-// function handleChange(breed) {
-//     var selectedValue = breed.value
-//     if (selectedValue === "other") {
-//         document.getElementById("otherInput").style.display = "block";
-//     } else {
-//         document.getElementById("otherInput").style.display = "none"
-//     }
-// }
 
 function handleChange(breed) {
     var selectedValue = breed.value;
@@ -188,20 +171,8 @@ function handleChange(breed) {
         otherInput.style.display = "none";
     }
 }
-
-// function handleChange(breed) {
-//     var selectedValue = breed.value;
-//     var otherInput = document.getElementById("otherInput");
-//     if (selectedValue === "other") {
-//         otherInput.style.display = "block";
-//     } else {
-//         otherInput.style.display = "none";
-//     }
-// }
-
 async function populateTable() {
     await getAllPets()
-    //sortTable()
     let html = `
     <table class = "table table-striped">
         <tr>
@@ -224,7 +195,6 @@ async function populateTable() {
             <th>Delete/Adopt</th>
         </tr>`
     pets.forEach(function (pet) {
-        //add more logic into the if statement (shelterid) so that shelters only see their own animals
         if (pet.adoptionStatus != "Adopted") {
             html += `
             <tr>
@@ -258,13 +228,8 @@ async function populateTable() {
 
 
 async function handleAddPet() {
-    // Get the current date and time
     var postDate = new Date();
-
-    // Extract individual components of the date and time
     var postDate = new Date();
-
-    // Convert intakeDateStart to ISO 8601 format with timezone offset
     var formattedPostDate = postDate.toISOString();
 
     var breedValue = document.getElementById("breed").value
@@ -274,7 +239,6 @@ async function handleAddPet() {
     } else {
         otherInput = breedValue
     }
-
     let attitude = "";
     document.querySelectorAll('input[name="attitude"]:checked').forEach(function (checkbox, index) {
         // If this is not the first checkbox, add a ";" before adding the value
@@ -283,23 +247,16 @@ async function handleAddPet() {
         }
         attitude += checkbox.value;
     });
-
-
     var intakeDateElement = document.getElementById('intakeDate');
     var intakeDateValue = intakeDateElement.value;
-
     // Extract individual components of the date and time
     var intakeDateStart = new Date(intakeDateValue);
-
     // Convert intakeDateStart to ISO 8601 format with timezone offset
     var formattedIntakeDate = intakeDateStart.toISOString();
-
-
     // let imageFile = document.getElementById('imageUpload').files[0];
     // let imageData = await convertImageToBase64(imageFile);
 
     let pet = {
-        //petID: petID, 
         name: document.getElementById('name').value,
         breed: otherInput,
         age: parseInt(document.getElementById('age').value),
@@ -315,11 +272,6 @@ async function handleAddPet() {
         adoptionStatus: "open",
         shelterID: shelterID,
         imagePath: "image"
-        //imageData: imageData // Include image data in the pet object
-
-        //imageUrl: imageUrl
-
-        //shelter id
     }
 
     console.log(postDate)
@@ -372,17 +324,13 @@ async function handlePetAdoption(petID) {
     try {
         console.log('Attempting to adopt pet with ID:', petID);
 
-        // Find the pet with the specified ID
         const pet = pets.find(pet => pet.petID == petID);
         if (!pet) {
             throw new Error('Pet not found');
         }
-
-        // Update the adoption status
         pet.adoptionStatus = "Adopted";
         console.log('Adoption status updated:', pet.adoptionStatus);
 
-        // Send the updated pet data to the backend
         const response = await fetch(petUrl + '/' + petID, {
             method: "PUT",
             body: JSON.stringify(pet),
@@ -394,18 +342,21 @@ async function handlePetAdoption(petID) {
         if (!response.ok) {
             throw new Error('Failed to update pet adoption status');
         }
-
-        // Refresh the table
         populateTable();
     } catch (error) {
         console.error('Error:', error);
-        // Handle the error (e.g., display an error message to the user)
     }
 }
-function handlePetEdit(pet) {
+async function handlePetEdit(petID) {
+    console.log(petID)
+    let response = await fetch('http://localhost:5016/api/pets/' + petID)
+    let pet = await response.json()
+    console.log(pet)
+
     let html = `
     <form onsubmit = "return false">
     <h3>Edit Pet Listing</h3>
+    <label for = "name">Name:</label><br>
     <input type="text" id="name" placeholder="Name" style="margin-bottom: 10px;"><br>
     <label for = "breed">Breed:</label><br>
             <select name="breed" id="breed" onchange="handleChange(breed)" style="margin-bottom: 10px;">
@@ -420,6 +371,11 @@ function handlePetEdit(pet) {
                 <option value="whiteRetriever">White Retriever</option>
                 <option value="other">Other</option>
             </select><br>
+            <div id="otherInput" style="display: none;">
+            <label for="other">Enter Breed:</label>
+            <input type="text" id="other" name="other">
+            </div>
+    <label for="age">Age:</label><br>
     <input type="number" id="age" placeholder="Age" style="margin-bottom: 10px;"><br>
     <label for = "gender">Gender:</label><br>
     <select name="gender" id="gender" style="margin-bottom: 10px;">
@@ -473,55 +429,44 @@ function handlePetEdit(pet) {
     <label for="imageUpload" style="margin-top: 10px;">Upload Image:</label>
     <input type="file" id="imageUpload" accept="image/*" style="margin-top: 10px;">
     <div id="imagePreview" style="margin-top: 10px;"></div>
-    <button style="margin-top: 10px;" class="btn btn-primary" onclick="handleUpdatePet('${pet.petID}')">Update</button> 
+    <button style="margin-top: 10px;" class="btn btn-primary" onclick="handleUpdatePet('${petID}')">Update</button> 
 </form>
     `
+    console.log(petID)
     document.getElementById('app').innerHTML = html
     document.getElementById('name').value = pet.name
     document.getElementById('breed').value = pet.breed
     document.getElementById('age').value = pet.age
     document.getElementById('gender').value = pet.gender
     document.getElementById('weight').value = pet.weight
+    document.getElementById('height').value = pet.height
     document.getElementById('aboutMe').value = pet.aboutMe
     document.getElementById('adoptionStatus').value = pet.adoptionStatus
-    document.getElementById('height').value = pet.height
     document.getElementById('houseTrained').value = pet.houseTrained
 
     const breedSelect = document.getElementById('breed');
     breedSelect.value = pet.breed;
     handleChange(breedSelect);
 
-    
-        // Your existing code...
-    
-        // Check if there are any checkboxes checked
-        const checkedAttitudeCheckboxes = document.querySelectorAll('input[name="attitude"]:checked');
-        if (checkedAttitudeCheckboxes.length > 0) {
-            let attitude = [];
-            checkedAttitudeCheckboxes.forEach(function(checkbox) {
-                attitude.push(checkbox.value);
-            });
-            // Your existing code to populate the updatedPet object...
-        } else {
-            // If no checkboxes are checked, set attitude to an empty array
-            let attitude = [];
-            // Your existing code to populate the updatedPet object...
+    let attitude = "";
+    document.querySelectorAll('input[name="attitude"]:checked').forEach(function (checkbox, index) {
+        if (index > 0) {
+            attitude += ";";
         }
-        if (pet.attitude) {
-            pet.attitude.forEach(function(attitude) {
-                document.getElementById('attitude' + attitude.charAt(0).toUpperCase() + attitude.slice(1)).checked = true;
-            });
-        }
-        // Iterate over pet.attitude to pre-select attitude checkboxes
-        // pet.attitude.forEach(function(attitude) {
-        //     document.getElementById('attitude' + attitude.charAt(0).toUpperCase() + attitude.slice(1)).checked = true;
-        // });
-    
-        // Your existing code...
-    
+        attitude += checkbox.value;
+    }); 
 }
 
 async function handleUpdatePet(petID) {
+    let response = await fetch('http://localhost:5016/api/pets/' + petID)
+    let originalPet = await response.json();
+
+    let intakeDate = originalPet.intakeDate;
+    let postDate = originalPet.postDate;
+    let shelterID = originalPet.shelterID;
+    let petType = originalPet.petType
+    let imagePath = originalPet.imagePath
+
     var breedValue = document.getElementById("breed").value
     var otherInput = ""
     if (breedValue === "other") {
@@ -539,32 +484,28 @@ async function handleUpdatePet(petID) {
         attitude += checkbox.value;
     });
 
-    //let attitude = []
-    // document.querySelectorAll('input[name="attitude"]:checked').forEach(function (checkbox) {
-    //     attitude.push(checkbox.value)
-    // })
-    let updatedPet = {
+    let pet = {
         petID: petID, 
         name: document.getElementById('name').value, 
         breed: otherInput, 
         age :document.getElementById('age').value,
         gender :document.getElementById('gender').value,
-        //intakeDate :formattedIntakeDate,
-        //postDate: formattedPostDate,
+        intakeDate :intakeDate,
+        postDate: postDate,
         weight: document.getElementById('weight').value,
         attitude: attitude,
         aboutMe: document.getElementById('aboutMe').value,
         height: document.getElementById('height').value,
         houseTrained: document.getElementById('houseTrained').value,
-        //petType: document.getElementById('petType').value,
+        petType: petType,
         adoptionStatus: document.getElementById('adoptionStatus').value,
-        //shelterID: shelterID,
-        //imagePath: "image"
+        shelterID: shelterID,
+        imagePath: imagePath
     }
-    console.log(updatedPet)
-    await fetch(petUrl + '/' + updatedPet.petID, {
+    console.log(pet)
+    await fetch(petUrl + '/' + pet.petID, {
         method: "PUT",
-        body: JSON.stringify(updatedPet),
+        body: JSON.stringify(pet),
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }

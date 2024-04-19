@@ -1,36 +1,12 @@
-//const shelterPrivacyUrl = "http://localhost:5016/api/ShelterPrivacy"
-
-//const shelterPrivacyUrl = apiUrls.shelterPrivacyUrl
-// may not actually need this url since the id is added to the object in createaccount.js but also might since the save button uses id
-//const shelterUrl = "http://localhost:5016/api/shelter"
-
+let shelterID
 async function handleOnLoad() {
+    console.log('true')
     const token = localStorage.getItem('jwt');
     const decodedToken = decodeJWT(token);
-    const shelterID = parseInt(decodedToken.nameid);
-
-    // Fetch shelter privacy settings based on shelter ID from the server
-    let shelterPrivacy = await getShelterPrivacy(shelterID);
-
-    // Populate the form fields with the current values
-    document.querySelector('input[name="intakeDatePrivate"][value="' + shelterPrivacy.intakeDatePrivate + '"]').checked = true;
-    document.querySelector('input[name="weightPrivate"][value="' + shelterPrivacy.weightPrivate + '"]').checked = true;
-    document.querySelector('input[name="attitudePrivate"][value="' + shelterPrivacy.attitudePrivate + '"]').checked = true;
-    document.querySelector('input[name="aboutMePrivate"][value="' + shelterPrivacy.aboutMePrivate + '"]').checked = true;
-    document.querySelector('input[name="heightPrivate"][value="' + shelterPrivacy.heightPrivate + '"]').checked = true;
-    document.querySelector('input[name="houseTrainedPrivate"][value="' + shelterPrivacy.houseTrainedPrivate + '"]').checked = true;
-    document.getElementById('distancePref').value = shelterPrivacy.distancePref;
-
-    
-}
-
-async function handleOnLoad() {
-    const token = localStorage.getItem('jwt'); // Implement this function to decode JWT
-    const decodedToken = decodeJWT(token);
-    const shelterID = parseInt(decodedToken.nameid)
+    shelterID = parseInt(decodedToken.nameid)
     
     let shelterPrivacy = await getShelterPrivacy(shelterID)
-    //let shelter = await getAllShelters();
+    
     let html = `
     <form onsubmit="handleSubmit()" style="text-align: left;">
     
@@ -94,7 +70,7 @@ async function handleOnLoad() {
             <input type="number" id="distancePref" name="distancePref" placeholder="miles">
         </div>
     </div>
-        <button class="btn btn-primary" type="submit" onclick="handleSavePrivacy('${shelterPrivacy.shelterID}')" style="float: center;">Save Preferences</button>
+        <button class="btn btn-primary" type="submit" onclick="handleSavePrivacy('${shelterPrivacy.shelterID}',event)" style="float: center;">Save Preferences</button>
     </form>
     `
     document.getElementById('app').innerHTML = html
@@ -147,19 +123,11 @@ async function handleOnLoad() {
             radioButton.checked = false;
         }
     });
-
-    // document.getElementById('intakeDatePrivate').checked = shelterPrivacy.intakeDatePrivate
-    // document.getElementById('weightPrivate').checked = shelterPrivacy.weightPrivate
-    // document.getElementById('attitudePrivate').checked = shelterPrivacy.attitudePrivate
-    // document.getElementById('aboutMePrivate').checked = shelterPrivacy.aboutMePrivate
-    // document.getElementById('heightPrivate').checked = shelterPrivacy.heightPrivate
-    // document.getElementById('houseTrainedPrivate').checked = shelterPrivacy.houseTrainedPrivate
-    document.getElementById('distancePref').value = shelterPrivacy.distancePref
 }
 
 async function getShelterPrivacy(shelterID) {
     // Fetch shelter privacy settings based on shelter ID from the server
-    let response = await fetch(`http://localhost:5016/api/shelterPrivacy/${shelterID}`);
+    let response = await fetch(`http://localhost:5016/api/ShelterPrivacy/${shelterID}`);
     let shelterPrivacy = await response.json();
     return shelterPrivacy;
 }
@@ -176,30 +144,21 @@ function decodeJWT(token) {
 
 async function handleSavePrivacy(shelterID, event) {
     event.preventDefault();
+    let shelterPrivacy
 
-    // Get the selected values from the radio buttons and input fields
-    let intakeDatePrivate = document.querySelector('input[name="intakeDatePrivate"]:checked').value;
-    let weightPrivate = document.querySelector('input[name="weightPrivate"]:checked').value;
-    let attitudePrivate = document.querySelector('input[name="attitudePrivate"]:checked').value;
-    let aboutMePrivate = document.querySelector('input[name="aboutMePrivate"]:checked').value;
-    let heightPrivate = document.querySelector('input[name="heightPrivate"]:checked').value;
-    let houseTrainedPrivate = document.querySelector('input[name="houseTrainedPrivate"]:checked').value;
-    let distancePref = document.getElementById('distancePref').value;
-
-    // Create the shelterPrivacy object with the selected values
-    let shelterPrivacy = {
+    shelterPrivacy = {
         shelterID: shelterID,
-        intakeDatePrivate: intakeDatePrivate,
-        weightPrivate: weightPrivate,
-        attitudePrivate: attitudePrivate,
-        aboutMePrivate: aboutMePrivate,
-        heightPrivate: heightPrivate,
-        houseTrainedPrivate: houseTrainedPrivate,
-        distancePref: distancePref,
+        intakeDatePrivate: (document.querySelector('input[name="intakeDatePrivate"]:checked').value === "true"),
+        weightPrivate: (document.querySelector('input[name="weightPrivate"]:checked').value === "true"),
+        attitudePrivate: (document.querySelector('input[name="attitudePrivate"]:checked').value === "true"),
+        aboutMePrivate: (document.querySelector('input[name="aboutMePrivate"]:checked').value === "true"),
+        heightPrivate: (document.querySelector('input[name="heightPrivate"]:checked').value === "true"),
+        houseTrainedPrivate: (document.querySelector('input[name="houseTrainedPrivate"]:checked').value === "true"),
+        distancePref: document.getElementById('distancePref').value,
     };
+    console.log(shelterPrivacy)
 
-    // Make the PUT request with the updated shelterPrivacy object
-    await fetch(shelterPrivacyUrl + '/' + shelterID, {
+    await fetch('http://localhost:5016/api/ShelterPrivacy' + '/' + shelterID, {
         method: "PUT",
         body: JSON.stringify(shelterPrivacy),
         headers: {
@@ -207,35 +166,5 @@ async function handleSavePrivacy(shelterID, event) {
         }
     });
 
-    // Reload the form with the updated values
     handleOnLoad();
 }
-
-
-
-// async function handleSavePrivacy(shelterID, event){
-//     event.preventDefault()
-//     let shelterPrivacy = {
-//         shelterID: shelterID, 
-//         intakeDatePrivate: document.getElementById('intakeDatePrivate').value,
-//         weightPrivate: document.getElementById('weightPrivate').value,
-//         attitudePrivate: document.getElementById('attitudePrivate').value,
-//         aboutMePrivate: document.getElementById('aboutMePrivate').value,
-//         heightPrivate: document.getElementById('heightPrivate').value,
-//         houseTrainedPrivate: document.getElementById('houseTrainedPrivate').value,
-//         distancePref: document.getElementById('distancePref').value,
-//     }
-//     await fetch(shelterPrivacyUrl + '/' + shelterID,{
-//         method: "PUT",
-//         body: JSON.stringify(shelterPrivacy),
-//         headers: {
-//             "Content-type" : "application/json; charset=UTF-8"
-//         }
-//     })
-//     handleOnLoad()
-// }
-// // Add an event listener to the form submission
-// document.addEventListener('DOMContentLoaded', () => {
-//     handleSavePrivacy =document.querySelector('form')
-// })
-// //document.querySelector('form').addEventListener('submit', handleSavePrivacy);

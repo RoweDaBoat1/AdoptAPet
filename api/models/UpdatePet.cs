@@ -7,7 +7,7 @@ namespace api.models
 {
     public class UpdatePetData : IUpdatePet
     {
-        public void UpdatePet(int PetID, Pet updatedPet)
+        public void UpdatePet(int id, Pet updatedPet)
         {
             ConnectionString myConnection = new ConnectionString();
             string cs = myConnection.cs;
@@ -30,23 +30,23 @@ namespace api.models
                                         AboutMe = @AboutMe,
                                         Height = @Height, 
                                         HouseTrained = @HouseTrained, 
-                                        AdoptionStatus = @AdoptionStatus,
+                                        AdoptionStatus = @AdoptionStatus
                                     WHERE PetID = @PetID";
-                //cmd.Parameters.AddWithValue("@PetID", PetID);
+                cmd.Parameters.AddWithValue("@PetID", id);
                 cmd.Parameters.AddWithValue("@Name", updatedPet.Name);
                 cmd.Parameters.AddWithValue("@Breed", updatedPet.Breed);
                 cmd.Parameters.AddWithValue("@Age", updatedPet.Age);
                 cmd.Parameters.AddWithValue("@Gender", updatedPet.Gender);
-                //cmd.Parameters.AddWithValue("@IntakeDate", updatedPet.IntakeDate);
-                //cmd.Parameters.AddWithValue("@PostDate", updatedPet.PostDate);
+                cmd.Parameters.AddWithValue("@IntakeDate", updatedPet.IntakeDate);
+                cmd.Parameters.AddWithValue("@PostDate", updatedPet.PostDate);
                 cmd.Parameters.AddWithValue("@Weight", updatedPet.Weight);
                 cmd.Parameters.AddWithValue("@Attitude", updatedPet.Attitude);
                 cmd.Parameters.AddWithValue("@AboutMe", updatedPet.AboutMe);
                 cmd.Parameters.AddWithValue("@Height", updatedPet.Height);
                 cmd.Parameters.AddWithValue("@HouseTrained", updatedPet.HouseTrained);
-                //cmd.Parameters.AddWithValue("@PetType", updatedPet.PetType);
+                cmd.Parameters.AddWithValue("@PetType", updatedPet.PetType);
                 cmd.Parameters.AddWithValue("@AdoptionStatus", updatedPet.AdoptionStatus);
-                //cmd.Parameters.AddWithValue("@ShelterID", updatedPet.ShelterID);
+                cmd.Parameters.AddWithValue("@ShelterID", updatedPet.ShelterID);
 
                 cmd.ExecuteNonQuery();
             // }

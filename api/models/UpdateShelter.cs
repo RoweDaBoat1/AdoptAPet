@@ -7,7 +7,7 @@ namespace api.models
 {
     public class UpdateShelterData : IUpdateShelter
     {
-        public void UpdateShelter(int ShelterID, Shelter updatedShelter)
+        public void UpdateShelter(int id, Shelter updatedShelter)
         {
             ConnectionString myConnection = new ConnectionString();
             string cs = myConnection.cs;
@@ -30,7 +30,7 @@ namespace api.models
                                     Role = @Role, 
                                     Approval_Status = @Approval_Status
                                 WHERE ShelterID = @ShelterID";
-            cmd.Parameters.AddWithValue("@ShelterID", ShelterID);
+            cmd.Parameters.AddWithValue("@ShelterID", id);
             cmd.Parameters.AddWithValue("@PasswordHash", updatedShelter.PasswordHash);
             cmd.Parameters.AddWithValue("@Salt", updatedShelter.Salt);
             cmd.Parameters.AddWithValue("@AddressLine", updatedShelter.AddressLine);
