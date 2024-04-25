@@ -208,7 +208,7 @@ async function populateTable() {
                 <td>${pet.postDate}</td>
                 <td>${pet.weight}</td>
                 <td>${pet.attitude}</td>
-                <td>${pet.aboutMe}</td>
+                <td class="truncate">${pet.aboutMe}</td>
                 <td>${pet.height}</td>
                 <td>${pet.houseTrained}</td>
                 <td>${pet.petType}</td>
@@ -422,7 +422,7 @@ async function handlePetEdit(petID) {
     </select><br>
     <textarea id="aboutMe" placeholder="About" style="width:400px; height:100px"></textarea><br>
     <label for = "adoptionStatus">Adoption Status:</label><br>
-    <select name="adoptionStatus" id="adoptionStatus" style="margin-bottom: 10px;><br>
+    <select name="adoptionStatus" id="adoptionStatus" style="margin-bottom: 10px;"><br>
         <option value="available">available</option>
         <option value="pending">pending</option>
     </select><br>
