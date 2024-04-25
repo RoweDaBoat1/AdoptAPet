@@ -36,7 +36,7 @@ function populateFeaturedPets() {
 populateFeaturedPets();
 
 function populatePosts(shelterPosts) {
-    const container = document.getElementById('featured-pets-container');
+    const container = document.getElementById('postContainer');
     container.innerHTML = '';
 
     shelterPosts.forEach(post => {
