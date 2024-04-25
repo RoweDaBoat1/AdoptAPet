@@ -80,3 +80,17 @@
 #newListingForm select {
     margin-bottom: 10px; /* Add margin-bottom to create vertical padding */
 }
+
+.truncate {
+    max-width: 150px; /* Adjust as needed */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer; /*Add this if you want to make the truncated text clickable*/
+}
+
+#petTable {
+    margin: 0;
+    padding: 0;
+    text-align: left !important;
+}

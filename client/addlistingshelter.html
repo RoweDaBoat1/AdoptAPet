@@ -8,6 +8,20 @@
     <link rel="stylesheet" href="./resources/styles/addlisting.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href ="./resources/styles/login.css">
+    <style>
+        .truncate {
+          max-width: 100px; /* Adjust as needed */
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          cursor: pointer; /* Add this if you want to make the truncated text clickable */
+        }
+        .revealed {
+          /* Additional styles for revealed text */
+          white-space: normal;
+          max-width: none;
+        }
+      </style>
 </head>
 <body onload="handleOnLoad()">
     <div class="menu_bar">
@@ -53,6 +67,14 @@
     <script src="./resources/scripts/login.js"></script>
     <script src="./resources/scripts/createaccount.js"></script>
     <script src="./resources/scripts/addlistingshelter.js"></script>
+    <script>
+        document.querySelectorAll('.truncate').forEach(item => {
+          item.addEventListener('click', event => {
+            // Toggle class to reveal full text
+            event.target.classList.toggle('revealed');
+          });
+        });
+    </script>
     <script>
       // Inside a script tag at the end of your HTML file
       document.addEventListener('DOMContentLoaded', () => {
