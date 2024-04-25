@@ -67,7 +67,7 @@ async function handleOnLoad() {
     <div class="form-row">
         <div class="form-label">Distance Preference for Adopters:</div>
         <div class="form-field">
-            <input type="number" id="distancePref" name="distancePref" placeholder="miles">
+            <input type="text" id="distancePref" name="distancePref" value =${shelterPrivacy.distancePref}>
         </div>
     </div>
         <button class="btn btn-primary" type="submit" onclick="handleSavePrivacy('${shelterPrivacy.shelterID}',event)" style="float: center;">Save Preferences</button>

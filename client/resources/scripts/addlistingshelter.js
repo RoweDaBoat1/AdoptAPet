@@ -183,7 +183,7 @@ async function populateTable() {
                     <td>${pet.postDate}</td>
                     <td>${pet.weight}</td>
                     <td>${pet.attitude}</td>
-                    <td>${pet.aboutMe}</td>
+                    <td class="truncate">${pet.aboutMe}</td>
                     <td>${pet.height}</td>
                     <td>${pet.houseTrained}</td>
                     <td>${pet.petType}</td>
@@ -199,6 +199,13 @@ async function populateTable() {
     // Update the pet table with the generated HTML
     document.getElementById('petSTable').innerHTML = html;
 }
+
+document.querySelectorAll('.truncate').forEach(item => {
+    item.addEventListener('click', event => {
+      // Toggle class to reveal full text
+      event.target.classList.toggle('revealed');
+    });
+  });
 
 async function handleAddPet() {
     // Get the current date and time
@@ -394,7 +401,7 @@ async function handlePetEdit(petID) {
     </select><br>
     <textarea id="aboutMe" placeholder="About" style="width:400px; height:100px"></textarea><br>
     <label for = "adoptionStatus">Adoption Status:</label><br>
-    <select name="adoptionStatus" id="adoptionStatus" style="margin-bottom: 10px;><br>
+    <select name="adoptionStatus" id="adoptionStatus" style="margin-bottom: 10px;"><br>
         <option value="available">available</option>
         <option value="pending">pending</option>
     </select><br>
