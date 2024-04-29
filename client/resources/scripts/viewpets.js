@@ -1,14 +1,6 @@
 const apiUrl = 'http://localhost:5016/api/pets';
 const favoriteUrl = 'http://localhost:5016/api/Favorite';
 
-function handleOnLoad(){
-  const token = localStorage.getItem('jwt');
-  const decodedToken = decodeJWT(token);
-  const shelterID = decodedToken.nameid;
-  const userID = decodedToken.userID;
-
-}
-
 function decodeJWT(token){
   const base64Url = token.split('.')[1];
   const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -61,9 +53,18 @@ async function populateCards() {
   }
 }
 
-async function favoritePet(petID, favoriteDate, userID) {
-  const token = localStorage.getItem('jwt'); 
+
+async function favoritePet(petID, favoriteDate) {
+  const token = localStorage.getItem('jwt');
+  const decodedToken = decodeJWT(token);
+  const userID = decodedToken.nameid;
   
+  let favorite = {
+    userID: userID,
+    petID: petID,
+    favoriteDate: favoriteDate
+  }
+
   const response = await fetch('http://localhost:5016/api/Favorite', {
     method: 'POST',
     headers: {
@@ -144,7 +145,7 @@ const filters = {
   weight: '',
   height: '',
   attitude: '',
-  house_trained: '',
+  houseTrained: '',
   age: '',
   gender: ''
 };
@@ -153,17 +154,17 @@ async function populateHardCodedFilterOptions() {
   const breeds = ['', 'Lakeland Terrier', 'Mini Goldendoodle', 'Chocolate Lab', 'Siberian Husky', 'Ragdoll', 'Lab', 'White Retriever', 'Poodle'];
   const weights = ['', 'SMALL (2-22 lbs.)', 'MEDIUM (24-57 lbs.)', 'LARGE (59-99 lbs.)', 'X-LARGE (100+ lbs.)'];
   const heights = ['', 'SMALL: 12" or Less', 'MEDIUM: 13" to 16" inches', 'LARGE: 17" to 20" inches', 'X-LARGE: 21" to 27" inches', 'XX-LARGE 28" or UP'];
-  const attitudes = ['', 'Friendly', 'Playful', 'Anxious', 'Independent', 'Calm'];
-  const houseTrainedOptions = ['', 'Yes', 'No'];
-  const ages = ['', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Over 10', 'Under 1'];
+  const attitude = ['', 'Friendly', 'Playful', 'Anxious', 'Independent', 'Calm'];
+  const houseTrained = ['', 'Yes', 'No'];
+  const age = ['', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '15', '22'];
   const genders = ['', 'Male', 'Female'];
 
   populateSelectOptions('breed', breeds);
   populateSelectOptions('weight', weights);
   populateSelectOptions('height', heights);
-  populateSelectOptions('attitude', attitudes);
-  populateSelectOptions('house_trained', houseTrainedOptions);
-  populateSelectOptions('age', ages);
+  populateSelectOptions('attitude', attitude);
+  populateSelectOptions('houseTrained', houseTrained);
+  populateSelectOptions('age', age);
   populateSelectOptions('gender', genders);
 }
 
@@ -189,7 +190,7 @@ function updateFilters() {
   filters.weight = document.getElementById('weight').value;
   filters.height = document.getElementById('height').value;
   filters.attitude = document.getElementById('attitude').value;
-  filters.house_trained = document.getElementById('house_trained').value;
+  filters.houseTrained = document.getElementById('houseTrained').value;
   filters.age = document.getElementById('age').value;
   filters.gender = document.getElementById('gender').value;
 }
@@ -199,9 +200,9 @@ function applyFilters(pets) {
     const breedFilter = !filters.breed || filters.breed === '' || filters.breed === 'Any' || pet.breed === filters.breed;
     const weightFilter = !filters.weight || filters.weight === '' || filters.weight === 'Any' || pet.weight === filters.weight;
     const heightFilter = !filters.height || filters.height === '' || filters.height === 'Any' || pet.height === filters.height;
-    const attitudeFilter = !filters.attitude || filters.attitude === '' || filters.attitude === 'Any' || pet.attitude === filters.attitude;
-    const houseTrainedFilter = !filters.house_trained || filters.house_trained === '' || filters.house_trained === 'Any' || pet.house_trained === filters.house_trained;
-    const ageFilter = !filters.age || filters.age === '' || filters.age === 'Any' || pet.age === filters.age;
+    const attitudeFilter = !filters.attitude || filters.attitude === '' || filters.attitude === 'Any' || pet.attitude.split(',').includes(filters.attitude);
+    const houseTrainedFilter = !filters.houseTrained || filters.houseTrained === '' || filters.houseTrained === 'Any' || pet.houseTrained === filters.houseTrained;
+    const ageFilter = !filters.age || filters.age === '' || filters.age === 'Any' || parseInt(pet.age) === parseInt(filters.age);
     const genderFilter = !filters.gender || filters.gender === '' || filters.gender === 'Any' || pet.gender === filters.gender;
 
     return breedFilter && weightFilter && heightFilter && attitudeFilter &&
