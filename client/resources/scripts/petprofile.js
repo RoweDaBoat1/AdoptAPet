@@ -29,7 +29,7 @@ async function populatePetProfile() {
         document.getElementById('height').textContent = pet.height;
         document.getElementById('houseTrained').textContent = pet.houseTrained;
         document.getElementById('petType').textContent = pet.petType;
-        document.getElementById('petImage').src = `data:image/png;base64, ${pet.imageData}`;
+        document.getElementById('petImage').src = "./resources/styles/images/blank profile.jpg"
 
         const shelter = await fetchShelterData(pet.shelterID);
         if (shelter) {
