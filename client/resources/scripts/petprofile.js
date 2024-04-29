@@ -44,27 +44,38 @@ async function populatePetProfile() {
             const pendingMessage = document.createElement('p');
             pendingMessage.textContent = 'Pending';
             document.getElementById('petProfileContainer').appendChild(pendingMessage);
-
+        
             const pendingIcon = document.createElement('i');
             pendingIcon.classList.add('fas', 'fa-hourglass-half');
             document.getElementById('petProfileContainer').appendChild(pendingIcon);
-
-            const adoptionFormLink = document.getElementById('adoptionFormLinkContainer');
-            adoptionFormLink.style.display = 'none';
-        } else {
-            const adoptionFormUrl = `adoptionform.html?petId=${petId}`;
-            const adoptionFormLink = document.createElement('a');
-            adoptionFormLink.href = adoptionFormUrl;
-            adoptionFormLink.textContent = 'Click here to fill out the adoption form';
-            
+        
+            const adoptionFormButton = document.createElement('button');
+            adoptionFormButton.textContent = 'Fill out the adoption form';
+            adoptionFormButton.id = 'adoptionFormButton'; 
+        
             const linkContainer = document.getElementById('adoptionFormLinkContainer');
             if (linkContainer) {
-                linkContainer.appendChild(adoptionFormLink);
+                linkContainer.appendChild(adoptionFormButton);
             } else {
                 console.error('Adoption form link container not found');
             }
-        }
-    }
+        } else {
+            const adoptionFormUrl = `adoptionform.html?petId=${petId}`;
+            const adoptionFormButton = document.createElement('button');
+            adoptionFormButton.textContent = 'Click here to fill out the adoption form';
+            adoptionFormButton.classList.add('btn', 'btn-primary');
+            adoptionFormButton.addEventListener('click', function() {
+                window.location.href = adoptionFormUrl; 
+            });
+        
+            const adoptionFormContainer = document.querySelector('.adoption-form-container');
+                if (adoptionFormContainer) {
+                        adoptionFormContainer.appendChild(adoptionFormButton);
+                } else {
+                    console.error('Adoption form container not found');
+                }
+         }
+     }
 } catch (error) {
     console.error('Error fetching data:', error);
 }

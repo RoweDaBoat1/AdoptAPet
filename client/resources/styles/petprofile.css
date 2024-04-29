@@ -90,17 +90,27 @@
 }
 
 .adoption-form-container {
-    position: absolute;
-    top: 50px; 
-    right: 50px; 
+    position: fixed;
+    bottom: 20px;
+    right: 20px; 
 }
 
-.adoption-form-container a {
-    color: white; 
-    text-decoration: none;
-    font-size: 24px; 
+.adoption-form-container button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
 }
 
-.adoption-form-container a:hover {
-    color: rgb(25, 105, 255); 
+.adoption-form-container button:hover {
+    background-color: #0056b3;
+}
+
+#petImage {
+    max-width: 100%; 
+    border-radius: 50%; 
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); 
 }
