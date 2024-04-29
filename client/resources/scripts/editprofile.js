@@ -141,7 +141,7 @@ async function updateUser(userID, updatedUser) {
     // Extract values from the original pet object
     let passwordHash = originalUser.passwordHash
     let salt = originalUser.salt
-    let favoritePets = originalUser.favoritePets
+    // let favoritePets = originalUser.favoritePets
     let role = originalUser.role
 
     let email= updatedUser.email
@@ -160,7 +160,7 @@ async function updateUser(userID, updatedUser) {
         lastName: lastName,
         zipCode: zipCode,
         phoneNumber: phoneNumber,
-        favoritePets: favoritePets,
+        // favoritePets: favoritePets,
         role: role
     }
     console.log(user)

@@ -1,5 +1,4 @@
 const petUrl = "http://localhost:5016/api/pets"
-
 //const petUrl = apiUrls.petUrl
 let shelterID
 let pets = []
