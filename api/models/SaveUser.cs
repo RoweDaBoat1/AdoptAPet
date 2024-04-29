@@ -26,7 +26,7 @@ namespace api.models
             using var cmd = new MySqlCommand(cs);
 
             cmd.Connection = con;
-            cmd.CommandText = @"INSERT INTO User(UserId, Email, PasswordHash, Salt, FirstName, LastName, ZipCode, PhoneNumber, FavoritePets, Role) VALUES(@UserId, @Email, @PasswordHash, @Salt, @FirstName, @LastName, @ZipCode, @PhoneNumber, @FavoritePets, @Role)";
+            cmd.CommandText = @"INSERT INTO User(UserId, Email, PasswordHash, Salt, FirstName, LastName, ZipCode, PhoneNumber, Role) VALUES(@UserId, @Email, @PasswordHash, @Salt, @FirstName, @LastName, @ZipCode, @PhoneNumber, @Role)";
             cmd.Parameters.AddWithValue("@UserId", value.UserID);
             cmd.Parameters.AddWithValue("@Email", value.Email);
             cmd.Parameters.AddWithValue("@PasswordHash", hashedPassword); // Use hashed password
@@ -35,7 +35,6 @@ namespace api.models
             cmd.Parameters.AddWithValue("@LastName", value.LastName);
             cmd.Parameters.AddWithValue("@ZipCode", value.ZipCode);
             cmd.Parameters.AddWithValue("@PhoneNumber", value.PhoneNumber);
-            cmd.Parameters.AddWithValue("@FavoritePets", value.FavoritePets);
             cmd.Parameters.AddWithValue("@Role", value.Role);
             cmd.Prepare();
             cmd.ExecuteNonQuery();

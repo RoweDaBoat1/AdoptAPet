@@ -34,8 +34,7 @@ namespace api.models
                     LastName = rdr.IsDBNull(5) ? null : rdr.GetString(5),
                     ZipCode = rdr.IsDBNull(6) ? null : rdr.GetString(6),
                     PhoneNumber = rdr.IsDBNull(7) ? null : rdr.GetString(7),
-                    FavoritePets = rdr.IsDBNull(8) ? null : rdr.GetString(8),
-                    Role = rdr.IsDBNull(9) ? null : rdr.GetString(9)
+                    Role = rdr.IsDBNull(8) ? null : rdr.GetString(8)
                 });
             }
 
@@ -70,8 +69,7 @@ namespace api.models
                                 LastName = rdr.IsDBNull(5) ? null : rdr.GetString(5),
                                 ZipCode = rdr.IsDBNull(6) ? null : rdr.GetString(6),
                                 PhoneNumber = rdr.IsDBNull(7) ? null : rdr.GetString(7),
-                                FavoritePets = rdr.IsDBNull(8) ? null : rdr.GetString(8),
-                                Role = rdr.IsDBNull(9) ? null : rdr.GetString(9)
+                                Role = rdr.IsDBNull(8) ? null : rdr.GetString(8)
                             };
                         }
                         else

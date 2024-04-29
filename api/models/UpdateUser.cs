@@ -25,7 +25,6 @@ namespace api.models
                                     LastName = @LastName, 
                                     ZipCode = @ZipCode, 
                                     PhoneNumber = @PhoneNumber, 
-                                    FavoritePets = @FavoritePets,
                                     Role = @Role 
                                 WHERE UserId = @UserId";
             cmd.Parameters.AddWithValue("@UserId", id);
@@ -36,7 +35,6 @@ namespace api.models
             cmd.Parameters.AddWithValue("@LastName", updatedUser.LastName);
             cmd.Parameters.AddWithValue("@ZipCode", updatedUser.ZipCode);
             cmd.Parameters.AddWithValue("@PhoneNumber", updatedUser.PhoneNumber);
-            cmd.Parameters.AddWithValue("@FavoritePets", updatedUser.FavoritePets);
             cmd.Parameters.AddWithValue("@Role", updatedUser.Role);
             
             cmd.ExecuteNonQuery();
